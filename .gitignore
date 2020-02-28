@@ -1,0 +1,13 @@
+.idea
+dist
+node_modules/
+.cache/
+frontend/src/.DS_Store
+frontend/fonts/
+.vscode/
+.env
+dockerbuild.sh
+package-lock.json
+
+.DS_Store
+yarn-error.log

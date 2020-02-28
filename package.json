@@ -1,0 +1,60 @@
+{
+  "name": "nais-deploy-frontend",
+  "version": "42.0.0",
+  "description": "Frontend for nais deploy",
+  "scripts": {
+    "build-watch": "parcel watch frontend/index.html --public-url /static",
+    "start-watch": "NODE_ENV=development DEBUG=http,deploy-frontend nodemon bin/www",
+    "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
+    "build": "parcel build frontend/index.html --public-url /static",
+    "test": "echo \"TODO\" && exit 1",
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "helmet": "^3.21.3",
+    "http": "^0.0.0",
+    "morgan": "^1.9.1",
+    "prop-types": "^15.7.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-react": "^7.8.3",
+    "classnames": "^2.2.6",
+    "husky": "^4.2.3",
+    "less": "^3.11.1",
+    "lodash.throttle": "^4.1.1",
+    "nav-frontend-core": "^4.0.11",
+    "nav-frontend-js-utils": "^1.0.8",
+    "nav-frontend-knapper": "^1.0.39",
+    "nav-frontend-knapper-style": "^0.3.34",
+    "nav-frontend-typografi": "^2.0.17",
+    "nav-frontend-typografi-style": "^1.0.18",
+    "nodemon": "^2.0.2",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*",
+      "frontend/*"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "author": "@navikt/aura",
+  "license": "MIT",
+  "private": true
+}
