@@ -4,6 +4,7 @@ const { host } = require('./server/config/config')
 const express = require('express')
 const favicon = require('serve-favicon')
 var path = require('path')
+const router = require('./server/routes/routes')
 const logger = require('morgan')
 //const prometheus = require('prom-client')
 const helmet = require('helmet')
@@ -18,6 +19,7 @@ app.use(
     }
   })
 )
+app.use('/', router)
 
 app.use(helmet())
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
