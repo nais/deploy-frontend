@@ -1,0 +1,24 @@
+{
+    "external-hosts": ["login.microsoftonline.com"],
+    "ingress": ["https://deploy.nais.io"],
+    
+    "envs": [
+        { "name": "BASTA_BACKEND", "value": "https://basta.prod-fss-pub.nais.io" },
+        {
+          "name": "BASTAAZURECONFIG_CALLBACKURI",
+          "value": "https://basta.adeo.no/auth/openid/callback"
+        },
+        {
+          "name": "AZURE_OPENID_CONNECT_CONFIGURATION",
+          "value": "https://login.microsoftonline.com/navno.onmicrosoft.com/.well-known/openid-configuration"
+        },
+        {
+          "name": "AZURE_TOKEN_URI",
+          "value": "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/token"
+        },
+        {
+          "name": "AZURE_LOGOUT_URL",
+          "value": "https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/logout?post_logout_redirect_uri=http:\\\\localhost:8080"
+        }
+      ]
+    }

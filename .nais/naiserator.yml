@@ -1,0 +1,41 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: deploy-frontend
+  namespace: aura
+  labels:
+    team: aura
+spec:
+  accessPolicy:
+    outbound:
+      external:
+{{#each external-hosts}}
+      - host: {{this}}
+{{/each}}
+      rules: []
+  image: {{ image }}
+  port: 8080 
+  liveness:
+    path: /isalive
+  readiness:
+    path: /isalive
+  replicas:
+    min: 2
+    max: 2
+  ingresses:
+    {{#each ingresses}}
+    - "{{this}}"
+    {{/each}}
+  env:
+{{#each envs}}
+    - name: "{{name}}"
+      value: "{{value}}"
+{{/each}}
+  skipCaBundle: true
+  resources:
+    limits:
+      cpu: 500m 
+      memory: 512Mi
+    requests:
+      cpu: 200m
+      memory: 256Mi
