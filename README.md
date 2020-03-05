@@ -1,3 +1,4 @@
+![](https://github.com/nais/deploy-frontend/workflows/Build%20and%20deploy%20nais-deploy-frontend/badge.svg)
 
 # Nais deploy frontend 
 
