@@ -4,18 +4,18 @@
   "description": "Frontend for nais deploy",
   "scripts": {
     "build-watch": "parcel watch frontend/index.html --public-url /static",
-    "start-watch": "NODE_ENV=development DEBUG=http,deploy-frontend nodemon bin/www",
+    "start-watch": "NODE_ENV=development nodemon bin/www",
     "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
     "build": "parcel build frontend/index.html --public-url /static",
     "test": "jest",
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "debug": "^4.1.1",
     "express": "^4.17.1",
     "helmet": "^3.21.3",
     "http": "^0.0.0",
     "morgan": "^1.9.1",
+    "pino": "^5.17.0",
     "prop-types": "^15.7.2",
     "serve-favicon": "^2.5.0"
   },

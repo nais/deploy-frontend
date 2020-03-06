@@ -1,11 +1,11 @@
 'use strict'
 
-const { host } = require('./src/config/config')
+const { host, logger } = require('./src/config/config')
 const express = require('express')
 const favicon = require('serve-favicon')
 var path = require('path')
 const router = require('./src/routes/routes')
-const logger = require('morgan')
+const httpLogger = require('morgan')
 //const prometheus = require('prom-client')
 const helmet = require('helmet')
 
@@ -13,7 +13,7 @@ const helmet = require('helmet')
 
 const app = express()
 app.use(
-  logger('dev', {
+  httpLogger('dev', {
     skip: function(req, res) {
       return res.statusCode < 400
     }
@@ -50,7 +50,7 @@ app.get('*', (req, res) => {
 app.use((err, req, res, next) => {
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
-  console.log('Error ' + err)
+  logger.error('Error ' + err)
   res.status(err.status || 500).send(err)
   next()
 })

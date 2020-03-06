@@ -1,12 +1,10 @@
 #!/usr/bin/env node
 
 const app = require('../server/app')
-const { host, port } = require('../server/src/config/config')
+const { host, port, logger } = require('../server/src/config/config')
 const http = require('http')
-var debug = require('debug')('http'),
-  name = 'deploy-frontend'
 
-debug(`Starting up`, name)
+logger.info('Starting up...')
 
 app.set('port', port)
 
@@ -22,10 +20,10 @@ function onError(error) {
 
   switch (error.code) {
     case 'EACCES':
-      console.error(`Port ${port} requires elevated privileges`)
+      logger.error(`Port ${port} requires elevated privileges`)
       process.exit(1)
     case 'EADDRINUSE':
-      console.error(`Port ${port} is already in use`)
+      logger.error(`Port ${port} is already in use`)
       process.exit(1)
     default:
       throw error
@@ -34,5 +32,5 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address()
-  debug(`Listening on ${host}:${addr.port}`)
+  logger.info(`Listening on ${host}:${addr.port}`)
 }
