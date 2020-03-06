@@ -12,8 +12,7 @@ WORKDIR /home/app
 COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./bin ./bin
-COPY ./server/public ./server/public
-COPY ./server/src ./server/src
+COPY ./server/ ./server
 RUN yarn install --production=true
 
 FROM node:13-alpine
