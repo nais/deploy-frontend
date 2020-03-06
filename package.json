@@ -7,7 +7,7 @@
     "start-watch": "NODE_ENV=development DEBUG=http,deploy-frontend nodemon bin/www",
     "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
     "build": "parcel build frontend/index.html --public-url /static",
-    "test": "echo \"TODO\" && exit 1",
+    "test": "jest",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^5.1.0",
     "husky": "^4.2.3",
+    "jest": "^25.1.0",
     "less": "^3.11.1",
     "lodash.throttle": "^4.1.1",
     "nav-frontend-core": "^4.0.11",
@@ -41,7 +42,14 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "rimraf": "^3.0.2",
+    "supertest": "^4.0.2",
     "typescript": "^3.8.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   },
   "nodemonConfig": {
     "ignore": [

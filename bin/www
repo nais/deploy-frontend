@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const app = require('../app')
-const { host, port } = require('../server/config/config')
+const app = require('../server/app')
+const { host, port } = require('../server/src/config/config')
 const http = require('http')
 var debug = require('debug')('http'),
   name = 'deploy-frontend'
