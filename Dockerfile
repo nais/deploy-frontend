@@ -12,8 +12,8 @@ WORKDIR /home/app
 COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./bin ./bin
-COPY ./public ./public
-COPY ./server ./server
+COPY ./server/public ./server/public
+COPY ./server/src ./server/src
 RUN yarn install --production=true
 
 FROM node:13-alpine
@@ -25,7 +25,6 @@ COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY --from=frontend-builder /home/app/dist/ ./dist/
 COPY --from=api-builder /home/app/server ./api/server
-COPY --from=api-builder /home/app/public ./api/public
 COPY --from=api-builder /home/app/bin ./api/bin
 COPY --from=api-builder /home/app/node_modules ./node_modules
 
