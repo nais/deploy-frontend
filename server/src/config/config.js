@@ -7,7 +7,7 @@ if (process.env['NODE_ENV'] === 'production') {
   loglevel = process.env['LOG_LEVEL'] || 'info'
   //exports.sessionSecret = process.env['SESSION_SECRET'] || 'H3mligereEnnDetteBlirDetIkke!'
   //exports.cookieDomain = ''
-} else if (process.env['NODE_ENV'] === 'development') {
+} else {
   exports.host = 'localhost'
   loglevel = 'info'
 }
