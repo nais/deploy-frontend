@@ -28,7 +28,7 @@ jobs:
       - name: Run tests
         run: yarn test 
       - name: Build docker image
-        run: docker build . --tag $(IMAGE)
+        run: docker build . --tag $IMAGE
       - name: Login to Github package registry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
