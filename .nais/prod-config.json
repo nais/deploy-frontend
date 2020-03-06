@@ -1,6 +1,6 @@
 {
     "external-hosts": ["login.microsoftonline.com"],
-    "ingress": ["https://deploy.nais.io"],
+    "ingresses": ["https://deploy.nais.io"],
     
     "envs": [
         { "name": "BASTA_BACKEND", "value": "https://basta.prod-fss-pub.nais.io" },

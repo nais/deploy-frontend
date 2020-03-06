@@ -1,6 +1,6 @@
 {
     "external-hosts": ["login.microsoftonline.com"],
-    "ingress": ["https://deploy-frontend.dev-adeo.no/"],
+    "ingresses": ["https://deploy-frontend.dev-adeo.no/"],
     "envs": [
       {
         "name": "AZURECONFIG_CALLBACKURI",
