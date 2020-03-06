@@ -48,6 +48,8 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/dev-config.json
+          OWNER: navikt
+          REPOSITORY: aura-dummy
 
   deploy-prod:
     name: Deploy to prod-gcp
@@ -61,6 +63,8 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
+          OWNER: navikt
+          REPOSITORY: aura-dummy
       
     
 
