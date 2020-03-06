@@ -39,7 +39,7 @@ app.use(express.json())
 //app.set('trust proxy', 1)
 
 // ROUTES
-app.use('/static', express.static(path.join(__dirname, 'dist')))
+app.use('/static', express.static(path.join(__dirname, '../dist')))
 //app.use('/', router)
 
 app.get('*', (req, res) => {
