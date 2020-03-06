@@ -49,7 +49,7 @@ jobs:
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/dev-config.json
           OWNER: navikt
-          REPOSITORY: aura-dummy
+          REPOSITORY: aura-infra
 
   deploy-prod:
     name: Deploy to prod-gcp
@@ -64,7 +64,7 @@ jobs:
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
           OWNER: navikt
-          REPOSITORY: aura-dummy
+          REPOSITORY: aura-infra
       
     
 
