@@ -1,17 +1,35 @@
 'use strict'
 
-const { host, logger } = require('./src/config/config')
+const { client, strategy } = require('./src/auth/azure')
+const { logger, server } = require('./src/config')
 const express = require('express')
 const favicon = require('serve-favicon')
-var path = require('path')
-const router = require('./src/routes/routes')
+const path = require('path')
+const cors = require('./src/cors')
+const { setup } = require('./src/routes/routes')
 const httpLogger = require('morgan')
+const morganBody = require('morgan-body')
+const passport = require('passport')
+const session = require('./src/session')
+//const session = require('cookie-session')
+//const azureAuthClient = require('ath')
 //const prometheus = require('prom-client')
 const helmet = require('helmet')
 
 //prometheus.collectDefaultMetrics()
 
 const app = express()
+
+async function configureAzure() {
+  const azureAuthClient = await client()
+  const azureOidcStrategy = strategy(azureAuthClient)
+  return azureOidcStrategy
+}
+
+if (process.env !== 'production') {
+  morganBody(app)
+}
+
 app.use(
   httpLogger('dev', {
     skip: function(req, res) {
@@ -19,27 +37,39 @@ app.use(
     }
   })
 )
-app.use('/', router)
-
-app.use(helmet())
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-const cors = function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', host)
-  res.setHeader('Access-Control-Allow-Credentials', 'true')
-  res.setHeader('Access-Control-Allow-Methods', 'GET')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, Content-Type, X-AUTHENTICATION, X-IP, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With'
-  )
-  return next()
-}
-app.use(cors)
+session.setup(app)
 
 app.use(express.json())
-//app.set('trust proxy', 1)
+app.use(express.urlencoded({ extended: true }))
+app.use(helmet())
+//app.use(cors)
+
+//app.use(cookieParser(sessionSecret))
+//app.use(bodyParser.urlencoded({ extended: true }))
+app.set('trust proxy', 1)
+
+/*app.use(
+  session({
+    name: server.cookieName,
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    domain: '',
+    sameSite: 'lax'
+  })
+)*/
+
+app.use(passport.initialize())
+app.use(passport.session())
+const azureAuthClient = configureAzure()
+passport.use('azureOidc', azureAuthClient)
+passport.serializeUser((user, done) => done(null, user))
+passport.deserializeUser((user, done) => done(null, user))
+
+app.use('/', setup(azureAuthClient))
+
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
 // ROUTES
-app.use('/static', express.static(path.join(__dirname, '../dist')))
+//app.use('/static', express.static(path.join(__dirname, '../dist')))
 //app.use('/', router)
 
 app.get('*', (req, res) => {
@@ -48,6 +78,7 @@ app.get('*', (req, res) => {
 
 // ERROR HANDLING
 app.use((err, req, res, next) => {
+  console.error('ERRROR', err)
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
   logger.error('Error ' + err)
