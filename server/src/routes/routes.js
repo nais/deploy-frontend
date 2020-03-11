@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const authUtils = require('../auth/auth-utils')
 const passport = require('passport')
 const health = require('../healthCheck')
 const session = require('express-session')
@@ -41,7 +42,7 @@ exports.setup = authClient => {
   router.get('/me', (req, res) => {
     authUtils
       .getUserInfoFromGraphApi(authClient, req)
-      .then(userinfo => res.json(userinfo))
+      .then(userinfo => res.send(userinfo))
       .catch(err => res.status(500).json(err))
   })
 
@@ -63,8 +64,3 @@ exports.setup = authClient => {
 
   return router
 }
-
-// APPLICATION HEALTH
-//router.get('/isalive', health.isAlive())
-
-//router.get('/metrics', health.metrics())

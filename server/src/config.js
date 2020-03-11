@@ -3,7 +3,6 @@ const loglevel = process.env['LOG_LEVEL'] || 'info'
 const logger = require('pino')({ level: loglevel })
 
 const envVar = (name, required = true) => {
-  console.log('Looking for ', name, required)
   if (!process.env[name] && required) {
     logger.error(`Missing required environment variable ${name}`)
     process.exit(1)

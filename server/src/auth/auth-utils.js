@@ -1,5 +1,5 @@
 const { TokenSet } = require('openid-client')
-const { got, HTTPError } = require('got')
+const got = require('got')
 //const url = require('url')
 
 const tokenSetSelfId = 'self'
@@ -47,9 +47,9 @@ const getUserInfoFromGraphApi = (authClient, req) => {
           resolveBodyOnly: true
         })
       )
-      .then(response => resolve(response))
+      .then(response => resolve(response.body))
       .catch(err => {
-        if (err instanceof HTTPError) {
+        if (err instanceof got.HTTPError) {
           reject({
             error: err,
             response: err.response.body
@@ -93,7 +93,7 @@ const hasValidAccessToken = (req, key = tokenSetSelfId) => {
 
 module.exports = {
   getOnBehalfOfAccessToken: getOnBehalfOfAccessToken,
-  exportsgetUserInfoFromGraphApi: getUserInfoFromGraphApi,
+  getUserInfoFromGraphApi: getUserInfoFromGraphApi,
   appendDefaultScope: appendDefaultScope,
   hasValidAccessToken: hasValidAccessToken,
   tokenSetSelfId: tokenSetSelfId

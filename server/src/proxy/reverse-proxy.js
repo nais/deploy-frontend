@@ -9,6 +9,7 @@ const options = (api, authClient) => ({
     return new Promise((resolve, reject) =>
       authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
         access_token => {
+          console.log('Got access token', access_token)
           options.headers.Authorization = `Bearer ${access_token}`
           resolve(options)
         },
@@ -38,12 +39,13 @@ const options = (api, authClient) => ({
   }
 })
 
-//const stripTrailingSlash = str => (str.endsWith('/') ? str.slice(0, -1) : str)
+const stripTrailingSlash = str => (str.endsWith('/') ? str.slice(0, -1) : str)
 
 const setup = (router, authClient) => {
-  config.reverseProxy.apis.forEach(api =>
-    router.use(`/${api.path}/*`, proxy(api.url, options(api, authClient)))
-  )
+  config.reverseProxy.apis.forEach(api => {
+    console.log('ReverseProxy setup: ', api.path, api.url)
+    return router.use(`/${api.path}/*`, proxy(api.url, options(api, authClient)))
+  })
 }
 
 exports.setup = setup

@@ -1,6 +1,6 @@
-const host = require('./config')
+const { host } = require('./config')
 
-exports.cors = (req, res, next) => {
+const cors = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', host)
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
@@ -10,4 +10,8 @@ exports.cors = (req, res, next) => {
   )
   res.setHeader('Access-Control-Expose-Headers', 'Location')
   return next()
+}
+
+module.exports = {
+  cors: cors
 }

@@ -17,7 +17,6 @@ const client = async () => {
 
 const strategy = client => {
   const verify = (tokenSet, done) => {
-    console.log('Calling verify from strategy')
     if (tokenSet.expired()) {
       return done(null, false)
     }
