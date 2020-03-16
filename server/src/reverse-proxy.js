@@ -1,5 +1,5 @@
-const authUtils = require('../auth/auth-utils')
-const config = require('../config')
+const authUtils = require('./auth/auth-utils')
+const config = require('./config')
 const proxy = require('express-http-proxy')
 const url = require('url')
 

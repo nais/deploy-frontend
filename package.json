@@ -3,10 +3,12 @@
   "version": "42.0.0",
   "description": "Frontend for nais deploy",
   "scripts": {
-    "build-watch": "parcel watch frontend/index.html --public-url /static",
+    "build-watch": "parcel watch frontend/index.html",
     "start-watch": "NODE_ENV=development nodemon bin/www",
+    "start-offline": "NODE_ENV=development nodemon bin/offline",
     "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
-    "build": "parcel build frontend/index.html --public-url /static",
+    "offline": "concurrently --kill-others \"yarn run start-offline\" \"yarn run build-watch\"",
+    "build": "parcel build frontend/index.html",
     "test": "jest",
     "start": "node  ./bin/www"
   },

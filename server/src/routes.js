@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const authUtils = require('../auth/auth-utils')
+const authUtils = require('./auth/auth-utils')
 const passport = require('passport')
-const health = require('../healthCheck')
+const health = require('./healthCheck')
 const session = require('express-session')
-const reverseProxy = require('../proxy/reverse-proxy')
+const reverseProxy = require('./reverse-proxy')
 const path = require('path')
 
 const ensureAuthenticated = async (req, res, next) => {
@@ -24,7 +24,6 @@ exports.setup = authClient => {
     '/callback',
     passport.authenticate('azureOidc', { failureRedirect: '/login' }),
     (req, res) => {
-      console.log('in redirect callback')
       if (session.redirectTo) {
         res.redirect(session.redirectTo)
       } else {
@@ -34,12 +33,8 @@ exports.setup = authClient => {
   )
 
   router.use(ensureAuthenticated)
-
-  // Protected
-  router.get('/', (req, res) => {
-    res.json(req.user)
-  })
   router.get('/me', (req, res) => {
+    console.log('RU ', req.user)
     authUtils
       .getUserInfoFromGraphApi(authClient, req)
       .then(userinfo => res.send(userinfo))
@@ -56,11 +51,11 @@ exports.setup = authClient => {
   reverseProxy.setup(router, authClient)
 
   // serve static files
-  router.use(express.static(path.join(__dirname, '../dist')))
-  //app.use('/static', express.static(path.join(__dirname, '../dist')))
-  /*router.use('*', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, '../website/production') })
-  })*/
+  router.use(express.static('dist'))
+  //app.use('/static', express.static(path.join(__dirname, '../../../dist')))
+  router.use('*', (req, res) => {
+    res.sendFile('index.html', { root: path.join(__dirname, '../../../dist') })
+  })
 
   return router
 }

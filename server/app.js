@@ -6,7 +6,7 @@ const express = require('express')
 const favicon = require('serve-favicon')
 const path = require('path')
 const { cors } = require('./src/cors')
-const { setup } = require('./src/routes/routes')
+const { setup } = require('./src/routes')
 const httpLogger = require('morgan')
 const morganBody = require('morgan-body')
 const passport = require('passport')
@@ -50,13 +50,7 @@ async function configure() {
 
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 
-  // ROUTES
-  //app.use('/static', express.static(path.join(__dirname, '../dist')))
-  //app.use('/', router)
-
-  app.get('*', (req, res) => {
-    res.sendFile('index.html', { root: './dist' })
-  })
+  
 
   // ERROR HANDLING
   app.use((err, req, res, next) => {
