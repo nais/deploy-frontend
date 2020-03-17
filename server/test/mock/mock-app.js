@@ -24,7 +24,7 @@ async function configure() {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use('/', router)
-  router.get('/api/apikey', apiKeyMock.getApiKeys())
+  router.get('/api/v1/apikeys', apiKeyMock.getApiKeys())
   router.use(express.static('dist'))
   router.use('*', (req, res) => {
     res.sendFile('index.html', { root: path.join(__dirname, '../../../dist') })
