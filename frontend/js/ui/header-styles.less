@@ -1,0 +1,47 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+@import (reference) '~nav-frontend-core/less/_mixins';
+
+@naisColor: darken(#005b82, 10%);;
+
+.header {
+  background:  @naisColor;
+  line-height: auto;
+  border-bottom: 4px solid @navLysGra;
+  z-index: 200;
+
+  &__content {
+    .header__logo {
+        padding-bottom: 0.5rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: @navLysGra;
+      background: @naisColor;
+
+      svg {
+        position:absolute;
+        top:0px;
+        left:20px;
+      }
+
+      .header__title {
+        font-size: 1.5rem;
+        font-weight:bold;
+        padding-top: 1.5rem;
+        padding-left: 5.5rem;
+      }
+
+      &:hover {
+        .header__title {
+          text-decoration: underline;
+        }
+      }
+
+      &:focus {
+        outline:none;
+        box-shadow:0 0 0 30px @fokusFarge;
+        z-index:1;
+      }
+    }
+  }
+}
