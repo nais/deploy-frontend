@@ -8,6 +8,8 @@ metadata:
 spec:
   accessPolicy:
     outbound:
+      rules: 
+        application: hookd
       external:
 {{#each external-hosts}}
       - host: {{this}}
@@ -26,6 +28,8 @@ spec:
     {{#each ingresses}}
     - "{{this}}"
     {{/each}}
+  envFrom: 
+    - secret: deploy-frontend-secrets
   env:
 {{#each envs}}
     - name: "{{name}}"
