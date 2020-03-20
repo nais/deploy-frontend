@@ -10,6 +10,7 @@
     "offline": "concurrently --kill-others \"yarn run start-offline\" \"yarn run build-watch\"",
     "build": "parcel build frontend/index.html",
     "test": "jest",
+    "tdd": "jest --watch",
     "start": "node  ./bin/www"
   },
   "dependencies": {
@@ -31,14 +32,21 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-0",
+    "@babel/core": "^7.8.7",
     "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
     "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.4",
     "@types/moment": "^2.13.0",
+    "babel-jest": "^25.1.0",
     "classnames": "^2.2.5",
     "concurrently": "^5.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "husky": "^4.2.3",
     "jest": "^25.1.0",
+    "jest-transform-stub": "^2.0.0",
     "less": "^3.11.1",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
@@ -58,15 +66,36 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "prop-types": "^15.5.10",
-    "react": "^15.4.2 || ^16.0.0",
+    "react": "^15.4.2 || ^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
+    "react-test-renderer": "^16.13.0",
     "rimraf": "^3.0.2",
     "supertest": "^4.0.2",
+    "ts-jest": "^25.2.1",
     "typescript": "^3.8.2"
   },
   "jest": {
-    "testEnvironment": "node",
+    "preset": "ts-jest/presets/js-with-babel",
+    "transform": {
+        ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+    },
+    "moduleNameMapper": {
+        "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+        "\\-style$": "<rootDir>/server/test/style-mock.js"
+      },
+    "setupFilesAfterEnv": [
+      "<rootDir>/server/test/setupTests.js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
