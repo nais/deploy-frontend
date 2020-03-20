@@ -1,5 +1,5 @@
 import React from 'react'
-import ApiKey from './apiKey'
+import ApiKey from '../apiKey'
 import { shallow } from 'enzyme'
 
 const apiKeys = [
