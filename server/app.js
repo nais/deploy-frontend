@@ -19,7 +19,7 @@ const helmet = require('helmet')
 const app = express()
 
 async function configure() {
-  if (process.env !== 'production') {
+  if (process.env['NODE_ENV'] !== 'production') {
     morganBody(app)
   }
 
@@ -49,8 +49,6 @@ async function configure() {
   app.use('/', setup(azureAuthClient))
 
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
-
-  
 
   // ERROR HANDLING
   app.use((err, req, res, next) => {
