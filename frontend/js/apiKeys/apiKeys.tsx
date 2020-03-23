@@ -11,17 +11,18 @@ function ApiKeys() {
 
   return (
     <>
-      {isError && (
-        <AlertStripe type="feil" className="errorMessage">
-          <Element>An error occured when fetching apikeys.</Element>
-          <Normaltekst>{errorMessage}</Normaltekst>{' '}
-        </AlertStripe>
-      )}
+      
       {isLoading ? (
         'Loading....'
       ) : (
         <div>
           <InfoPanel />
+          {isError && (
+        <AlertStripe type="feil" className="errorMessage">
+          <Element>An error occured when fetching apikeys.</Element>
+          <Normaltekst>{errorMessage}</Normaltekst>{' '}
+        </AlertStripe>
+      )}
           {data.map((apiKey, idx: number) => (
             <ApiKey key={idx} apiKey={apiKey} />
           ))}
