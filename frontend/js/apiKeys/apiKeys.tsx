@@ -1,21 +1,30 @@
 import React from 'react'
-import { useFetch } from '../hooks'
+import { useHttpGet } from '../hooks'
 import ApiKey from './apiKey'
 import InfoPanel from './infoPanel'
 import './apikey-styles.less'
-
+import AlertStripe from 'nav-frontend-alertstriper'
+import { Normaltekst, Element } from 'nav-frontend-typografi'
 
 function ApiKeys() {
-  const [apiKeys, loading] = useFetch('/api/v1/apikeys')
+  const [{ data, isLoading, isError, errorMessage }] = useHttpGet('/api/v1/apikeys')
 
   return (
     <>
-      {loading ? (
+      {isError && (
+        <AlertStripe type="feil" className="errorMessage">
+          <Element>An error occured when fetching apikeys.</Element>
+          <Normaltekst>{errorMessage}</Normaltekst>{' '}
+        </AlertStripe>
+      )}
+      {isLoading ? (
         'Loading....'
       ) : (
         <div>
-        <InfoPanel/>
-          {apiKeys.map((apiKey, idx) => (<ApiKey key={idx} apiKey={apiKey} />))}
+          <InfoPanel />
+          {data.map((apiKey, idx: number) => (
+            <ApiKey key={idx} apiKey={apiKey} />
+          ))}
         </div>
       )}
     </>

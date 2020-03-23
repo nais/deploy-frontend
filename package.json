@@ -51,7 +51,10 @@
     "lodash.throttle": "^4.1.1",
     "moment": "^2.24.0",
     "morgan-body": "^2.4.8",
+    "nav-frontend-alertstriper": "^3.0.13",
+    "nav-frontend-alertstriper-style": "^2.0.11",
     "nav-frontend-core": "^4.0.11",
+    "nav-frontend-ikoner-assets": "^2.0.1",
     "nav-frontend-js-utils": "^1.0.8",
     "nav-frontend-knapper": "^1.0.39",
     "nav-frontend-knapper-style": "^0.3.34",
@@ -78,12 +81,12 @@
   "jest": {
     "preset": "ts-jest/presets/js-with-babel",
     "transform": {
-        ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
     },
     "moduleNameMapper": {
-        "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
-        "\\-style$": "<rootDir>/server/test/style-mock.js"
-      },
+      "^.+.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "\\-style$": "<rootDir>/server/test/style-mock.js"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/server/test/setupTests.js"
     ],

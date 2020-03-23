@@ -1,5 +1,11 @@
 exports.getApiKeys = () => {
   return (req, res) => {
+    /*   res
+     .status(400)
+      .send(
+        'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message. '
+      )*/
+
     res.status(200).json([
       {
         team: 'team1',
