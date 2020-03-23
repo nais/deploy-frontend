@@ -1,6 +1,7 @@
 FROM node:13-alpine as frontend-builder
 WORKDIR /home/app
 COPY ./node_modules ./node_modules
+COPY ./.tsconfig.json ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./.babelrc ./
@@ -9,6 +10,7 @@ RUN yarn run build
 
 FROM node:13-alpine as api-builder
 WORKDIR /home/app
+COPY ./.tsconfig.json ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
 COPY ./bin ./bin
