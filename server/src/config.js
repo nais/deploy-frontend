@@ -63,8 +63,6 @@ const reverseProxyConfig = () => {
   return config
 }
 
-console.log('Exporting ', azureAd, host)
-
 module.exports = {
   azureAd: azureAd,
   host: host,
