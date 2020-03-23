@@ -43,7 +43,7 @@ const stripTrailingSlash = str => (str.endsWith('/') ? str.slice(0, -1) : str)
 
 const setup = (router, authClient) => {
   config.reverseProxy.apis.forEach(api => {
-    console.log(`ReverseProxy setup: ${api.path} => ${api.url}`, api.path, api.url)
+    console.log(`ReverseProxy setup: ${api.path} => ${api.url}`)
     const proxyOptions = options(api, authClient)
     console.log('Proxy options', proxyOptions)
 
