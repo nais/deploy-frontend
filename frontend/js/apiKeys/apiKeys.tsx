@@ -7,7 +7,7 @@ import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element } from 'nav-frontend-typografi'
 
 function ApiKeys() {
-  const [{ data, isLoading, isError, errorMessage }] = useHttpGet('/api/v1/apikeys')
+  const [{ data, isLoading, isError, errorMessage }] = useHttpGet('/api/v1/apikey')
 
   return (
     <>
