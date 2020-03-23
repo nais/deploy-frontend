@@ -4,7 +4,7 @@ const session = require('express-session')
 const SESSION_MAX_AGE_MILLISECONDS = 24 * 60 * 60 * 1000
 
 const setup = app => {
-  console.log('Configure sessions', host.sessionKey, host.cookieName)
+  console.log('Configure sessions', host.cookieName)
   app.set('trust proxy', 1)
   app.use(
     session({

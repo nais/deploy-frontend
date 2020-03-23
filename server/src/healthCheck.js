@@ -1,6 +1,5 @@
 exports.isAlive = () => {
   return (req, res) => {
-    console.log('isalive')
     return res.status(200).send({ status: 'up' })
   }
 }

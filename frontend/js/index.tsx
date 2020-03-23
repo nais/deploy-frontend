@@ -2,10 +2,8 @@
 import React from 'react';
 import * as DOM from 'react-dom';
 
-import { Hovedknapp } from 'nav-frontend-knapper';
 import Header from './ui/header'
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Systemtittel } from 'nav-frontend-typografi';
 //import { ApiKeys } from './apiKeys/apiKeys'
 import ApiKeys from './apiKeys/apiKeys'
 
