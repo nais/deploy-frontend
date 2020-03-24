@@ -9,7 +9,6 @@ const options = (api, authClient) => ({
     return new Promise((resolve, reject) =>
       authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
         access_token => {
-          console.log('Got access token', access_token)
           options.headers.Authorization = `Bearer ${access_token}`
           resolve(options)
         },
@@ -21,14 +20,20 @@ const options = (api, authClient) => ({
     const urlFromApi = url.parse(api.url)
     const pathFromApi = urlFromApi.pathname === '/' ? '' : urlFromApi.pathname
 
+    console.log('PathName', urlFromApi.pathname)
+    console.log('PathFromAPI', pathFromApi)
+
     const urlFromRequest = url.parse(req.originalUrl)
     const pathFromRequest = urlFromRequest.pathname.replace(`/${api.path}/`, '/')
+    console.log('pathFromRequest', pathFromRequest)
 
     const queryString = urlFromRequest.query
     const newPath =
       (pathFromApi ? pathFromApi : '') +
       (pathFromRequest ? pathFromRequest : '') +
       (queryString ? '?' + queryString : '')
+
+    console.log('urlFromApi.href', urlFromApi.href)
 
     console.log(
       `Proxying request from '${req.originalUrl}' to '${stripTrailingSlash(
