@@ -9,6 +9,7 @@ const options = (api, authClient) => ({
     return new Promise((resolve, reject) =>
       authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
         access_token => {
+          console.log('Using accesstoken ', access_token)
           options.headers.Authorization = `Bearer ${access_token}`
           resolve(options)
         },
