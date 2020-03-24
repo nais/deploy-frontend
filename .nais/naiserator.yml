@@ -9,7 +9,8 @@ spec:
   accessPolicy:
     outbound:
       rules: 
-        application: hookd
+        application: hookd-gcp
+        application: hookd 
       external:
 {{#each external-hosts}}
       - host: {{this}}
