@@ -9,13 +9,12 @@ spec:
   accessPolicy:
     outbound:
       rules: 
-      - application: hookd-gcp
-      - application: hookd 
+        - application: hookd-gcp
+        - application: hookd 
       external:
-{{#each external-hosts}}
-      - host: {{this}}
-{{/each}}
-      rules: []
+      {{#each external-hosts}}
+        - host: {{this}}
+      {{/each}}
   image: {{ image }}
   port: 8080 
   liveness:
