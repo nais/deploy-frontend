@@ -3,7 +3,7 @@
     "ingresses": ["https://deploy.dev-gcp.nais.io/"],
     "envs": [
         {"name": "DOWNSTREAM_API_CLIENT_ID", "value": "ecd35adf-754e-4c75-8098-8e6e1d33cdf9"},
-        {"name": "DOWNSTREAM_API_URL", "value": "http://hookd-gcp/api"},
+        {"name": "DOWNSTREAM_API_URL", "value": "http://hookd-gcp/"},
         {"name": "DOWNSTREAM_API_PATH", "value": "downstream"},
         {"name": "DOWNSTREAM_API_SCOPES", "value": ""},
         {"name": "AAD_DISCOVERY_URL", "value": "https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration"},
