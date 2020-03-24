@@ -29,10 +29,11 @@ const options = (api, authClient) => ({
     console.log('pathFromRequest', pathFromRequest)
 
     const queryString = urlFromRequest.query
+    console.log("querystring", queryString)
     const newPath =
       (pathFromApi ? pathFromApi : '') +
       (pathFromRequest ? pathFromRequest : '') +
-      (queryString ? '?' + queryString : '') +
+      //(queryString ? '?' + queryString : '') +
       console.log('urlFromApi.href', urlFromApi.href)
 
     console.log(`Proxying request from '${req.originalUrl}' to '${newPath}'`)

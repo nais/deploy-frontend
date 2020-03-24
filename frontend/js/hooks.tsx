@@ -42,7 +42,7 @@ const useHttpGet = initialPath => {
         const errorMessageBody = await response.text()
         dispatch({
           type: ActionTypes.FETCH_FAILURE,
-          payload: `${errorMessageBody} (HTTP ${response.status} ${response.statusText}).`
+          payload: `${errorMessageBody} ( HTTP ${response.status} ${response.statusText} ).`
         })
       }
     } catch (e) {
