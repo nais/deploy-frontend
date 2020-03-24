@@ -29,9 +29,8 @@ const options = (api, authClient) => ({
 
     const queryString = urlFromRequest.query
     const newPath =
-      (pathFromApi ? pathFromApi : '') +
-      (pathFromRequest ? pathFromRequest : '') +
-      (queryString ? '?' + queryString : '')
+      (pathFromRequest ? pathFromRequest : '') + (queryString ? '?' + queryString : '')
+    //(pathFromApi ? pathFromApi : '') +
 
     console.log('urlFromApi.href', urlFromApi.href)
 
