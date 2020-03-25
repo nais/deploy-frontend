@@ -9,7 +9,6 @@ const options = (api, authClient) => ({
     return new Promise((resolve, reject) =>
       authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
         access_token => {
-          console.log('Using accesstoken ', access_token)
           options.headers.Authorization = `Bearer ${access_token}`
           resolve(options)
         },
@@ -21,15 +20,10 @@ const options = (api, authClient) => ({
     const urlFromApi = url.parse(api.url)
     const pathFromApi = urlFromApi.pathname === '/' ? '' : urlFromApi.pathname
 
-    console.log('PathName', urlFromApi.pathname)
-    console.log('PathFromAPI', pathFromApi)
-
     const urlFromRequest = url.parse(req.originalUrl)
     const pathFromRequest = urlFromRequest.pathname.replace(`/${api.path}/`, '/')
-    console.log('pathFromRequest', pathFromRequest)
 
     const queryString = urlFromRequest.query
-    console.log('querystring', queryString)
     /*const newPath =
       (pathFromApi ? pathFromApi : '') +
       (pathFromRequest ? pathFromRequest : '') +
@@ -49,7 +43,6 @@ const setup = (router, authClient) => {
   config.reverseProxy.apis.forEach(api => {
     console.log(`ReverseProxy setup: ${api.path} => ${api.url}`)
     const proxyOptions = options(api, authClient)
-    console.log('Proxy options', proxyOptions)
 
     return router.use(`/${api.path}/*`, proxy(api.url, proxyOptions))
   })

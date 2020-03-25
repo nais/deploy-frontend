@@ -11,7 +11,6 @@ const metadata = {
 
 const client = async () => {
   const issuer = await Issuer.discover(azureAd.discoveryUrl)
-  console.log(`Discovered issuer ${issuer.issuer}`)
   return new issuer.Client(metadata)
 }
 

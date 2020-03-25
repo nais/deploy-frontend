@@ -36,9 +36,8 @@ const useHttpGet = initialPath => {
       const response = await fetch(url)
 
       if (response.ok) {
-        const jsonPayload = await response.json()
-        const orderedJson = jsonPayload.sort((a, b) =>a.team.localeCompare(b.team))
-        dispatch({ type: ActionTypes.FETCH_SUCCESS, payload: orderedJson })
+        const json = await response.json()
+        dispatch({ type: ActionTypes.FETCH_SUCCESS, payload: json })
       } else {
         const errorMessageBody = await response.text()
         dispatch({

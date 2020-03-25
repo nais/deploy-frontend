@@ -34,7 +34,6 @@ exports.setup = authClient => {
 
   router.use(ensureAuthenticated)
   router.get('/me', (req, res) => {
-    console.log('RU ', req.user)
     authUtils
       .getUserInfoFromGraphApi(authClient, req)
       .then(userinfo => res.send(userinfo))
