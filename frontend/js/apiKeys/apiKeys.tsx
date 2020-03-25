@@ -56,10 +56,8 @@ function ApiKeys() {
             </AlertStripe>
           )}
           {teamKeyMap.map((team, idx: number) => {
-return <ApiKey key={idx} apiKey={team} />
-          }
-              
-          )}
+            return <ApiKey key={idx} apiKey={team} />
+          })}
         </div>
       )}
     </>
