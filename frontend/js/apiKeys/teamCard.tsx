@@ -22,6 +22,13 @@ const formatTimestamp = (timestamp: string) => {
   return moment(timestamp).format('DD MMMM YYYY')
 }
 
+const findNewestKey = (apiKeys) => { 
+    const apiKeysByExpieryDate = apiKeys.sort((a,b) => {
+        return moment(b.expires).unix() - moment(a.expires).unix()
+    })
+    return apiKeysByExpieryDate[0]
+}
+
 const KeyStatus = props => {
   const { expiresTimestamp } = props
   if (moment(expiresTimestamp).isAfter(moment.now())) {
@@ -35,12 +42,12 @@ const KeyStatus = props => {
   }
 }
 
-const ApiKey = props => {
-  const { apiKey } = props
-  const {key, expires, groupId, created} = apiKey.apiKey
+const TeamCard = props => {
+  const { apiKeys } = props
+  const {team, key, expires, groupId, created} = findNewestKey(apiKeys)
   return (
     <Panel border className="apikeyCard">
-      <Undertittel>{apiKey.name}</Undertittel>
+      <Undertittel>{team}</Undertittel>
       <Element>
         <KeyIcon />
         {key}
@@ -55,4 +62,4 @@ const ApiKey = props => {
   )
 }
 
-export default ApiKey
+export default TeamCard

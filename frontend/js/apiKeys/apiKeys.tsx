@@ -1,12 +1,11 @@
 import React from 'react'
 import { useHttpGet } from '../hooks'
-import ApiKey from './apiKey'
+import TeamCard from './teamCard'
 import InfoPanel from './infoPanel'
 import './apikey-styles.less'
 import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
 import NavFrontendSpinner from 'nav-frontend-spinner'
-import moment from 'moment'
 
 const groupByTeam = data => {
   return data.reduce((result, currentValue) => {
@@ -26,17 +25,8 @@ const groupByTeam = data => {
 function ApiKeys() {
   const [{ data, isLoading, isError, errorMessage }] = useHttpGet('/downstream/api/v1/apikey/')
 
-  const teams = groupByTeam(data)
-  const teamNames = Object.keys(teams).sort()
-
-  const teamKeyMap = teamNames.map(teamName => {
-    return {
-      name: teamName,
-      apiKey: teams[teamName].sort((a, b) => {
-        return moment(b.expires).unix() - moment(a.expires).unix()
-      })[0]
-    }
-  })
+  const apiKeysByTeam = groupByTeam(data)
+  const teamNames = Object.keys(apiKeysByTeam).sort()
 
   return (
     <>
@@ -55,8 +45,8 @@ function ApiKeys() {
               <Normaltekst>{errorMessage}</Normaltekst>{' '}
             </AlertStripe>
           )}
-          {teamKeyMap.map((team, idx: number) => {
-            return <ApiKey key={idx} apiKey={team} />
+          {teamNames.map((teamName: string, idx: number) => {
+            return <TeamCard key={idx} apiKeys={apiKeysByTeam[teamName]} />
           })}
         </div>
       )}
