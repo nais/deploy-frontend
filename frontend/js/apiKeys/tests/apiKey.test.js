@@ -85,6 +85,6 @@ describe('(Component) Valid ApiKey shows valid message', () => {
         .children()
         .first()
         .text()
-    ).toContain('Key is valid for another')
+    ).toContain('Valid for another')
   })
 })

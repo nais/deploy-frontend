@@ -34,7 +34,7 @@ const KeyStatus = props => {
   if (moment(expiresTimestamp).isAfter(moment.now())) {
     return (
       <Normaltekst>
-        {`Key is valid for another ${moment(expiresTimestamp).fromNow(true)}`}
+        {`Valid for another ${moment(expiresTimestamp).fromNow(true)}`}
       </Normaltekst>
     )
   } else {
