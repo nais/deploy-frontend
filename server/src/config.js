@@ -28,44 +28,19 @@ const azureAd = {
   responseMode: 'query'
 }
 
-const loadReverseProxyConfig = () => {
-  console.log(`Loading reverse proxy config from DOWNSTREAM_API_* [CLIENT_ID, PATH, URL]`)
-  const scopes = envVar('DOWNSTREAM_API_SCOPES', false)
-  console.log('Downstream api url ', envVar('DOWNSTREAM_API_URL'))
+const proxyConfig = () => {
   return {
-    apis: [
-      {
-        clientId: envVar('DOWNSTREAM_API_CLIENT_ID'),
-        path: envVar('DOWNSTREAM_API_PATH', false) || 'downstream',
-        url: envVar('DOWNSTREAM_API_URL'),
-        scopes: scopes ? scopes.split(',') : []
-      }
-    ]
+    clientId: envVar('DOWNSTREAM_API_CLIENT_ID'),
+    path: 'downstream',
+    url: envVar('DOWNSTREAM_API_URL')
   }
 }
 
-const reverseProxyConfig = () => {
-  const config = loadReverseProxyConfig()
-  config.apis.forEach((entry, index) => {
-    if (!entry.path) {
-      console.error(`API entry ${index} is missing 'path'`)
-      process.exit(1)
-    }
-    if (!entry.url) {
-      console.error(`API entry ${index} is missing 'url'`)
-      process.exit(1)
-    }
-    if (!entry.clientId) {
-      console.error(`API entry ${index} is missing 'clientId'`)
-      process.exit(1)
-    }
-  })
-  return config
-}
+
 
 module.exports = {
   azureAd: azureAd,
   host: host,
   logger: logger,
-  reverseProxy: reverseProxyConfig()
+  proxyConfig: proxyConfig()
 }

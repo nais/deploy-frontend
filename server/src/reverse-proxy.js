@@ -1,7 +1,6 @@
 const authUtils = require('./auth/auth-utils')
-const config = require('./config')
+const { proxyConfig, logger } = require('./config')
 const proxy = require('express-http-proxy')
-const url = require('url')
 
 const options = (api, authClient) => ({
   parseReqBody: false,
@@ -17,35 +16,20 @@ const options = (api, authClient) => ({
     )
   },
   proxyReqPathResolver: req => {
-    const urlFromApi = url.parse(api.url)
-    const pathFromApi = urlFromApi.pathname === '/' ? '' : urlFromApi.pathname
+    const newPath = req.originalUrl.replace(api.path, '').replace('//', '/')
+    logger.debug(`Proxying request from '${req.originalUrl}' to '${newPath}'`)
+    console.log('new replaced path ', newPath)
 
-    const urlFromRequest = url.parse(req.originalUrl)
-    const pathFromRequest = urlFromRequest.pathname.replace(`/${api.path}/`, '/')
-
-    const queryString = urlFromRequest.query
-    /*const newPath =
-      (pathFromApi ? pathFromApi : '') +
-      (pathFromRequest ? pathFromRequest : '') +
-      //(queryString ? '?' + queryString : '') +
-      console.log('urlFromApi.href', urlFromApi.href)*/
-
-    const newPath = '/api/v1/apikey/'
-
-    console.log(`Proxying request from '${req.originalUrl}' to '${newPath}'`)
     return newPath
   }
 })
 
-const stripTrailingSlash = str => (str.endsWith('/') ? str.slice(0, -1) : str)
-
 const setup = (router, authClient) => {
-  config.reverseProxy.apis.forEach(api => {
-    console.log(`ReverseProxy setup: ${api.path} => ${api.url}`)
-    const proxyOptions = options(api, authClient)
+  const { path, url } = proxyConfig
+  logger.info(`ReverseProxy setup: ${path} => ${url}`)
+  const proxyOptions = options(proxyConfig, authClient)
 
-    return router.use(`/${api.path}/*`, proxy(api.url, proxyOptions))
-  })
+  return router.use(`/${path}/*`, proxy(url, proxyOptions))
 }
 
 exports.setup = setup

@@ -1,6 +1,5 @@
 const { TokenSet } = require('openid-client')
 const got = require('got')
-//const url = require('url')
 
 const tokenSetSelfId = 'self'
 
@@ -65,11 +64,7 @@ const appendDefaultScope = scope => `${scope}/.default`
 const formatClientIdScopeForV2Clients = clientId => appendDefaultScope(`api://${clientId}`)
 
 const createOnBehalfOfScope = api => {
-  if (api.scopes && api.scopes.length > 0) {
-    return `${api.scopes.join(' ')}`
-  } else {
-    return `${formatClientIdScopeForV2Clients(api.clientId)}`
-  }
+  return `${formatClientIdScopeForV2Clients(api.clientId)}`
 }
 
 const getTokenSetsFromSession = req => {
