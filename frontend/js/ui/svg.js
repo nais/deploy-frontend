@@ -88,6 +88,29 @@ export const KeyIcon = () => (
   </svg>
 )
 
+export const AddCircle = () => (
+  <svg
+    contentScriptType="text/ecmascript"
+    zoomAndPan="magnify"
+    contentStyleType="text/css"
+    id="Filled_Version"
+    enable-background="new 0 0 24 24"
+    version="1.1"
+    width="24px"
+    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 24 24"
+    height="24px"
+    xmlns="http://www.w3.org/2000/svg"
+    x="0px"
+    y="0px"
+  >
+    <path
+      fill="#0067C5"
+      d="M23.502,8.021L16,8V0.508c0-0.133-0.053-0.261-0.146-0.354c-0.094-0.094-0.222-0.147-0.353-0.147L8.5,0l0,0  C8.367,0,8.24,0.053,8.146,0.147C8.053,0.24,8,0.367,8,0.5V8H0.497c-0.276,0-0.5,0.224-0.5,0.5v7c0,0.276,0.224,0.5,0.5,0.5H8v7.5  C8,23.776,8.224,24,8.5,24h6.997c0.275,0,0.5-0.224,0.5-0.5V16H23.5c0.275,0,0.499-0.224,0.5-0.5V8.523  C24.001,8.246,23.777,8.023,23.502,8.021z"
+    />
+  </svg>
+)
+
 export const AzureAdIcon = () => (
   <svg
     version="1.1"

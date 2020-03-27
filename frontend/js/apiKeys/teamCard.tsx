@@ -1,9 +1,10 @@
 import React from 'react'
 import { Panel } from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
-import { KeyIcon } from '../ui/svg'
+import { KeyIcon, AddCircle } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
 import './apikey-styles.less'
+import { Knapp, Flatknapp } from 'nav-frontend-knapper';
 
 import moment from 'moment'
 
@@ -58,6 +59,7 @@ const TeamCard = props => {
       <Normaltekst>
         <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
       </Normaltekst>
+<div className="newKeyButton"><Flatknapp mini><AddCircle/><span>Create new key</span></Flatknapp></div>
     </Panel>
   )
 }
