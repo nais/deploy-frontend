@@ -94,7 +94,6 @@ export const AddCircle = () => (
     zoomAndPan="magnify"
     contentStyleType="text/css"
     id="Filled_Version"
-    enable-background="new 0 0 24 24"
     version="1.1"
     width="24px"
     preserveAspectRatio="xMidYMid meet"

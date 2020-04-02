@@ -26,6 +26,8 @@ async function configure() {
   app.use('/', router)
   router.get('/api/v1/apikey', apiKeyMock.getApiKeys())
   router.get('/downstream/api/v1/apikey/', apiKeyMock.getApiKeys())
+  router.post('/downstream/api/v1/apikey/:team', apiKeyMock.rotate())
+  router.post('/api/v1/apikey/:team', apiKeyMock.rotate())
   router.use(express.static('dist'))
   router.use('*', (req, res) => {
     res.sendFile('index.html', { root: path.join(__dirname, '../../../dist') })

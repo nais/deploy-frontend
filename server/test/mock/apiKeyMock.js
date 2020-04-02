@@ -1,7 +1,7 @@
 exports.getApiKeys = () => {
   return (req, res) => {
-    /*   res
-     .status(400)
+    /*res
+      .status(400)
       .send(
         'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message. '
       )*/
@@ -35,5 +35,19 @@ exports.getApiKeys = () => {
         expires: '2020-03-16T10:30:23.655+01:00'
       }
     ])
+  }
+}
+
+exports.rotate = () => {
+  return (req, res) => {
+    console.log('Rotating key')
+    setTimeout(
+      () => res.status(201).send(),
+      //.status(500)
+      //.send(
+      //  'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message.'
+      //),
+      1000
+    )
   }
 }
