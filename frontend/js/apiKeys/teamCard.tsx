@@ -1,22 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Panel } from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
 import { KeyIcon, AddCircle } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
-import './apikey-styles.less'
-import { Knapp, Flatknapp, Fareknapp } from 'nav-frontend-knapper'
-import Modal from 'nav-frontend-modal'
-import AlertStripe from 'nav-frontend-alertstriper'
-import { connect } from 'react-redux'
-
+import { Knapp } from 'nav-frontend-knapper'
 import moment from 'moment'
+import './apikey-styles.less'
 
 const azureAdGroupUrl =
   'https://portal.azure.com/#blade/Microsoft_AAD_IAM/GroupDetailsMenuBlade/Overview/groupId/'
-
-/*type State = {
-  showKeyRotationModal: boolean
-}*/
 
 export type ApiKey = {
   team: string
@@ -26,14 +18,8 @@ export type ApiKey = {
   created: string
 }
 
-/*type KeyRotationStatus = {
-  status: string
-  errorMessage: string
-}*/
-
-type Props = {
+ type Props = {
   apiKeys: Array<ApiKey>
-  //keyRotationStatus: KeyRotationStatus
   handleKeyRotation: Function
 }
 
@@ -48,21 +34,11 @@ const findNewestKey = apiKeys => {
   return apiKeysByExpieryDate[0]
 }
 
-export class TeamCard extends Component<Props, {}> {
-  constructor(props) {
-    super(props)
-  }
-
-
-
-
-
-  render() {
-    const { apiKeys, handleKeyRotation } = this.props
+function TeamCard(props: Props) {
+    const { apiKeys, handleKeyRotation } = props
     const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
 
     return (
-      <>
         <Panel border className="apikeyCard">
           <Undertittel>{team}</Undertittel>
           <Element>
@@ -82,11 +58,8 @@ export class TeamCard extends Component<Props, {}> {
             </Knapp>
           </div>
         </Panel>
-       
-      </>
     )
   }
-}
 
 const KeyStatus = props => {
   const { expiresTimestamp } = props

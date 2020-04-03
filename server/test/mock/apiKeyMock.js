@@ -43,10 +43,10 @@ exports.rotate = () => {
     console.log('Rotating key')
     setTimeout(
       () => res.status(201).send(),
-      //.status(500)
-      //.send(
-      //  'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message.'
-      //),
+      /*res.status(500)
+      .send(
+        'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message.'
+      ),*/
       1000
     )
   }

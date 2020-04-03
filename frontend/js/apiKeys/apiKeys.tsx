@@ -12,24 +12,7 @@ import './apikey-styles.less'
 import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
 import NavFrontendSpinner from 'nav-frontend-spinner'
-import Modal from 'nav-frontend-modal'
-import { Panel } from 'nav-frontend-paneler'
-import { Knapp, Flatknapp, Fareknapp } from 'nav-frontend-knapper'
-
-type KeyRotationStatus = {
-  status: string
-  errorMessage: string
-  confirmationPending: boolean
-  teamName: string
-}
-
-type Props = {
-  apiKeys: Array<any>
-  fetchStatus: string
-  errorMessage: string
-  dispatch: Function
-  rotateKey: KeyRotationStatus
-}
+import RotateKeyModal from './rotate/rotateKeyModal'
 
 const groupByTeam = (data: Array<any>) => {
   return data.reduce((result, currentValue) => {
@@ -97,39 +80,11 @@ class ApiKeys extends Component<Props, {}> {
                 )
               })}
             </div>
-            <Modal
-              className="confirmationDialog"
-              ariaHideApp={false}
-              isOpen={rotateKey.confirmationPending}
+            <RotateKeyModal
+              keyRotationStatus={rotateKey}
               onRequestClose={() => this.cancelKeyRotation()}
-              closeButton={true}
-              contentLabel="Confirm key rotation"
-            >
-              <Panel className="confirmationDialog">
-                <AlertStripe type="advarsel" form="inline">
-                  <Undertittel>Warning</Undertittel>
-                  <Normaltekst>
-                    This will creating a new API key for team {rotateKey.teamName} and invalidate
-                    all existing keys.
-                  </Normaltekst>
-                </AlertStripe>
-                {rotateKey.status === 'ERROR' && (
-                <AlertStripe type="feil" className="errorMessage">
-                  <Element>An error occured when creating new apikey.</Element>
-                  <Normaltekst>{rotateKey.errorMessage}</Normaltekst>{' '}
-                </AlertStripe>
-              )}
-                <div className="confirmButton">
-                  <Fareknapp
-                    mini
-                    spinner={rotateKey.status === 'PROCESSING'}
-                    onClick={() => this.rotateKey(rotateKey.teamName)}
-                  >
-                    Confirm
-                  </Fareknapp>
-                </div>
-              </Panel>
-            </Modal>
+              onRotatekey={team => this.rotateKey(team)}
+            />
           </>
         )}
       </>
@@ -145,5 +100,20 @@ const mapStateToProps = state => {
     rotateKey: state.rotateKey
   }
 }
+
+type KeyRotationStatus = {
+    status: string
+    errorMessage: string
+    confirmationPending: boolean
+    teamName: string
+  }
+  
+  type Props = {
+    apiKeys: Array<any>
+    fetchStatus: string
+    errorMessage: string
+    dispatch: Function
+    rotateKey: KeyRotationStatus
+  }
 
 export default connect(mapStateToProps)(ApiKeys)
