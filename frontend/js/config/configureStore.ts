@@ -2,7 +2,7 @@ import {createStore, applyMiddleware, compose} from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import apiKeysSaga from './sagas'
+import apiKeysSaga from '../sagas'
 import rootReducer from './rootReducer'
 
 export default function configureStore() {

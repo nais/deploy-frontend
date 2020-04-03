@@ -4,7 +4,7 @@ import Header from './ui/header'
 import { BrowserRouter as Router } from 'react-router-dom'
 import ApiKeys from './apiKeys/apiKeys'
 import { Provider } from 'react-redux'
-import configureStore from './configureStore'
+import configureStore from './config/configureStore'
 
 import './styles.less'
 

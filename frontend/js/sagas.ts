@@ -9,7 +9,7 @@ import {
   APIKEY_ROTATE_REQUEST_PROCESSING,
   APIKEY_ROTATE_REQUEST_SUCCESS,
   APIKEY_ROTATE_REQUEST_FAILED
-} from './actionTypes'
+} from './config/actionTypes'
 
 const apiKeysApiPath = '/downstream/api/v1/apikey/'
 const rotateKeyApiPath = '/downstream/api/v1/apikey/'

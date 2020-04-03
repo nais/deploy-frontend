@@ -4,7 +4,7 @@ import {
     APIKEY_ROTATE_REQUEST_FAILED,
     APIKEY_ROTATE_CONFIRMATION,
     APIKEY_CANCEL_ROTATION
-  } from '../../actionTypes'
+  } from '../../config/actionTypes'
   
   export default (
     state = {

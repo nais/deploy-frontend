@@ -5,7 +5,7 @@ import {
   APIKEY_ROTATE_REQUEST,
   APIKEY_ROTATE_CONFIRMATION,
   APIKEY_CANCEL_ROTATION
-} from '../actionTypes'
+} from '../config/actionTypes'
 import TeamCard from './teamCard'
 import InfoPanel from './infoPanel'
 import './apikey-styles.less'

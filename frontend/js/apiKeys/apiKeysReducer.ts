@@ -2,7 +2,7 @@ import {
   APIKEYS_REQUEST_FETCHING,
   APIKEYS_REQUEST_SUCCESSFUL,
   APIKEYS_REQUEST_FAILED
-} from '../actionTypes'
+} from '../config/actionTypes'
 
 export default (
   state = {
