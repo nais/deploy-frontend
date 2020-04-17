@@ -7,6 +7,7 @@ const path = require('path')
 const httpLogger = require('morgan')
 const morganBody = require('morgan-body')
 const apiKeyMock = require('./apiKeyMock')
+const userInfoMock = require('./userInfoMock')
 
 const app = express()
 
@@ -24,6 +25,7 @@ async function configure() {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use('/', router)
+  router.get('/me', userInfoMock.getUserInfo())
   router.get('/api/v1/apikey', apiKeyMock.getApiKeys())
   router.get('/downstream/api/v1/apikey/', apiKeyMock.getApiKeys())
   router.post('/downstream/api/v1/apikey/:team', apiKeyMock.rotate())

@@ -3,15 +3,22 @@
 
 @naisColor: darken(#005b82, 10%);
 
+.userInfo {
+  float: right;
+  padding-top: 2rem;
+  padding-right: 1.5rem;
+  color: @navLysGra;
+}
+
 .header {
-  background:  @naisColor;
+  background: @naisColor;
   line-height: auto;
   border-bottom: 4px solid @navLysGra;
   z-index: 200;
 
   &__content {
     .header__logo {
-        padding-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
       display: inline-block;
       position: relative;
       text-decoration: none;
@@ -19,14 +26,14 @@
       background: @naisColor;
 
       svg {
-        position:absolute;
-        top:0px;
-        left:20px;
+        position: absolute;
+        top: 0px;
+        left: 20px;
       }
 
       .header__title {
         font-size: 1.5rem;
-        font-weight:bold;
+        font-weight: bold;
         padding-top: 1.5rem;
         padding-left: 5.5rem;
       }
