@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { NaisLogo } from './svg'
 import NavBar from './NavBar'
+//import UserInfo from './userInfo'
 
 import './header-styles.less'
 
@@ -13,7 +14,9 @@ function Header() {
           <NaisLogo />
           <div className="header__title">Nais deploy</div>
         </NavLink>
-        <NavBar />
+        {/*<UserInfo/>
+        
+        <NavBar />*/}
       </div>
     </header>
   )
