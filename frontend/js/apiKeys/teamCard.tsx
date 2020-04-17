@@ -18,7 +18,7 @@ export type ApiKey = {
   created: string
 }
 
- type Props = {
+type Props = {
   apiKeys: Array<ApiKey>
   handleKeyRotation: Function
 }
@@ -35,31 +35,31 @@ const findNewestKey = apiKeys => {
 }
 
 function TeamCard(props: Props) {
-    const { apiKeys, handleKeyRotation } = props
-    const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
+  const { apiKeys, handleKeyRotation } = props
+  const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
 
-    return (
-        <Panel border className="apikeyCard">
-          <Undertittel>{team}</Undertittel>
-          <Element>
-            <KeyIcon />
-            {key}
-          </Element>
-          <KeyStatus expiresTimestamp={expires} />
-          <Normaltekst>{`Created ${formatTimestamp(created)}`}</Normaltekst>
-          <Element className="aad">{`Azure AD team id`}</Element>
-          <Normaltekst>
-            <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
-          </Normaltekst>
-          <div className="newKeyButton">
-            <Knapp mini onClick={() => handleKeyRotation(team)}>
-              <AddCircle />
-              <span>Create new key</span>
-            </Knapp>
-          </div>
-        </Panel>
-    )
-  }
+  return (
+    <Panel border className="apikeyCard">
+      <Undertittel>{team}</Undertittel>
+      <Element>
+        <KeyIcon />
+        {key}
+      </Element>
+      <KeyStatus expiresTimestamp={expires} />
+      <Normaltekst>{`Created ${formatTimestamp(created)}`}</Normaltekst>
+      <Element className="aad">{`Azure AD team id`}</Element>
+      <Normaltekst>
+        <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
+      </Normaltekst>
+      <div className="newKeyButton">
+        <Knapp mini onClick={() => handleKeyRotation(team)}>
+          <AddCircle />
+          <span>Rotate key</span>
+        </Knapp>
+      </div>
+    </Panel>
+  )
+}
 
 const KeyStatus = props => {
   const { expiresTimestamp } = props
