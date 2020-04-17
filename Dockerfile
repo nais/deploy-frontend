@@ -1,4 +1,4 @@
-FROM node:13-alpine as frontend-builder
+FROM node:13.12-alpine as frontend-builder
 WORKDIR /home/app
 COPY ./node_modules ./node_modules
 COPY ./tsconfig.json ./
