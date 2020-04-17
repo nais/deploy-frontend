@@ -64,7 +64,11 @@ const appendDefaultScope = scope => `${scope}/.default`
 const formatClientIdScopeForV2Clients = clientId => appendDefaultScope(`api://${clientId}`)
 
 const createOnBehalfOfScope = api => {
-  return `${formatClientIdScopeForV2Clients(api.clientId)}`
+  if (api.scopes && api.scopes.length > 0) {
+    return `${api.scopes.join(' ')}`
+  } else {
+    return `${formatClientIdScopeForV2Clients(api.clientId)}`
+  }
 }
 
 const getTokenSetsFromSession = req => {
