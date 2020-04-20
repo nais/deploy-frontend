@@ -21,6 +21,7 @@
     "express-session": "^1.17.0",
     "helmet": "^3.21.3",
     "http": "^0.0.0",
+    "memorystore": "^1.6.2",
     "morgan": "^1.9.1",
     "morgan-body": "^2.4.8",
     "openid-client": "^3.14.0",
