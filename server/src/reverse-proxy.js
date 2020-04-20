@@ -18,7 +18,6 @@ const options = (api, authClient) => ({
   proxyReqPathResolver: req => {
     const newPath = req.originalUrl.replace(api.path, '').replace('//', '/')
     logger.debug(`Proxying request from '${req.originalUrl}' to '${newPath}'`)
-    console.log('new replaced path ', newPath)
 
     return newPath
   }
