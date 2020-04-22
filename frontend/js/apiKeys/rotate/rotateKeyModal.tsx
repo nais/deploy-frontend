@@ -11,7 +11,7 @@ function RotateKeyModal(props: Props) {
   return (
     <Modal
       className="confirmationDialog"
-      ariaHideApp={false}
+      //ariaHideApp={false}
       isOpen={keyRotationStatus.confirmationPending}
       onRequestClose={() => onRequestClose()}
       closeButton={true}

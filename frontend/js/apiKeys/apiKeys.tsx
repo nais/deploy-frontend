@@ -27,7 +27,7 @@ const groupByTeam = (data: Array<any>) => {
   }, {})
 }
 
-class ApiKeys extends Component<Props, {}> {
+export class ApiKeys extends Component<Props, {}> {
   constructor(props) {
     super(props)
   }
@@ -102,18 +102,18 @@ const mapStateToProps = state => {
 }
 
 type KeyRotationStatus = {
-    status: string
-    errorMessage: string
-    confirmationPending: boolean
-    teamName: string
-  }
-  
-  type Props = {
-    apiKeys: Array<any>
-    fetchStatus: string
-    errorMessage: string
-    dispatch: Function
-    rotateKey: KeyRotationStatus
-  }
+  status: string
+  errorMessage: string
+  confirmationPending: boolean
+  teamName: string
+}
+
+type Props = {
+  apiKeys: Array<any>
+  fetchStatus: string
+  errorMessage: string
+  dispatch: Function
+  rotateKey: KeyRotationStatus
+}
 
 export default connect(mapStateToProps)(ApiKeys)
