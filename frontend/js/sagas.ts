@@ -18,7 +18,7 @@ const apiKeysApiPath = '/downstream/api/v1/apikey/'
 const rotateKeyApiPath = '/downstream/api/v1/apikey/'
 const userInfoPath = '/me'
 
-function* fetchApiKeys() {
+export function* fetchApiKeys() {
   try {
     yield put({ type: APIKEYS_REQUEST_FETCHING })
     const apiKeys = yield call(httpGet, apiKeysApiPath)
@@ -28,7 +28,7 @@ function* fetchApiKeys() {
   }
 }
 
-function* rotateKey(action) {
+export function* rotateKey(action) {
   try {
     yield put({ type: APIKEY_ROTATE_REQUEST_PROCESSING })
     yield call(httpPost, `${rotateKeyApiPath}${action.team}`)
@@ -39,7 +39,7 @@ function* rotateKey(action) {
   }
 }
 
-function* fetchUserInfo() {
+export function* fetchUserInfo() {
   try {
     const userInfo = yield call(httpGet, userInfoPath)
     yield put({ type: USERINFO_REQUEST_SUCCESS, value: userInfo })
