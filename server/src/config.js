@@ -19,8 +19,8 @@ const host = {
 
 const azureAd = {
   discoveryUrl: envVar('AAD_DISCOVERY_URL'),
-  clientId: envVar('CLIENT_ID'),
-  clientSecret: envVar('CLIENT_SECRET'),
+  clientId: envVar('AZURE_APP_CLIENT_ID'),
+  clientSecret: envVar('AZURE_APP_CLIENT_SECRET'),
   redirectUri: envVar('AAD_REDIRECT_URL'),
   logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL'),
   tokenEndpointAuthMethod: 'client_secret_post',

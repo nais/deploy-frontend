@@ -1,15 +1,18 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
+
 metadata:
   name: deploy-frontend
   namespace: aura
   labels:
     team: aura
 spec:
+  azure:
+    application:
+      enabled: true
   accessPolicy:
     outbound:
       rules: 
-        - application: hookd-gcp
         - application: hookd 
       external:
       {{#each external-hosts}}

@@ -21,7 +21,7 @@ exports.setup = authClient => {
   router.get('/isalive', health.isAlive())
   router.get('/login', passport.authenticate('azureOidc', { failureRedirect: '/login' }))
   router.use(
-    '/callback',
+    '/oauth2/callback',
     passport.authenticate('azureOidc', { failureRedirect: '/login' }),
     (req, res) => {
       if (session.redirectTo) {
