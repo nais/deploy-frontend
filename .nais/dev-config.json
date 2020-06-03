@@ -5,10 +5,6 @@
     { "name": "DOWNSTREAM_API_URL", "value": "http://hookd/" },
     { "name": "DOWNSTREAM_API_PATH", "value": "downstream" },
     { "name": "DOWNSTREAM_API_SCOPES", "value": "" },
-    {
-      "name": "AAD_DISCOVERY_URL",
-      "value": "https://login.microsoftonline.com/62366534-1ec3-4962-8869-9b5535279d0b/v2.0/.well-known/openid-configuration"
-    },
     { "name": "AAD_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/oauth2/callback" },
     { "name": "AAD_LOGOUT_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/logout" }
   ]

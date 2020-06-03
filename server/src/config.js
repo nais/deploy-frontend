@@ -18,7 +18,7 @@ const host = {
 }
 
 const azureAd = {
-  discoveryUrl: envVar('AAD_DISCOVERY_URL'),
+  discoveryUrl: envVar('AZURE_APP_WELL_KNOWN_URL'),
   clientId: envVar('AZURE_APP_CLIENT_ID'),
   clientSecret: envVar('AZURE_APP_CLIENT_SECRET'),
   redirectUri: envVar('AAD_REDIRECT_URL'),
@@ -35,8 +35,6 @@ const proxyConfig = () => {
     url: envVar('DOWNSTREAM_API_URL')
   }
 }
-
-
 
 module.exports = {
   azureAd: azureAd,
