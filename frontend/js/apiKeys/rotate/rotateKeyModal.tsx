@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from 'nav-frontend-modal'
-import { Panel } from 'nav-frontend-paneler'
+import Panel from 'nav-frontend-paneler'
 import { Fareknapp } from 'nav-frontend-knapper'
 import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
@@ -8,6 +8,7 @@ import './rotate-key-styles.less'
 
 function RotateKeyModal(props: Props) {
   const { keyRotationStatus, onRequestClose, onRotatekey } = props
+  Modal.setAppElement(document.getElementById('root'))
   return (
     <Modal
       className="confirmationDialog"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Panel } from 'nav-frontend-paneler'
+import Panel from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
 import { KeyIcon, AddCircle } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
@@ -27,7 +27,7 @@ const formatTimestamp = (timestamp: string) => {
   return moment(timestamp).format('DD MMMM YYYY')
 }
 
-const findNewestKey = apiKeys => {
+const findNewestKey = (apiKeys) => {
   const apiKeysByExpieryDate = apiKeys.sort((a, b) => {
     return moment(b.expires).unix() - moment(a.expires).unix()
   })
@@ -61,7 +61,7 @@ function TeamCard(props: Props) {
   )
 }
 
-const KeyStatus = props => {
+const KeyStatus = (props) => {
   const { expiresTimestamp } = props
   if (moment(expiresTimestamp).isAfter(moment.now())) {
     return (
