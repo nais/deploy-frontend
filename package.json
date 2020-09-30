@@ -134,5 +134,8 @@
   },
   "author": "@navikt/aura",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "resolutions": {
+    "**/**/node-forge": "^0.10.0"
+  }
 }
