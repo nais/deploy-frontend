@@ -10,6 +10,9 @@ const NavBar = () => (
       <ul>
         <li>
           <NavLink exact={true} activeClassName="active" to="/">
+            Dashboard
+          </NavLink>
+          <NavLink exact={true} activeClassName="active" to="/apikeys">
             API keys
           </NavLink>
         </li>

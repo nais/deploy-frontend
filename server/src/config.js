@@ -12,9 +12,9 @@ const envVar = (name, required = true) => {
 
 const host = {
   name: envVar('HOST', false) || 'localhost',
-  port: 8080,
+  port: 8081,
   sessionKey: envVar('COOKIE_KEY'),
-  cookieName: 'deploy-frontend'
+  cookieName: 'deploy-frontend',
 }
 
 const azureAd = {
@@ -25,14 +25,14 @@ const azureAd = {
   logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL'),
   tokenEndpointAuthMethod: 'client_secret_post',
   responseTypes: ['code'],
-  responseMode: 'query'
+  responseMode: 'query',
 }
 
 const proxyConfig = () => {
   return {
     clientId: envVar('DOWNSTREAM_API_CLIENT_ID'),
     path: 'downstream',
-    url: envVar('DOWNSTREAM_API_URL')
+    url: envVar('DOWNSTREAM_API_URL'),
   }
 }
 
@@ -40,5 +40,5 @@ module.exports = {
   azureAd: azureAd,
   host: host,
   logger: logger,
-  proxyConfig: proxyConfig()
+  proxyConfig: proxyConfig(),
 }

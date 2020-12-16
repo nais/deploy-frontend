@@ -1,8 +1,9 @@
 import React from 'react'
 import * as DOM from 'react-dom'
 import Header from './ui/header'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import ApiKeys from './apiKeys/apiKeys'
+import Dashboard from './dashboard/dashboard'
 import { Provider } from 'react-redux'
 import configureStore from './config/configureStore'
 
@@ -16,7 +17,14 @@ function Application() {
       <Router>
         <div className="mainWrapper">
           <Header />
-          <ApiKeys />
+          <Switch>
+            <Route path="/apikeys">
+              <ApiKeys />
+            </Route>
+            <Route path="/">
+              <Dashboard />
+            </Route>
+          </Switch>
         </div>
       </Router>
     </Provider>
