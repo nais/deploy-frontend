@@ -12,7 +12,7 @@ const envVar = (name, required = true) => {
 
 const host = {
   name: envVar('HOST', false) || 'localhost',
-  port: 8081,
+  port: parseInt(envVar('PORT', false), 10) || 8081,
   sessionKey: envVar('COOKIE_KEY'),
   cookieName: 'deploy-frontend',
 }
