@@ -6,7 +6,7 @@ import ApiKeys from './apiKeys/apiKeys'
 import Dashboard from './dashboard/dashboard'
 import { Provider } from 'react-redux'
 import configureStore from './config/configureStore'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.less'
 
 const store = configureStore()
