@@ -19,7 +19,7 @@ spec:
         - host: {{this}}
       {{/each}}
   image: {{ image }}
-  port: 8080 
+  port: 8081
   liveness:
     path: /isalive
   readiness:
