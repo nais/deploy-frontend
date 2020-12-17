@@ -6,7 +6,7 @@ function Deployments(props) {
   var deploymentElementList = null
 
   useEffect(() => {
-    fetch('http://localhost:8081/downstream/api/v1/dashboard/deployments')
+    fetch('/downstream/api/v1/dashboard/deployments')
       .then((res) => res.json())
       .then((json) => setDeploymentsList(json.deployments))
   }, [])
