@@ -68,6 +68,7 @@ function Deployment(props) {
         <TimeAgo date={dep.created} />
       </td>
       <td>{dep.team}</td>
+      <td>{dep.cluster}</td>
       <td>{statusBadge()}</td>
       <td>{logsLink(dep)}</td>
     </tr>

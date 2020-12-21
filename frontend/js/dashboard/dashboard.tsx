@@ -18,6 +18,7 @@ function Deployments(props) {
           <th>Repository</th>
           <th>Created</th>
           <th>Team</th>
+          <th>Cluster</th>
           <th>Status</th>
           <th>Links</th>
         </tr>
