@@ -15,7 +15,7 @@ function Deployments(props) {
     <table className="tabell">
       <thead>
         <tr>
-          <th>Repository</th>
+          <th>Resource(s)</th>
           <th>Created</th>
           <th>Team</th>
           <th>Cluster</th>

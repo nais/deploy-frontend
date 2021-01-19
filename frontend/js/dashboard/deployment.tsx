@@ -3,16 +3,23 @@ import React, { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
 
+function RepoLink(props) {}
+
 function Deployment(props) {
   const { initialData } = props
 
-  const dep = initialData.deployment
+  const dep = initialData
 
   const repoLink = (repo) => {
     if (repo == null) {
-      return <em>n/a</em>
+      return <div className="knapp--mini knapp knapp--disabled">GitHub</div>
     }
-    return <a href={`https://github.com/${repo}`}>{repo}</a>
+
+    return (
+      <a className="knapp--mini knapp--hoved knapp" href={`https://github.com/${repo}`}>
+        GitHub
+      </a>
+    )
   }
 
   const statusBadge = () => {
@@ -61,16 +68,33 @@ function Deployment(props) {
     )
   }
 
+  const appName = (resources) => {
+    if (!Array.isArray(resources) || !resources.length) {
+      return 'no app in deployment'
+    }
+
+    return resources.map((r) => {
+      return (
+        <div>
+          <span style={{ opacity: 0.6 }}>{r.namespace}/</span>
+          {r.name} <em style={{ opacity: 0.6 }}>{r.kind}</em>
+        </div>
+      )
+    })
+  }
+
   return (
-    <tr key={dep.id}>
-      <td>{repoLink(dep.githubRepository)}</td>
+    <tr key={dep.deployment.id}>
+      <td>{appName(dep.resources)}</td>
       <td>
-        <TimeAgo date={dep.created} />
+        <TimeAgo date={dep.deployment.created} />
       </td>
-      <td>{dep.team}</td>
-      <td>{dep.cluster}</td>
+      <td>{dep.deployment.team}</td>
+      <td>{dep.deployment.cluster}</td>
       <td>{statusBadge()}</td>
-      <td>{logsLink(dep)}</td>
+      <td>
+        {repoLink(dep.deployment.githubRepository)} {logsLink(dep.deployment)}
+      </td>
     </tr>
   )
 }
