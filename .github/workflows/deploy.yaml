@@ -55,7 +55,7 @@ jobs:
           REPOSITORY: nais-deploy
   deploy-prod:
     name: Deploy to prod-gcp
-    needs: deploy-dev
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
