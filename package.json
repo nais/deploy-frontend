@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "amplitude-js": "^7.4.3",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "cookie-session": "^1.4.0",
     "dotenv": "^8.2.0",
