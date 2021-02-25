@@ -1,12 +1,18 @@
 FROM node:13.12-alpine as frontend-builder
 WORKDIR /home/app
 COPY ./node_modules ./node_modules
-COPY ["./tsconfig.json", "./package.json", "./yarn.lock", "./.babelrc", "./frontend", "./"]
+COPY ./tsconfig.json ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
+COPY ./.babelrc ./
+COPY ./frontend ./frontend
 RUN yarn run build
 
 FROM node:13-alpine as api-builder
 WORKDIR /home/app
-COPY ["./tsconfig.json", "./package.json", "./yarn.lock", "./"]
+COPY ./tsconfig.json ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
 COPY ./bin ./bin
 COPY ./server/ ./server
 RUN yarn install --production=true
