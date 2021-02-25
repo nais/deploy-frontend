@@ -5,7 +5,6 @@ import { logPageView } from '../amplitude.js'
 function Deployments(props) {
   const [deploymentsList, setDeploymentsList] = useState([])
   var deploymentElementList = null
-  logPageView('/')
 
   useEffect(() => {
     fetch('/downstream/api/v1/dashboard/deployments')
@@ -35,6 +34,7 @@ function Deployments(props) {
 }
 
 export default function Dashboard(props) {
+  logPageView('/')
   return (
     <div className={'mainContent'}>
       <Deployments />

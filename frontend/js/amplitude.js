@@ -9,7 +9,7 @@ export function initAmplitude() {
           : '69f900cf5fe06368af2469ca4cf1f927',
         '',
         {
-          apiEndpoint: 'amplitude.nav.no/collect-auto',
+          apiEndpoint: 'amplitude.nav.no/collect',
           saveEvents: false,
           includeUtm: true,
           includeReferrer: true,
