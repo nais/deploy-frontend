@@ -4,6 +4,7 @@ const cors = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', host)
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+  res.setHeader('Content-Security-Policy', "script-src https://cdn.amplitude.com 'self'")
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, Content-Type, X-AUTHENTICATION, X-IP, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With'
@@ -13,5 +14,5 @@ const cors = (req, res, next) => {
 }
 
 module.exports = {
-  cors: cors
+  cors: cors,
 }
