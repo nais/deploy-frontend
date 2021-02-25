@@ -8,6 +8,9 @@ import { Provider } from 'react-redux'
 import configureStore from './config/configureStore'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.less'
+import { initAmplitude } from './amplitude.js'
+
+initAmplitude()
 
 const store = configureStore()
 

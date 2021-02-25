@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Deployment from './deployment'
+import { logPageView } from '../amplitude.js'
 
 function Deployments(props) {
   const [deploymentsList, setDeploymentsList] = useState([])
   var deploymentElementList = null
+  logPageView('/')
 
   useEffect(() => {
     fetch('/downstream/api/v1/dashboard/deployments')

@@ -4,7 +4,7 @@ import {
   APIKEYS_REQUEST,
   APIKEY_ROTATE_REQUEST,
   APIKEY_ROTATE_CONFIRMATION,
-  APIKEY_CANCEL_ROTATION
+  APIKEY_CANCEL_ROTATION,
 } from '../config/actionTypes'
 import TeamCard from './teamCard'
 import InfoPanel from './infoPanel'
@@ -13,6 +13,7 @@ import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import RotateKeyModal from './rotate/rotateKeyModal'
+import { logPageView } from '../amplitude.js'
 
 const groupByTeam = (data: Array<any>) => {
   return data.reduce((result, currentValue) => {
@@ -29,6 +30,7 @@ const groupByTeam = (data: Array<any>) => {
 
 export class ApiKeys extends Component<Props, {}> {
   constructor(props) {
+    logPageView('/apikeys')
     super(props)
   }
 
@@ -75,7 +77,7 @@ export class ApiKeys extends Component<Props, {}> {
                   <TeamCard
                     key={idx}
                     apiKeys={apiKeysByTeam[teamName]}
-                    handleKeyRotation={team => this.showConfirmationModal(team)}
+                    handleKeyRotation={(team) => this.showConfirmationModal(team)}
                   />
                 )
               })}
@@ -83,7 +85,7 @@ export class ApiKeys extends Component<Props, {}> {
             <RotateKeyModal
               keyRotationStatus={rotateKey}
               onRequestClose={() => this.cancelKeyRotation()}
-              onRotatekey={team => this.rotateKey(team)}
+              onRotatekey={(team) => this.rotateKey(team)}
             />
           </>
         )}
@@ -92,12 +94,12 @@ export class ApiKeys extends Component<Props, {}> {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     apiKeys: state.apiKeys.data,
     fetchStatus: state.apiKeys.status,
     errorMessage: state.apiKeys.errorMessage,
-    rotateKey: state.rotateKey
+    rotateKey: state.rotateKey,
   }
 }
 
