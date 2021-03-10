@@ -59,9 +59,7 @@ function Deployment(props) {
     return (
       <a
         className="knapp--mini knapp--hoved knapp"
-        href={`https://deploy.nais.io/logs?delivery_id=${dep.id}&ts=${timeStamp(
-          dep.created
-        )}&version=1`}
+        href={`https://deploy.nais.io/logs?delivery_id=${dep.id}&ts=${timeStamp(dep.created)}&v=1`}
       >
         Log
       </a>
