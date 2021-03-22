@@ -7,6 +7,7 @@
     "https://deploy.dev-gcp.nais.io/me",
     "https://deploy.dev-gcp.nais.io/downstream"
   ],
+  "reply-url": "https://deploy.dev-gcp.nais.io/oauth2/callback",
   "envs": [
     { "name": "DOWNSTREAM_API_URL", "value": "http://hookd/" },
     { "name": "DOWNSTREAM_API_PATH", "value": "downstream" },
