@@ -1,10 +1,17 @@
 {
   "external-hosts": ["login.microsoftonline.com"],
-  "ingresses": ["https://deploy.dev-gcp.nais.io/"],
+  "ingresses": [
+    "https://deploy.dev-gcp.nais.io/login",
+    "https://deploy.dev-gcp.nais.io/oauth2",
+    "https://deploy.dev-gcp.nais.io/logout",
+    "https://deploy.dev-gcp.nais.io/me",
+    "https://deploy.dev-gcp.nais.io/downstream"
+  ],
   "envs": [
     { "name": "DOWNSTREAM_API_URL", "value": "http://hookd/" },
     { "name": "DOWNSTREAM_API_PATH", "value": "downstream" },
     { "name": "DOWNSTREAM_API_SCOPES", "value": "" },
+    { "name": "AUTHENTICATION_ENABLED", "value": "true" },
     { "name": "AAD_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/oauth2/callback" },
     { "name": "AAD_LOGOUT_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/logout" }
   ]

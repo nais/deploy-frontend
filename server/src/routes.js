@@ -6,6 +6,7 @@ const health = require('./healthCheck')
 const session = require('express-session')
 const reverseProxy = require('./reverse-proxy')
 const path = require('path')
+const { host } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
   if (req.isAuthenticated() && authUtils.hasValidAccessToken(req)) {
@@ -16,7 +17,7 @@ const ensureAuthenticated = async (req, res, next) => {
   }
 }
 
-exports.setup = authClient => {
+exports.setup = (authClient) => {
   // Unprotected
   router.get('/isalive', health.isAlive())
   router.get('/login', passport.authenticate('azureOidc', { failureRedirect: '/login' }))
@@ -32,20 +33,22 @@ exports.setup = authClient => {
     }
   )
 
-  router.use(ensureAuthenticated)
-  router.get('/me', (req, res) => {
-    authUtils
-      .getUserInfoFromGraphApi(authClient, req)
-      .then(userinfo => res.send(userinfo))
-      .catch(err => res.status(500).json(err))
-  })
+  if (host.authenticationEnabled) {
+    router.use(ensureAuthenticated)
+    router.get('/me', (req, res) => {
+      authUtils
+        .getUserInfoFromGraphApi(authClient, req)
+        .then((userinfo) => res.send(userinfo))
+        .catch((err) => res.status(500).json(err))
+    })
 
-  router.get('/logout', (req, res) => {
-    req.logOut()
-    res.redirect(
-      authClient.endSessionUrl({ post_logout_redirect_uri: config.azureAd.logoutRedirectUri })
-    )
-  })
+    router.get('/logout', (req, res) => {
+      req.logOut()
+      res.redirect(
+        authClient.endSessionUrl({ post_logout_redirect_uri: config.azureAd.logoutRedirectUri })
+      )
+    })
+  }
 
   reverseProxy.setup(router, authClient)
 

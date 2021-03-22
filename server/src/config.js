@@ -10,11 +10,16 @@ const envVar = (name, required = true) => {
   return process.env[name]
 }
 
+const parseStringAsBool = (trueOrFalseString) => {
+  return trueOrFalseString.toLowerCase() === 'true'
+}
+
 const host = {
   name: envVar('HOST', false) || 'localhost',
   port: parseInt(envVar('PORT', false), 10) || 8081,
   sessionKey: envVar('COOKIE_KEY'),
   cookieName: 'deploy-frontend',
+  authenticationEnabled: parseStringAsBool(envVar('AUTHENTICATION_ENABLED', false)),
 }
 
 const azureAd = {

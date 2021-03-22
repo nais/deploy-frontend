@@ -1,7 +1,7 @@
 'use strict'
 
 const { client, strategy } = require('./src/auth/azure')
-const { logger } = require('./src/config')
+const { host, logger } = require('./src/config')
 const express = require('express')
 const favicon = require('serve-favicon')
 const path = require('path')
@@ -23,11 +23,13 @@ async function configure() {
     morganBody(app)
   }
 
+  logger.info('Authentication ' + (host.authenticationEnabled ? 'enabled' : 'disabled'))
+
   app.use(
     httpLogger('dev', {
-      skip: function(req, res) {
+      skip: function (req, res) {
         return res.statusCode < 400
-      }
+      },
     })
   )
   session.setup(app)
