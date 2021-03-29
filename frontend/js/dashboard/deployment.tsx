@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
 
-function RepoLink(props) {}
-
 function Deployment(props) {
   const { initialData } = props
 
