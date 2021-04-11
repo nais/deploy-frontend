@@ -2,9 +2,10 @@ import 'nav-frontend-tabell-style'
 import React, { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
+import FilterButton from './filterButton'
 
 function Deployment(props) {
-  const { initialData } = props
+  const { initialData, dispatch } = props
 
   const dep = initialData
 
@@ -69,9 +70,9 @@ function Deployment(props) {
       return 'no app in deployment'
     }
 
-    return resources.map((r) => {
+    return resources.map((r, index) => {
       return (
-        <div>
+        <div key={index}>
           <span style={{ opacity: 0.6 }}>{r.namespace}/</span>
           {r.name} <em style={{ opacity: 0.6 }}>{r.kind}</em>
         </div>
@@ -80,12 +81,14 @@ function Deployment(props) {
   }
 
   return (
-    <tr key={dep.deployment.id}>
+    <tr>
       <td>{appName(dep.resources)}</td>
       <td>
         <TimeAgo date={dep.deployment.created} />
       </td>
-      <td>{dep.deployment.team}</td>
+      <td>
+        <FilterButton filterDispatch={dispatch} team={dep.deployment.team} />
+      </td>
       <td>{dep.deployment.cluster}</td>
       <td>{statusBadge()}</td>
       <td>
