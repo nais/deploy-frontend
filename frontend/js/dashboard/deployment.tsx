@@ -4,52 +4,56 @@ import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
 import FilterButton from './filterButton'
 
-function Deployment(props) {
-  const { initialData, dispatch } = props
-
-  const dep = initialData
-
-  const repoLink = (repo) => {
-    if (repo == null) {
-      return <div className="knapp--mini knapp knapp--disabled">GitHub</div>
-    }
-
-    return (
-      <a className="knapp--mini knapp--hoved knapp" href={`https://github.com/${repo}`}>
-        GitHub
-      </a>
-    )
-  }
-
-  const statusBadge = () => {
-    if (initialData.statuses != null) {
-      let buttonStyle
-      const stateText = initialData.statuses[0].status
-      switch (stateText) {
-        case 'error':
-        case 'failure':
-          buttonStyle = 'danger'
-          break
-        case 'queued':
-        case 'pending':
-        case 'in_progress':
-          buttonStyle = 'warning'
-          break
-        case 'success':
-          buttonStyle = 'success'
-      }
-      return (
-        <Badge pill variant={buttonStyle}>
-          {stateText}
-        </Badge>
-      )
-    }
+const StatusBadge = ({ statuses }) => {
+  if (statuses == null)
     return (
       <Badge pill variant="secondary">
         undefined
       </Badge>
     )
+
+  const buttonStyles = {
+    error: 'danger',
+    failure: 'danger',
+    queued: 'warning',
+    pending: 'warning',
+    in_progress: 'warning',
+    success: 'success',
   }
+
+  const stateText = statuses[0].status
+
+  return (
+    <Badge pill variant={stateText in buttonStyles ? buttonStyles[stateText] : null}>
+      {stateText}
+    </Badge>
+  )
+}
+
+const RepoLink = ({ repo }) => {
+  const style: React.CSSProperties = {
+    marginRight: '.5em',
+    width: 'content-fit',
+  }
+  if (repo == null) {
+    return (
+      <div style={style} className="knapp--mini knapp knapp--disabled">
+        GitHub
+      </div>
+    )
+  }
+
+  return (
+    <a style={style} className="knapp--mini knapp--hoved knapp" href={`https://github.com/${repo}`}>
+      GitHub
+    </a>
+  )
+}
+
+function Deployment(props) {
+  const { initialData, dispatch } = props
+
+  const dep = initialData
 
   const logsLink = (dep) => {
     // ISO 8601 to unix epoch
@@ -90,9 +94,12 @@ function Deployment(props) {
         <FilterButton filterDispatch={dispatch} team={dep.deployment.team} />
       </td>
       <td>{dep.deployment.cluster}</td>
-      <td>{statusBadge()}</td>
       <td>
-        {repoLink(dep.deployment.githubRepository)} {logsLink(dep.deployment)}
+        <StatusBadge statuses={dep.statuses} />
+      </td>
+      <td>
+        <RepoLink repo={dep.deployment.githubRepository} />
+        {logsLink(dep.deployment)}
       </td>
     </tr>
   )

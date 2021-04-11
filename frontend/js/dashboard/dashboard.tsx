@@ -2,7 +2,8 @@ import React, { useEffect, useReducer, useState } from 'react'
 import Deployment from './deployment'
 import { logPageView } from '../amplitude.js'
 import { Close } from '@navikt/ds-icons'
-import * as z from 'zod'
+import { ZodError } from 'zod'
+import { getDeployments, DeploymentList } from './deploymentAPI'
 
 const FilterPanel = ({ dashboardState, dispatch }) => {
   const emptyListStyle: React.CSSProperties = {
@@ -55,10 +56,6 @@ const DeploymentsTable = ({ dashboardState, dispatch }) => {
     return true
   }
 
-  if (dashboardState.error !== '') {
-    return <div>{dashboardState.error}</div>
-  }
-
   return (
     <div>
       <table className="tabell">
@@ -94,61 +91,20 @@ export default function Dashboard(props) {
 
   type FetchResult =
     | { type: 'FETCH_SUCCESS'; payload: object }
-    | { type: 'FETCH_ERROR'; error: string }
-
-  const DeploymentSchema = z.object({
-    cluster: z.string().nullable(),
-    created: z.string(), // better support for date transformations expected with Zod 3
-    githubID: z.number().nullable(),
-    githubRepository: z.string().nullable(),
-    id: z.string(),
-    state: z.any().nullable(), // FIXME: I haven't seen this != null
-    team: z.string(),
-  })
-  type Deployment = z.infer<typeof DeploymentSchema>
-
-  const StatusSchema = z.object({
-    created: z.string(),
-    deploymentID: z.string().uuid(),
-    id: z.string().uuid(),
-    message: z.string().nullable(),
-    status: z.string(),
-  })
-  type Status = z.infer<typeof StatusSchema>
-
-  const ResourceSchema = z.object({
-    deploymentID: z.string().uuid(),
-    group: z.string().nullable(),
-    id: z.string(),
-    index: z.number(),
-    kind: z.string(),
-    name: z.string(),
-    namespace: z.string(),
-    version: z.string(),
-  })
-  type Resource = z.infer<typeof ResourceSchema>
-
-  const DeploymentListSchema = z
-    .object({
-      deployment: DeploymentSchema,
-      statuses: StatusSchema.array().nullable(),
-      resources: ResourceSchema.array().nullable(),
-    })
-    .array()
-  type DeploymentList = z.infer<typeof DeploymentListSchema>
+    | { type: 'FETCH_ERROR'; error: JSX.Element }
 
   interface dashboardState {
     loading: boolean
     deployments: DeploymentList
     filters: Map<string, string>
-    error: string
+    error: JSX.Element | null
   }
 
   const initialState: dashboardState = {
     loading: true,
     deployments: new Array(),
     filters: new Map(),
-    error: '',
+    error: null,
   }
 
   const deploymentsReducer = (
@@ -161,7 +117,7 @@ export default function Dashboard(props) {
           loading: false,
           deployments: action.payload,
           filters: state.filters,
-          error: '',
+          error: null,
         }
       case 'FETCH_ERROR':
         return {
@@ -196,29 +152,25 @@ export default function Dashboard(props) {
   const [dashboardState, deploymentsDispatch] = useReducer(deploymentsReducer, initialState)
 
   useEffect(() => {
-    let apiURL = '/downstream/api/v1/dashboard/deployments?'
-    for (let [key, value] of dashboardState.filters) {
-      apiURL += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`
-    }
-    fetch(apiURL)
-      .then((res) => res.json())
-      .then((json) => {
-        try {
-          let deployments = DeploymentListSchema.parse(json.deployments)
-          deploymentsDispatch({ type: 'FETCH_SUCCESS', payload: deployments })
-        } catch (e) {
-          deploymentsDispatch({
-            type: 'FETCH_ERROR',
-            error: (
-              <div>
-                <div>Data validation errors from backend</div>
-                <pre>{e.toString()}</pre>
-              </div>
-            ),
-          })
-        }
+    getDeployments(dashboardState.filters)
+      .then((deployments) => {
+        deploymentsDispatch({ type: 'FETCH_SUCCESS', payload: deployments })
+      })
+      .catch((e) => {
+        deploymentsDispatch({
+          type: 'FETCH_ERROR',
+          error: (
+            <div>
+              <pre>{e.toString()}</pre>
+            </div>
+          ),
+        })
       })
   }, [dashboardState.filters])
+
+  if (dashboardState.error) {
+    return <div className={'mainContent'}>{dashboardState.error}</div>
+  }
 
   return (
     <div className={'mainContent'}>
