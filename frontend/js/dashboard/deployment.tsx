@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
 import FilterButton from './filterButton'
+import { DeploymentData } from './deploymentAPI'
 
 const StatusBadge = ({ statuses }) => {
   if (statuses == null)
@@ -50,59 +51,67 @@ const RepoLink = ({ repo }) => {
   )
 }
 
-function Deployment(props) {
-  const { initialData, dispatch } = props
-
-  const dep = initialData
-
-  const logsLink = (dep) => {
-    // ISO 8601 to unix epoch
-    const timeStamp = (ds) => Math.trunc(Date.parse(ds) / 1000)
-
-    return (
-      <a
-        className="knapp--mini knapp--hoved knapp"
-        href={`https://deploy.nais.io/logs?delivery_id=${dep.id}&ts=${timeStamp(dep.created)}&v=1`}
-      >
-        Log
-      </a>
-    )
+const Resources = ({ resources }) => {
+  const weakStyle: React.CSSProperties = {
+    opacity: 0.6,
+    fontStyle: 'italic',
   }
-
-  const appName = (resources) => {
-    if (!Array.isArray(resources) || !resources.length) {
-      return 'no app in deployment'
-    }
-
-    return resources.map((r, index) => {
-      return (
-        <div key={index}>
-          <span style={{ opacity: 0.6 }}>{r.namespace}/</span>
-          {r.name} <em style={{ opacity: 0.6 }}>{r.kind}</em>
-        </div>
-      )
-    })
+  if (!Array.isArray(resources) || !resources.length) {
+    return <div style={weakStyle}>no app in deployment</div>
   }
 
   return (
-    <tr>
-      <td>{appName(dep.resources)}</td>
-      <td>
-        <TimeAgo date={dep.deployment.created} />
-      </td>
-      <td>
-        <FilterButton filterDispatch={dispatch} team={dep.deployment.team} />
-      </td>
-      <td>{dep.deployment.cluster}</td>
-      <td>
-        <StatusBadge statuses={dep.statuses} />
-      </td>
-      <td>
-        <RepoLink repo={dep.deployment.githubRepository} />
-        {logsLink(dep.deployment)}
-      </td>
-    </tr>
+    <div>
+      {resources.map((r, index) => (
+        <div key={index}>
+          <span style={weakStyle}>{r.namespace}/</span>
+          {r.name} <span style={weakStyle}>{r.kind}</span>
+        </div>
+      ))}
+    </div>
   )
 }
+
+const LogsLink = ({ deployment }) => {
+  const timeStamp = (ds) => Math.trunc(Date.parse(ds) / 1000) // ISO 8601 to unix epoch
+
+  return (
+    <a
+      className="knapp--mini knapp--hoved knapp"
+      href={`https://deploy.nais.io/logs?delivery_id=${deployment.id}&ts=${timeStamp(
+        deployment.created
+      )}&v=1`}
+    >
+      Log
+    </a>
+  )
+}
+
+interface DeploymentProps {
+  deployment: DeploymentData
+  dispatch: any // chickening out for now
+}
+
+const Deployment = ({ deployment, dispatch }: DeploymentProps) => (
+  <tr>
+    <td>
+      <Resources resources={deployment.resources} />
+    </td>
+    <td>
+      <TimeAgo date={deployment.deployment.created} />
+    </td>
+    <td>
+      <FilterButton filterDispatch={dispatch} team={deployment.deployment.team} />
+    </td>
+    <td>{deployment.deployment.cluster}</td>
+    <td>
+      <StatusBadge statuses={deployment.statuses} />
+    </td>
+    <td>
+      <RepoLink repo={deployment.deployment.githubRepository} />
+      <LogsLink deployment={deployment.deployment} />
+    </td>
+  </tr>
+)
 
 export default Deployment

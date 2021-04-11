@@ -29,13 +29,13 @@ const ResourceSchema = z.object({
   version: z.string(),
 })
 
-export const DeploymentListSchema = z
-  .object({
-    deployment: DeploymentSchema,
-    statuses: StatusSchema.array().nullable(),
-    resources: ResourceSchema.array().nullable(),
-  })
-  .array()
+export const DeploymentDataSchema = z.object({
+  deployment: DeploymentSchema,
+  statuses: StatusSchema.array().nullable(),
+  resources: ResourceSchema.array().nullable(),
+})
+
+export const DeploymentListSchema = DeploymentDataSchema.array()
 
 export const getDeployments = async (filters): Promise<DeploymentList> => {
   let apiURL = '/downstream/api/v1/dashboard/deployments?'
@@ -50,4 +50,5 @@ export const getDeployments = async (filters): Promise<DeploymentList> => {
 export type Deployment = z.infer<typeof DeploymentSchema>
 export type Status = z.infer<typeof StatusSchema>
 export type Resource = z.infer<typeof ResourceSchema>
+export type DeploymentData = z.infer<typeof DeploymentDataSchema>
 export type DeploymentList = z.infer<typeof DeploymentListSchema>
