@@ -1,10 +1,7 @@
 {
-  "compilerOptions": {
-    "strictNullChecks": true,
-    "module": "commonjs",
-    "target": "ES2019",
-    "jsx": "react",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "compilerOptions": {
+      "jsx": "react",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true
+    }
   }
-}
