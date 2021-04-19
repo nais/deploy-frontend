@@ -1,4 +1,4 @@
-FROM node:13.12-alpine as frontend-builder
+FROM node:14.16-alpine as frontend-builder
 WORKDIR /home/app
 COPY ./node_modules ./node_modules
 COPY ./tsconfig.json ./
@@ -8,7 +8,7 @@ COPY ./.babelrc ./
 COPY ./frontend ./frontend
 RUN yarn run build
 
-FROM node:13-alpine as api-builder
+FROM node:14-alpine as api-builder
 WORKDIR /home/app
 COPY ./tsconfig.json ./
 COPY ./package.json ./
@@ -17,7 +17,7 @@ COPY ./bin ./bin
 COPY ./server/ ./server
 RUN yarn install --production=true
 
-FROM node:13-alpine
+FROM node:14-alpine
 ENV NODE_ENV=production
 EXPOSE 8080
 WORKDIR /home/app
