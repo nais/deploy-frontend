@@ -22,6 +22,7 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
     borderRadius: '10rem',
     lineHeight: '1',
     border: '1px solid #ddd',
+    cursor: 'pointer',
   }
   return !dashboardState.filters.size ? (
     <div style={emptyListStyle}>No filters currently enabled. Click a team name to filter.</div>
@@ -73,7 +74,7 @@ const DeploymentsTable = ({ dashboardState, dispatch }) => {
           {dashboardState.deployments
             .filter((x) => deploymentFilter(x, dashboardState.filters))
             .map((x) => (
-              <Deployment key={x.deployment.id} dispatch={dispatch} initialData={x} />
+              <Deployment key={x.deployment.id} dispatch={dispatch} deployment={x} />
             ))}
         </tbody>
       </table>

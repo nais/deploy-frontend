@@ -92,26 +92,30 @@ interface DeploymentProps {
   dispatch: any // chickening out for now
 }
 
-const Deployment = ({ deployment, dispatch }: DeploymentProps) => (
-  <tr>
-    <td>
-      <Resources resources={deployment.resources} />
-    </td>
-    <td>
-      <TimeAgo date={deployment.deployment.created} />
-    </td>
-    <td>
-      <FilterButton filterDispatch={dispatch} team={deployment.deployment.team} />
-    </td>
-    <td>{deployment.deployment.cluster}</td>
-    <td>
-      <StatusBadge statuses={deployment.statuses} />
-    </td>
-    <td>
-      <RepoLink repo={deployment.deployment.githubRepository} />
-      <LogsLink deployment={deployment.deployment} />
-    </td>
-  </tr>
-)
+const Deployment = ({ deployment, dispatch }: DeploymentProps) => {
+  if (!deployment) return null
+
+  return (
+    <tr>
+      <td>
+        <Resources resources={deployment.resources} />
+      </td>
+      <td>
+        <TimeAgo date={deployment.deployment.created} />
+      </td>
+      <td>
+        <FilterButton filterDispatch={dispatch} team={deployment.deployment.team} />
+      </td>
+      <td>{deployment.deployment.cluster}</td>
+      <td>
+        <StatusBadge statuses={deployment.statuses} />
+      </td>
+      <td>
+        <RepoLink repo={deployment.deployment.githubRepository} />
+        <LogsLink deployment={deployment.deployment} />
+      </td>
+    </tr>
+  )
+}
 
 export default Deployment

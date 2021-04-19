@@ -17,6 +17,7 @@ const FilterButton = ({ team, filterDispatch, isSelected }: FilterButtonProps) =
     borderRadius: '10rem',
     lineHeight: '1',
     border: '1px solid #ddd',
+    cursor: 'pointer',
   }
   return (
     <div style={tdStyle} onClick={() => filterDispatch({ type: 'FILTER_ADD', value: team })}>

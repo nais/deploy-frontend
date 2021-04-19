@@ -1,5 +1,7 @@
 import * as z from 'zod'
 
+// TODO: Remove the data definitions which are not used by frontend
+//       (to prevent gratuitous validation errors)
 const DeploymentSchema = z.object({
   cluster: z.string().nullable(),
   created: z.string(), // better support for date transformations expected with Zod 3
