@@ -2,94 +2,117 @@ import 'nav-frontend-tabell-style'
 import React, { useEffect, useState } from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
+import FilterButton from './filterButton'
+import { DeploymentData } from './deploymentAPI'
 
-function Deployment(props) {
-  const { initialData } = props
-
-  const dep = initialData
-
-  const repoLink = (repo) => {
-    if (repo == null) {
-      return <div className="knapp--mini knapp knapp--disabled">GitHub</div>
-    }
-
-    return (
-      <a className="knapp--mini knapp--hoved knapp" href={`https://github.com/${repo}`}>
-        GitHub
-      </a>
-    )
-  }
-
-  const statusBadge = () => {
-    if (initialData.statuses != null) {
-      let buttonStyle
-      const stateText = initialData.statuses[0].status
-      switch (stateText) {
-        case 'error':
-        case 'failure':
-          buttonStyle = 'danger'
-          break
-        case 'queued':
-        case 'pending':
-        case 'in_progress':
-          buttonStyle = 'warning'
-          break
-        case 'success':
-          buttonStyle = 'success'
-      }
-      return (
-        <Badge pill variant={buttonStyle}>
-          {stateText}
-        </Badge>
-      )
-    }
+const StatusBadge = ({ statuses }) => {
+  if (statuses == null)
     return (
       <Badge pill variant="secondary">
         undefined
       </Badge>
     )
+
+  const buttonStyles = {
+    error: 'danger',
+    failure: 'danger',
+    queued: 'warning',
+    pending: 'warning',
+    in_progress: 'warning',
+    success: 'success',
   }
 
-  const logsLink = (dep) => {
-    // ISO 8601 to unix epoch
-    const timeStamp = (ds) => Math.trunc(Date.parse(ds) / 1000)
+  const stateText = statuses[0].status
 
+  return (
+    <Badge pill variant={stateText in buttonStyles ? buttonStyles[stateText] : null}>
+      {stateText}
+    </Badge>
+  )
+}
+
+const RepoLink = ({ repo }) => {
+  const style: React.CSSProperties = {
+    marginRight: '.5em',
+    width: 'content-fit',
+  }
+  if (repo == null) {
     return (
-      <a
-        className="knapp--mini knapp--hoved knapp"
-        href={`https://deploy.nais.io/logs?delivery_id=${dep.id}&ts=${timeStamp(dep.created)}&v=1`}
-      >
-        Log
-      </a>
+      <div style={style} className="knapp--mini knapp knapp--disabled">
+        GitHub
+      </div>
     )
   }
 
-  const appName = (resources) => {
-    if (!Array.isArray(resources) || !resources.length) {
-      return 'no app in deployment'
-    }
+  return (
+    <a style={style} className="knapp--mini knapp--hoved knapp" href={`https://github.com/${repo}`}>
+      GitHub
+    </a>
+  )
+}
 
-    return resources.map((r) => {
-      return (
-        <div>
-          <span style={{ opacity: 0.6 }}>{r.namespace}/</span>
-          {r.name} <em style={{ opacity: 0.6 }}>{r.kind}</em>
-        </div>
-      )
-    })
+const Resources = ({ resources }) => {
+  const weakStyle: React.CSSProperties = {
+    opacity: 0.6,
+    fontStyle: 'italic',
+  }
+  if (!Array.isArray(resources) || !resources.length) {
+    return <div style={weakStyle}>no app in deployment</div>
   }
 
   return (
-    <tr key={dep.deployment.id}>
-      <td>{appName(dep.resources)}</td>
+    <div>
+      {resources.map((r, index) => (
+        <div key={index}>
+          <span style={weakStyle}>{r.namespace}/</span>
+          {r.name} <span style={weakStyle}>{r.kind}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+const LogsLink = ({ deployment }) => {
+  const timeStamp = (ds) => Math.trunc(Date.parse(ds) / 1000) // ISO 8601 to unix epoch
+
+  return (
+    <a
+      className="knapp--mini knapp--hoved knapp"
+      href={`https://deploy.nais.io/logs?delivery_id=${deployment.id}&ts=${timeStamp(
+        deployment.created
+      )}&v=1`}
+    >
+      Log
+    </a>
+  )
+}
+
+interface DeploymentProps {
+  deployment: DeploymentData
+  dispatch: any // chickening out for now
+}
+
+const Deployment = ({ deployment, dispatch }: DeploymentProps) => {
+  if (!deployment) return null
+
+  return (
+    <tr>
       <td>
-        <TimeAgo date={dep.deployment.created} />
+        <Resources resources={deployment.resources} />
       </td>
-      <td>{dep.deployment.team}</td>
-      <td>{dep.deployment.cluster}</td>
-      <td>{statusBadge()}</td>
       <td>
-        {repoLink(dep.deployment.githubRepository)} {logsLink(dep.deployment)}
+        <TimeAgo date={deployment.deployment.created} />
+      </td>
+      <td>
+        <FilterButton filterDispatch={dispatch} team={deployment.deployment.team} />
+      </td>
+      <td>{deployment.deployment.cluster}</td>
+      <td>
+        <StatusBadge statuses={deployment.statuses} />
+      </td>
+      <td>
+        <RepoLink repo={deployment.deployment.githubRepository} />
+        <LogsLink deployment={deployment.deployment} />
       </td>
     </tr>
   )

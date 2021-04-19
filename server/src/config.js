@@ -11,7 +11,7 @@ const envVar = (name, required = true) => {
 }
 
 const parseStringAsBool = (trueOrFalseString) => {
-  return trueOrFalseString.toLowerCase() === 'true'
+  return typeof trueOrFalseString === 'string' && trueOrFalseString.toLowerCase() === 'true'
 }
 
 const host = {
@@ -23,11 +23,11 @@ const host = {
 }
 
 const azureAd = {
-  discoveryUrl: envVar('AZURE_APP_WELL_KNOWN_URL'),
-  clientId: envVar('AZURE_APP_CLIENT_ID'),
-  clientSecret: envVar('AZURE_APP_CLIENT_SECRET'),
-  redirectUri: envVar('AAD_REDIRECT_URL'),
-  logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL'),
+  discoveryUrl: envVar('AZURE_APP_WELL_KNOWN_URL', host.authenticationEnabled),
+  clientId: envVar('AZURE_APP_CLIENT_ID', host.authenticationEnabled),
+  clientSecret: envVar('AZURE_APP_CLIENT_SECRET', host.authenticationEnabled),
+  redirectUri: envVar('AAD_REDIRECT_URL', host.authenticationEnabled),
+  logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL', host.authenticationEnabled),
   tokenEndpointAuthMethod: 'client_secret_post',
   responseTypes: ['code'],
   responseMode: 'query',
