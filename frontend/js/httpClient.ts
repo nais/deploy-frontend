@@ -7,7 +7,7 @@ const fetchUrl = async (url, method = HttpMethod.GET) => {
   const response = await fetch(url, { method })
 
   if (response.ok) {
-    const contentLength = response.headers.get('content-length')
+    const contentLength = response.headers.get('content-length') || '0'
     if (parseInt(contentLength) > 0) {
       return await response.json()
     }

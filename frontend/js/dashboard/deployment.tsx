@@ -1,5 +1,6 @@
+'use strict';
 import 'nav-frontend-tabell-style'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import TimeAgo from 'react-timeago'
 import { Badge } from 'react-bootstrap'
 import FilterButton from './filterButton'

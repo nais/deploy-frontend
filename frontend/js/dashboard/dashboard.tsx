@@ -1,9 +1,10 @@
-import React, { useEffect, useReducer, useState } from 'react'
+'use strict';
+import React, { useEffect, useReducer } from 'react'
 import Deployment from './deployment'
 import { logPageView } from '../amplitude.js'
 import { Close } from '@navikt/ds-icons'
-import { ZodError } from 'zod'
 import { getDeployments, DeploymentList } from './deploymentAPI'
+import NavFrontendSpinner from "nav-frontend-spinner";
 
 const FilterPanel = ({ dashboardState, dispatch }) => {
   const emptyListStyle: React.CSSProperties = {
@@ -57,6 +58,14 @@ const DeploymentsTable = ({ dashboardState, dispatch }) => {
     return true
   }
 
+  const loadingSpinner = () => (
+      <tr>
+        <td colSpan={6} style={{textAlign: 'center'}}>
+          <NavFrontendSpinner/>
+        </td>
+      </tr>
+  )
+
   return (
     <div>
       <table className="tabell">
@@ -76,6 +85,7 @@ const DeploymentsTable = ({ dashboardState, dispatch }) => {
             .map((x) => (
               <Deployment key={x.deployment.id} dispatch={dispatch} deployment={x} />
             ))}
+          {dashboardState.loading ? loadingSpinner() : null}
         </tbody>
       </table>
     </div>
