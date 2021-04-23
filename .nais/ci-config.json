@@ -1,0 +1,19 @@
+{
+  "external-hosts": ["login.microsoftonline.com"],
+  "ingresses": [
+    "https://deploy.ci.nav.no/login",
+    "https://deploy.ci.nav.no/oauth2",
+    "https://deploy.ci.nav.no/logout",
+    "https://deploy.ci.nav.no/me",
+    "https://deploy.ci.nav.no/downstream"
+  ],
+  "reply-url": "https://deploy.ci.nav.no/oauth2/callback",
+  "envs": [
+    { "name": "DOWNSTREAM_API_URL", "value": "http://hookd/" },
+    { "name": "DOWNSTREAM_API_PATH", "value": "downstream" },
+    { "name": "DOWNSTREAM_API_SCOPES", "value": "" },
+    { "name": "AUTHENTICATION_ENABLED", "value": "true" },
+    { "name": "AAD_REDIRECT_URL", "value": "https://deploy.ci.nav.no/oauth2/callback" },
+    { "name": "AAD_LOGOUT_REDIRECT_URL", "value": "https://deploy.ci.nav.no/logout" }
+  ]
+}
