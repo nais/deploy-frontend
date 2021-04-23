@@ -63,6 +63,7 @@ jobs:
           CLUSTER: ci-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/ci-config.json
+          DEPLOY_SERVER: deploy.ci.nav.no:443
   deploy-prod:
     name: Deploy to prod-gcp
     needs: build
