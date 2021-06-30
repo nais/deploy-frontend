@@ -24,9 +24,9 @@ type Props = {
   userName: String
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userName: state.userInfo.userName
+    userName: state.userInfo.userName,
   }
 }
 

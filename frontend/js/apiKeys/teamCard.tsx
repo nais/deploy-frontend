@@ -41,7 +41,7 @@ function TeamCard(props: Props) {
   return (
     <Panel border className="apikeyCard">
       <Undertittel>{team}</Undertittel>
-      <Element>
+      <Element style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
         <KeyIcon />
         {key}
       </Element>

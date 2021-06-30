@@ -2,7 +2,7 @@ import { USERINFO_REQUEST_SUCCESS, USERINFO_REQUEST_FAILED } from '../config/act
 
 export default (
   state = {
-    userName: ''
+    userName: '',
   },
   action
 ) => {
@@ -10,12 +10,12 @@ export default (
     case USERINFO_REQUEST_SUCCESS:
       return {
         ...state,
-        userName: `${action.value.givenName} ${action.value.surname}`
+        userName: `${action.value.givenName} ${action.value.surname}`,
       }
     case USERINFO_REQUEST_FAILED:
       return {
         ...state,
-        userName: ''
+        userName: '',
       }
 
     default:

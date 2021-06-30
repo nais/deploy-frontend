@@ -8,7 +8,7 @@ import sinon from 'sinon'
 const defaultProps = {
   keyRotationStatus: { confirmationPending: true },
   onRequestClose: () => {},
-  onRotatekey: () => {}
+  onRotatekey: () => {},
 }
 
 describe('(RotateKeyModal) Basic rendering', () => {
@@ -21,17 +21,13 @@ describe('(RotateKeyModal) Basic rendering', () => {
 describe('(RotateKeyModal) Error handling', () => {
   const props = {
     ...defaultProps,
-    keyRotationStatus: { status: 'ERROR', errorMessage: 'Such error' }
+    keyRotationStatus: { status: 'ERROR', errorMessage: 'Such error' },
   }
   const wrapper = shallow(<RotateKeyModal {...props} />)
   it('Error message is shown', () => {
-    expect(
-      wrapper
-        .find({ type: 'feil' })
-        .find(Normaltekst)
-        .children()
-        .text()
-    ).toContain('Such error')
+    expect(wrapper.find({ type: 'feil' }).find(Normaltekst).children().text()).toContain(
+      'Such error'
+    )
   })
 })
 
@@ -40,7 +36,7 @@ describe('(RotateKeyModal) Rotatekey button is clicked with correct teamName par
   const props = {
     ...defaultProps,
     keyRotationStatus: { confirmationPending: true, teamName: 'aTeam' },
-    onRotatekey: eventHandlerSpy
+    onRotatekey: eventHandlerSpy,
   }
   const wrapper = shallow(<RotateKeyModal {...props} />)
   it('Rotate key button is clicked ', () => {

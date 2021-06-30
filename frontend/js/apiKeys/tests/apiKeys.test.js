@@ -9,7 +9,7 @@ import {
   APIKEYS_REQUEST,
   APIKEY_ROTATE_REQUEST,
   APIKEY_ROTATE_CONFIRMATION,
-  APIKEY_CANCEL_ROTATION
+  APIKEY_CANCEL_ROTATION,
 } from '../../config/actionTypes'
 
 const defaultProps = {
@@ -17,13 +17,13 @@ const defaultProps = {
   fetchStatus: '',
   errorMessage: '',
   dispatch: () => {},
-  rotateKey: {}
+  rotateKey: {},
 }
 
 describe('(ApiKeys) Spinner is only visible when apikeys are loading', () => {
   const props = {
     ...defaultProps,
-    fetchStatus: 'FETCHING'
+    fetchStatus: 'FETCHING',
   }
 
   const wrapper = shallow(<ApiKeys {...props} />)
@@ -45,19 +45,14 @@ describe('(ApiKeys) Error message is displayed when fetch status is ERROR', () =
   const props = {
     ...defaultProps,
     fetchStatus: 'ERROR',
-    errorMessage: 'Such error'
+    errorMessage: 'Such error',
   }
 
   it('Error message is displayed', () => {
     const wrapper = shallow(<ApiKeys {...props} />)
 
     expect(wrapper.exists('AlertStripe')).toBe(true)
-    expect(
-      wrapper
-        .find(AlertStripe)
-        .childAt(1)
-        .html()
-    ).toContain('Such error')
+    expect(wrapper.find(AlertStripe).childAt(1).html()).toContain('Such error')
   })
 })
 
@@ -96,43 +91,43 @@ describe('(ApiKeys) List of API keys from backend are grouped by team.', () => {
       groupId: '6fbc76c4-7909-4e58-99fa-64d542567c8c',
       key: 'theNewestKey',
       created: '2020-03-16T10:29:58.05+01:00',
-      expires: '2022-03-16T10:30:23.655+01:00'
+      expires: '2022-03-16T10:30:23.655+01:00',
     },
     {
       team: 'team1',
       groupId: '6fafac4-7909-4e58-99fa-64d542567c8c',
       key: 'theOldestKey',
       created: '2018-03-16T10:29:58.05+01:00',
-      expires: '2019-03-16T10:30:23.655+01:00'
+      expires: '2019-03-16T10:30:23.655+01:00',
     },
     {
       team: 'team3',
       groupId: '6fafac4-7909-4e58-99fa-64d542567c8c',
       key: 'theOldestKey',
       created: '2018-03-16T10:29:58.05+01:00',
-      expires: '2019-03-16T10:30:23.655+01:00'
+      expires: '2019-03-16T10:30:23.655+01:00',
     },
     {
       team: 'team2',
       groupId: '6fafac4-7909-4e58-99fa-64d542567c8c',
       key: 'aBitOlderKey',
       created: '2019-03-16T10:29:58.05+01:00',
-      expires: '2020-03-16T10:30:23.655+01:00'
+      expires: '2020-03-16T10:30:23.655+01:00',
     },
     {
       team: 'team3',
       groupId: '6fafac4-7909-4e58-99fa-64d542567c8c',
       key: 'theOldestKey',
       created: '2018-03-16T10:29:58.05+01:00',
-      expires: '2019-03-16T10:30:23.655+01:00'
+      expires: '2019-03-16T10:30:23.655+01:00',
     },
     {
       team: 'team3',
       groupId: '6fafac4-7909-4e58-99fa-64d542567c8c',
       key: 'theOldestKey',
       created: '2018-03-16T10:29:58.05+01:00',
-      expires: '2019-03-16T10:30:23.655+01:00'
-    }
+      expires: '2019-03-16T10:30:23.655+01:00',
+    },
   ]
 
   it('One teamCard component is shown pr team', () => {

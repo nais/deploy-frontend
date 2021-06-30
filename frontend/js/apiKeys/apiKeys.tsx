@@ -72,15 +72,17 @@ export class ApiKeys extends Component<Props, {}> {
                   <Normaltekst>{errorMessage}</Normaltekst>{' '}
                 </AlertStripe>
               )}
-              {teamNames.map((teamName: string, idx: number) => {
-                return (
-                  <TeamCard
-                    key={idx}
-                    apiKeys={apiKeysByTeam[teamName]}
-                    handleKeyRotation={(team) => this.showConfirmationModal(team)}
-                  />
-                )
-              })}
+              <div className="apiKeys">
+                {teamNames.map((teamName: string, idx: number) => {
+                  return (
+                    <TeamCard
+                      key={idx}
+                      apiKeys={apiKeysByTeam[teamName]}
+                      handleKeyRotation={(team) => this.showConfirmationModal(team)}
+                    />
+                  )
+                })}
+              </div>
             </div>
             <RotateKeyModal
               keyRotationStatus={rotateKey}

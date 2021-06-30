@@ -1,14 +1,14 @@
 import {
   APIKEYS_REQUEST_FETCHING,
   APIKEYS_REQUEST_SUCCESSFUL,
-  APIKEYS_REQUEST_FAILED
+  APIKEYS_REQUEST_FAILED,
 } from '../config/actionTypes'
 
 export default (
   state = {
     data: [],
     status: '',
-    errorMessage: ''
+    errorMessage: '',
   },
   action
 ) => {
@@ -16,20 +16,20 @@ export default (
     case APIKEYS_REQUEST_FETCHING:
       return {
         ...state,
-        status: 'FETCHING'
+        status: 'FETCHING',
       }
     case APIKEYS_REQUEST_SUCCESSFUL:
       return {
         ...state,
         status: 'SUCCESS',
-        data: action.value
+        data: action.value,
       }
     case APIKEYS_REQUEST_FAILED:
       return {
         ...state,
         data: [],
         status: 'ERROR',
-        errorMessage: action.error
+        errorMessage: action.error,
       }
     default:
       return state

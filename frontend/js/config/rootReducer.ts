@@ -6,7 +6,7 @@ import userInfo from '../ui/userInfoReducer'
 const rootReducer = combineReducers({
   apiKeys,
   rotateKey,
-  userInfo
+  userInfo,
 })
 
 export default rootReducer

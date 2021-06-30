@@ -1,13 +1,11 @@
 .errorMessage,
 .apikeyCard,
 .infoPanel {
-  margin-top: 1rem;
-  margin-left: 3rem;
-  max-width: 40vw;
+  margin: 1rem 3rem 0 3rem;
 }
 
 .spinner {
-    margin-top: 1rem;
+  margin-top: 1rem;
   margin-left: 3rem;
 }
 
@@ -26,11 +24,11 @@
 }
 
 .newKeyButton {
-    text-align: right;
+  text-align: right;
 }
 
 .confirmButton {
-    margin-top: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .aad {
@@ -38,11 +36,21 @@
 }
 
 .confirmationDialog {
-   padding-right: 50px;
- 
-   h2{
-       padding-bottom: 0.5rem;
-   }
+  padding-right: 50px;
 
+  h2 {
+    padding-bottom: 0.5rem;
+  }
 }
 
+.apiKeys {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 992px) {
+  .apiKeys {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
