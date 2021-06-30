@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Panel from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
 import { KeyIcon, AddCircle } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
 import { Knapp } from 'nav-frontend-knapper'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import moment from 'moment'
 import './apikey-styles.less'
+import { Copy, CopyFilled } from '@navikt/ds-icons'
 
 const azureAdGroupUrl =
   'https://portal.azure.com/#blade/Microsoft_AAD_IAM/GroupDetailsMenuBlade/Overview/groupId/'
@@ -35,6 +37,7 @@ const findNewestKey = (apiKeys) => {
 }
 
 function TeamCard(props: Props) {
+  const [copied, setCopied] = useState(false)
   const { apiKeys, handleKeyRotation } = props
   const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
 
@@ -51,11 +54,21 @@ function TeamCard(props: Props) {
       <Normaltekst>
         <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
       </Normaltekst>
-      <div className="newKeyButton">
-        <Knapp mini onClick={() => handleKeyRotation(team)}>
-          <AddCircle />
-          <span>Rotate key</span>
-        </Knapp>
+      <div className="apiButtons">
+        <div className="newKeyButton">
+          <Knapp mini onClick={() => setCopied(true)}>
+            {copied ? <CopyFilled /> : <Copy />}
+            <CopyToClipboard text={key}>
+              <span>{copied ? 'Copied...' : 'Copy key'}</span>
+            </CopyToClipboard>
+          </Knapp>
+        </div>
+        <div className="newKeyButton">
+          <Knapp mini onClick={() => handleKeyRotation(team)}>
+            <AddCircle />
+            <span>Rotate key</span>
+          </Knapp>
+        </div>
       </div>
     </Panel>
   )
