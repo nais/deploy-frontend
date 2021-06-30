@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Panel from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
 import { KeyIcon, AddCircle } from '../ui/svg'
@@ -40,6 +40,13 @@ function TeamCard(props: Props) {
   const [copied, setCopied] = useState(false)
   const { apiKeys, handleKeyRotation } = props
   const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (copied) setCopied(false)
+    }, 6000)
+    return () => clearTimeout(timer)
+  }, [copied])
 
   return (
     <Panel border className="apikeyCard">
