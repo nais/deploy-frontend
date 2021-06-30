@@ -3,7 +3,7 @@ import Panel from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
 import { KeyIcon, AddCircle } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
-import { Knapp } from 'nav-frontend-knapper'
+import { Fareknapp, Knapp } from 'nav-frontend-knapper'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import moment from 'moment'
 import './apikey-styles.less'
@@ -63,7 +63,7 @@ function TeamCard(props: Props) {
       </Normaltekst>
       <div className="apiButtons">
         <div className="newKeyButton">
-          <Knapp mini onClick={() => setCopied(true)}>
+          <Knapp mini onClick={() => setCopied(true)} style={{ transform: 'translateY(-2px)' }}>
             {copied ? <CopyFilled /> : <Copy />}
             <CopyToClipboard text={key}>
               <span>{copied ? 'Copied...' : 'Copy key'}</span>
@@ -71,10 +71,10 @@ function TeamCard(props: Props) {
           </Knapp>
         </div>
         <div className="newKeyButton">
-          <Knapp mini onClick={() => handleKeyRotation(team)}>
+          <Fareknapp mini onClick={() => handleKeyRotation(team)}>
             <AddCircle />
             <span>Rotate key</span>
-          </Knapp>
+          </Fareknapp>
         </div>
       </div>
     </Panel>
