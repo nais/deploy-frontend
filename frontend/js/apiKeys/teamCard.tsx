@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Panel from 'nav-frontend-paneler'
 import { Normaltekst, Undertittel, Element, Feilmelding } from 'nav-frontend-typografi'
-import { KeyIcon, AddCircle } from '../ui/svg'
+import { KeyIcon } from '../ui/svg'
 import Lenke from 'nav-frontend-lenker'
 import { Fareknapp, Knapp } from 'nav-frontend-knapper'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import moment from 'moment'
 import './apikey-styles.less'
-import { Copy, CopyFilled } from '@navikt/ds-icons'
+import { Copy, CopyFilled, RefreshFilled } from '@navikt/ds-icons'
 
 const azureAdGroupUrl =
   'https://portal.azure.com/#blade/Microsoft_AAD_IAM/GroupDetailsMenuBlade/Overview/groupId/'
@@ -72,7 +72,7 @@ function TeamCard(props: Props) {
         </div>
         <div className="newKeyButton">
           <Fareknapp mini onClick={() => handleKeyRotation(team)}>
-            <AddCircle />
+            <RefreshFilled />
             <span>Rotate key</span>
           </Fareknapp>
         </div>
