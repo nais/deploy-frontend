@@ -1,10 +1,10 @@
-'use strict';
+'use strict'
 import React, { useEffect, useReducer } from 'react'
 import { logPageView } from '../amplitude.js'
 import { getDeployments, DeploymentList } from './deploymentAPI'
-import {deploymentReducer, initialState} from "./deploymentReducer";
-import DeploymentTable from "./deploymentFilteredTable";
-import FilterPanel from "./filterPanel";
+import { deploymentReducer, initialState } from './deploymentReducer'
+import DeploymentTable from './deploymentFilteredTable'
+import FilterPanel from './filterPanel'
 
 export default function Dashboard(props) {
   logPageView('/')

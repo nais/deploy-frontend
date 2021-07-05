@@ -1,6 +1,6 @@
 const enum HttpMethod {
   GET = 'GET',
-  POST = 'POST'
+  POST = 'POST',
 }
 
 const fetchUrl = async (url, method = HttpMethod.GET) => {
@@ -18,10 +18,10 @@ const fetchUrl = async (url, method = HttpMethod.GET) => {
   }
 }
 
-export const httpGet = url => {
+export const httpGet = (url) => {
   return fetchUrl(url, HttpMethod.GET)
 }
 
-export const httpPost = url => {
+export const httpPost = (url) => {
   return fetchUrl(url, HttpMethod.POST)
 }

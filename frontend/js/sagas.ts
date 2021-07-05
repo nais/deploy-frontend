@@ -11,7 +11,7 @@ import {
   APIKEY_ROTATE_REQUEST_FAILED,
   USERINFO_REQUEST,
   USERINFO_REQUEST_SUCCESS,
-  USERINFO_REQUEST_FAILED
+  USERINFO_REQUEST_FAILED,
 } from './config/actionTypes'
 
 const apiKeysApiPath = '/downstream/api/v1/apikey/'

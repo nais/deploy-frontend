@@ -1,7 +1,7 @@
 import React from 'react'
 import Veilederpanel from 'nav-frontend-veilederpanel'
 import './apikey-styles.less'
-import {  Normaltekst } from 'nav-frontend-typografi'
+import { Normaltekst } from 'nav-frontend-typografi'
 import Lenke from 'nav-frontend-lenker'
 import { Veileder } from '../ui/svg'
 
