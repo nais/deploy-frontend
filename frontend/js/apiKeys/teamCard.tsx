@@ -7,7 +7,7 @@ import { Fareknapp, Knapp } from 'nav-frontend-knapper'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import moment from 'moment'
 import './apikey-styles.less'
-import { Copy, CopyFilled, RefreshFilled } from '@navikt/ds-icons'
+import { Copy, CopyFilled, EyeFilled, EyeScreenedFilled, RefreshFilled } from '@navikt/ds-icons'
 
 const azureAdGroupUrl =
   'https://portal.azure.com/#blade/Microsoft_AAD_IAM/GroupDetailsMenuBlade/Overview/groupId/'
@@ -38,6 +38,7 @@ const findNewestKey = (apiKeys) => {
 
 function TeamCard(props: Props) {
   const [copied, setCopied] = useState(false)
+  const [hidden, setHidden] = useState(true)
   const { apiKeys, handleKeyRotation } = props
   const { team, key, expires, groupId, created } = findNewestKey(apiKeys)
 
@@ -51,10 +52,17 @@ function TeamCard(props: Props) {
   return (
     <Panel border className="apikeyCard">
       <Undertittel>{team}</Undertittel>
-      <Element style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
+      <div className="keyWrapper">
         <KeyIcon />
-        {key}
-      </Element>
+        <Element className="key">{hidden ? '*'.repeat(key.length) : key}</Element>
+        <div className="eye">
+          {hidden ? (
+            <EyeFilled onClick={() => setHidden(!hidden)} />
+          ) : (
+            <EyeScreenedFilled onClick={() => setHidden(!hidden)} />
+          )}
+        </div>
+      </div>
       <KeyStatus expiresTimestamp={expires} />
       <Normaltekst>{`Created ${formatTimestamp(created)}`}</Normaltekst>
       <Element className="aad">{`Azure AD team id`}</Element>
