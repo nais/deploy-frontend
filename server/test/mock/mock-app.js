@@ -16,9 +16,9 @@ async function configure() {
 
   app.use(
     httpLogger('dev', {
-      skip: function(req, res) {
+      skip: function (req, res) {
         return res.statusCode < 400
-      }
+      },
     })
   )
 
@@ -27,6 +27,7 @@ async function configure() {
   app.use('/', router)
   router.get('/me', userInfoMock.getUserInfo())
   router.get('/api/v1/apikey', apiKeyMock.getApiKeys())
+  router.get('/downstream/api/v1/dashboard/deployments', apiKeyMock.getDeployments())
   router.get('/downstream/api/v1/apikey/', apiKeyMock.getApiKeys())
   router.post('/downstream/api/v1/apikey/:team', apiKeyMock.rotate())
   router.post('/api/v1/apikey/:team', apiKeyMock.rotate())
