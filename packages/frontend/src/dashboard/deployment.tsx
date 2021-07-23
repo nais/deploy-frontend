@@ -1,33 +1,33 @@
 import 'nav-frontend-tabell-style'
 import React from 'react'
 import TimeAgo from 'react-timeago'
-import { Badge } from 'react-bootstrap'
+import Etikett from 'nav-frontend-etiketter'
 import FilterButton from './filterButton'
 import { DeploymentData } from './deploymentAPI'
 
 const StatusBadge = ({ statuses }) => {
   if (statuses == null)
     return (
-      <Badge pill variant="secondary">
+      <Etikett mini type="advarsel">
         undefined
-      </Badge>
+      </Etikett>
     )
 
   const buttonStyles = {
-    error: 'danger',
-    failure: 'danger',
-    queued: 'warning',
-    pending: 'warning',
-    in_progress: 'warning',
-    success: 'success',
+    error: 'advarsel',
+    failure: 'advarsel',
+    queued: 'info',
+    pending: 'info',
+    in_progress: 'info',
+    success: 'suksess',
   }
 
   const stateText = statuses[0].status
 
   return (
-    <Badge pill variant={stateText in buttonStyles ? buttonStyles[stateText] : null}>
+    <Etikett mini type={stateText in buttonStyles ? buttonStyles[stateText] : 'fokus'}>
       {stateText}
-    </Badge>
+    </Etikett>
   )
 }
 
