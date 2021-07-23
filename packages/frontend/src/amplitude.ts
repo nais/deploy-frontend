@@ -33,6 +33,7 @@ function logAmplitudeEvent(eventName, eventData) {
 }
 
 export function logPageView(path) {
+  if (process.env.NODE_ENV !== 'production') return
   logAmplitudeEvent('pageview', {
     path: path,
   })

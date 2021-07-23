@@ -12,6 +12,7 @@
   "dependencies": {
     "@navikt/ds-icons": "^0.3.3",
     "amplitude-js": "^8.1.0",
+    "classnames": "^2.3.1",
     "nav-frontend-alertstriper": "^3.1.1",
     "nav-frontend-alertstriper-style": "^2.1.1",
     "nav-frontend-core": "^6.0.1",
@@ -51,6 +52,9 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.0.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/amplitude-js": "^8.0.1",
     "@types/jest": "^26.0.24",
     "@types/moment": "^2.13.0",
@@ -61,6 +65,7 @@
     "craco-less": "^1.17.1",
     "json-server": "^0.16.3",
     "moment": "^2.29.1",
+    "msw": "^0.33.0",
     "nodemon": "^2.0.12",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",

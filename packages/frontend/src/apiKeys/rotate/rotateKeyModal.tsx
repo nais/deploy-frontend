@@ -6,17 +6,26 @@ import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
 import './rotate-key-styles.less'
 
+const customStyles = {
+  content: {},
+}
+
+if (typeof window !== 'undefined') {
+  Modal.setAppElement('body')
+} else {
+  Modal.setAppElement('#root')
+}
+
 function RotateKeyModal(props: Props) {
   const { keyRotationStatus, onRequestClose, onRotatekey } = props
-  Modal.setAppElement(document.getElementById('root'))
+
   return (
     <Modal
       className="confirmationDialog"
-      //ariaHideApp={false}
       isOpen={keyRotationStatus.confirmationPending}
       onRequestClose={() => onRequestClose()}
-      closeButton={true}
       contentLabel="Confirm key rotation"
+      style={customStyles}
     >
       <Panel className="confirmationDialog">
         <AlertStripe type="advarsel" form="inline">

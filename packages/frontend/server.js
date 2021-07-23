@@ -8,13 +8,13 @@ server.use(middlewares)
 
 // Add custom routes before JSON Server router
 server.post('/downstream/api/v1/apikey/:team', (req, res) => {
-  setTimeout(() => res.statu(201).send(), 1000)
+  setTimeout(() => res.status(201).send(), 1000)
   // 'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message.'
   // res.status(500).send()
 })
 
 server.post('/api/v1/apikey/:team', (req, res) => {
-  setTimeout(() => res.statu(201).send(), 1000)
+  setTimeout(() => res.status(201).send(), 1000)
   // 'This is a hardcoded error (in apiKeyMock.js). Do not panic. We only use this for testing how error handling works in the frontend. And to make sure we can see this error message.'
   // res.status(500).send()
 })

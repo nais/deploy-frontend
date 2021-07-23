@@ -10,9 +10,7 @@
     "start-offline": "NODE_ENV=development nodemon bin/offline",
     "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
     "offline": "concurrently --kill-others \"yarn run start-offline\" \"yarn run build-watch\"",
-    "test": "jest",
-    "tdd": "jest --watch",
-    "start": "node  ./bin/www",
+    "start": "node ./bin/www",
     "prepare": "husky install"
   },
   "workspaces": [

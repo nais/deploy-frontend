@@ -7,7 +7,7 @@ import { Fareknapp, Knapp } from 'nav-frontend-knapper'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import moment from 'moment'
 import './apikey-styles.less'
-import { Copy, CopyFilled, EyeFilled, EyeScreenedFilled, RefreshFilled } from '@navikt/ds-icons'
+import { Copy, CopyFilled, EyeFilled, EyeScreenedFilled, RefreshFilled } from '@navikt/ds-icons/cjs'
 
 const azureAdGroupUrl =
   'https://portal.azure.com/#blade/Microsoft_AAD_IAM/GroupDetailsMenuBlade/Overview/groupId/'
