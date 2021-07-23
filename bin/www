@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const app = require('../server/app')
-const { host, logger } = require('../server/src/config')
+const app = require('../packages/server/app')
+const { host, logger } = require('../packages/server/src/config')
 const http = require('http')
 
 logger.info('Starting up...')

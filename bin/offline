@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const app = require('../server/test/mock/mock-app')
-const { logger } = require('../server/src/config')
+const app = require('../packages/server/test/mock/mock-app')
+const { logger } = require('../packages/server/src/config')
 const http = require('http')
 
 logger.info('Starting up offline server...')
