@@ -18,7 +18,7 @@ export interface dashboardState {
 
 export const initialState: dashboardState = {
   loading: true,
-  deployments: new Array(),
+  deployments: [],
   filters: new Map(),
   error: null,
 }

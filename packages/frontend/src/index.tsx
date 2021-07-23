@@ -1,37 +1,15 @@
 import React from 'react'
-import * as DOM from 'react-dom'
-import Header from './ui/header'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import ApiKeys from './apiKeys/apiKeys'
-import Dashboard from './dashboard/dashboard'
-import { Provider } from 'react-redux'
-import configureStore from './config/configureStore'
+import ReactDOM from 'react-dom'
+import { App } from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './styles.less'
-import { initAmplitude } from './amplitude.js'
+import { initAmplitude } from './amplitude'
 
 initAmplitude()
 
-const store = configureStore()
-
-function Application() {
-  return (
-    <Provider store={store}>
-      <Router>
-        <div className="mainWrapper">
-          <Header />
-          <Switch>
-            <Route path="/apikeys">
-              <ApiKeys />
-            </Route>
-            <Route path="/">
-              <Dashboard />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
-  )
-}
-
-DOM.render(<Application />, document.getElementById('root'))
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)

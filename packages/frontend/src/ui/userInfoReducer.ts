@@ -1,6 +1,6 @@
 import { USERINFO_REQUEST_SUCCESS, USERINFO_REQUEST_FAILED } from '../config/actionTypes'
 
-export default (
+const userInfoReducer = (
   state = {
     userName: '',
   },
@@ -22,3 +22,5 @@ export default (
       return state
   }
 }
+
+export default userInfoReducer

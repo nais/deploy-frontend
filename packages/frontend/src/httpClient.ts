@@ -1,4 +1,4 @@
-const enum HttpMethod {
+enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
 }
@@ -14,7 +14,7 @@ const fetchUrl = async (url, method = HttpMethod.GET) => {
     return ''
   } else {
     const errorMessageBody = await response.text()
-    throw `${errorMessageBody} (HTTP ${response.status} ${response.statusText})`
+    throw new Error(`${errorMessageBody} (HTTP ${response.status} ${response.statusText})`)
   }
 }
 

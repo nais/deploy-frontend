@@ -4,7 +4,7 @@ import {
   APIKEYS_REQUEST_FAILED,
 } from '../config/actionTypes'
 
-export default (
+const apiKeyReducer = (
   state = {
     data: [],
     status: '',
@@ -35,3 +35,5 @@ export default (
       return state
   }
 }
+
+export default apiKeyReducer

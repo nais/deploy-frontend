@@ -1,4 +1,3 @@
-'use strict'
 import 'nav-frontend-tabell-style'
 import React from 'react'
 import TimeAgo from 'react-timeago'

@@ -13,7 +13,7 @@ import AlertStripe from 'nav-frontend-alertstriper'
 import { Normaltekst, Element, Undertittel } from 'nav-frontend-typografi'
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import RotateKeyModal from './rotate/rotateKeyModal'
-import { logPageView } from '../amplitude.js'
+import { logPageView } from '../amplitude'
 
 const groupByTeam = (data: Array<any>) => {
   return data.reduce((result, currentValue) => {
@@ -58,7 +58,7 @@ export class ApiKeys extends Component<Props, {}> {
 
     return (
       <>
-        {fetchStatus == 'FETCHING' ? (
+        {fetchStatus === 'FETCHING' ? (
           <Undertittel>
             <NavFrontendSpinner type="XS" className="spinner" /> Loading...
           </Undertittel>

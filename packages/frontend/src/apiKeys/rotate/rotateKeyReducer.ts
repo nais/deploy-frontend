@@ -6,7 +6,7 @@ import {
   APIKEY_CANCEL_ROTATION,
 } from '../../config/actionTypes'
 
-export default (
+const rotateKeyReducer = (
   state = {
     status: '',
     errorMessage: '',
@@ -55,3 +55,5 @@ export default (
       return state
   }
 }
+
+export default rotateKeyReducer

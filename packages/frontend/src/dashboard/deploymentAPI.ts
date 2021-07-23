@@ -1,4 +1,3 @@
-'use strict'
 import * as z from 'zod'
 
 // TODO: Remove the data definitions which are not used by frontend

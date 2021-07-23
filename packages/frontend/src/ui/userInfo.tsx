@@ -5,10 +5,6 @@ import { USERINFO_REQUEST } from '../config/actionTypes'
 import './header-styles.less'
 
 class UserInfo extends Component<Props, {}> {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { dispatch } = this.props
     dispatch({ type: USERINFO_REQUEST })

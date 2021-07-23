@@ -1,4 +1,3 @@
-'use strict'
 import { FilterFilled } from '@navikt/ds-icons'
 import React from 'react'
 
