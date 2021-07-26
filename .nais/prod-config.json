@@ -5,6 +5,7 @@
     "https://deploy.nais.io/oauth2",
     "https://deploy.nais.io/logout",
     "https://deploy.nais.io/me",
+    "https://deploy.nais.io/apikeys",
     "https://deploy.nais.io/downstream"
   ],
   "reply-url": "https://deploy.nais.io/oauth2/callback",

@@ -5,6 +5,7 @@
     "https://deploy.dev-gcp.nais.io/oauth2",
     "https://deploy.dev-gcp.nais.io/logout",
     "https://deploy.dev-gcp.nais.io/me",
+    "https://deploy.dev-gcp.nais.io/apikeys",
     "https://deploy.dev-gcp.nais.io/downstream"
   ],
   "reply-url": "https://deploy.dev-gcp.nais.io/oauth2/callback",
