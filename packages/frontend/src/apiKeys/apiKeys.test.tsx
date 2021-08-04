@@ -1,11 +1,11 @@
 import React from 'react'
-import { ApiKeys } from '../apiKeys'
+import { ApiKeys } from './apiKeys'
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import {
   APIKEYS_REQUEST,
   APIKEY_ROTATE_CONFIRMATION,
   APIKEY_CANCEL_ROTATION,
-} from '../../config/actionTypes'
+} from '../config/actionTypes'
 
 const defaultProps = {
   apiKeys: [],
