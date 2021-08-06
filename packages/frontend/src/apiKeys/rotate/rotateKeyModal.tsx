@@ -1,4 +1,3 @@
-import React from 'react'
 import Modal from 'nav-frontend-modal'
 import Panel from 'nav-frontend-paneler'
 import { Fareknapp } from 'nav-frontend-knapper'
@@ -55,7 +54,7 @@ function RotateKeyModal(props: Props) {
   )
 }
 
-type Props = {
+export type Props = {
   keyRotationStatus: KeyRotationStatus
   onRequestClose: Function
   onRotatekey: Function
