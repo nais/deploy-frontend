@@ -1,5 +1,5 @@
 import 'nav-frontend-tabell-style'
-import React from 'react'
+
 import TimeAgo from 'react-timeago'
 import Etikett from 'nav-frontend-etiketter'
 import FilterButton from './filterButton'

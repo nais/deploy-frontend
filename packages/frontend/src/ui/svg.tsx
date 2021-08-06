@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const NaisLogo = () => (
   <svg
     version="1.1"

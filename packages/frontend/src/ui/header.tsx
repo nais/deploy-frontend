@@ -1,4 +1,3 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { NaisLogo } from './svg'
 import NavBar from './NavBar'

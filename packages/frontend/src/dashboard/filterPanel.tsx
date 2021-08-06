@@ -1,4 +1,3 @@
-import React from 'react'
 import { Close } from '@navikt/ds-icons'
 
 const FilterPanel = ({ dashboardState, dispatch }) => {

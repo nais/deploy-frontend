@@ -1,5 +1,4 @@
 import { FilterFilled } from '@navikt/ds-icons'
-import React from 'react'
 
 interface FilterButtonProps {
   team: string

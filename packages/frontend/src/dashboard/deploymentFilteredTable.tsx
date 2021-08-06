@@ -1,6 +1,5 @@
 import NavFrontendSpinner from 'nav-frontend-spinner'
 import Deployment from './deployment'
-import React from 'react'
 
 const DeploymentTable = ({ dashboardState, dispatch }) => {
   const deploymentFilter = (deployment, filters) => {

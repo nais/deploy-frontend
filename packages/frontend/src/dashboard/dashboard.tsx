@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { logPageView } from '../amplitude'
 import { getDeployments } from './deploymentAPI'
 import { deploymentReducer, initialState } from './deploymentReducer'
