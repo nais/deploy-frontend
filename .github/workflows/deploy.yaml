@@ -18,7 +18,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: '13.12.x'
+          node-version: '16.x'
       - name: Cache NPM dependencies
         uses: actions/cache@v1
         with:
@@ -27,9 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-cache-
       - name: Download dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Run tests
         run: yarn test
+      - name: Build
+        run: yarn build
       - name: Build docker image
         run: docker build . --tag $IMAGE
       - name: Login to Github package registry

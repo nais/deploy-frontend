@@ -6,10 +6,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "yarn workspaces run build",
+    "test": "CI=true yarn workspaces run test",
     "start-watch": "NODE_ENV=development nodemon bin/www",
-    "start-offline": "NODE_ENV=development nodemon bin/offline",
-    "dev": "concurrently --kill-others \"yarn run start-watch\" \"yarn run build-watch\"",
-    "offline": "concurrently --kill-others \"yarn run start-offline\" \"yarn run build-watch\"",
+    "offline": "yarn workspace nais-deploy-frontend run offline",
+    "prestart": "cp -R packages/frontend/build dist",
     "start": "node ./bin/www",
     "prepare": "husky install"
   },
@@ -22,16 +23,15 @@
     "concurrently": "^6.0.2",
     "husky": "^6.0.0",
     "jest": "26.6.0",
-    "lerna": "^4.0.0",
     "lint-staged": ">=10",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.12",
     "prettier": "^2.2.1",
     "typescript": "^4.2.4"
   },
   "nodemonConfig": {
     "ignore": [
       "dist/*",
-      "frontend/*"
+      "packages/frontend/*"
     ]
   },
   "lint-staged": {

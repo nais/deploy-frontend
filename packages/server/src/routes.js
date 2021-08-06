@@ -53,10 +53,10 @@ exports.setup = (authClient) => {
   reverseProxy.setup(router, authClient)
 
   // serve static files
-  router.use(express.static('dist'))
+  router.use(express.static(path.join(process.cwd(), 'dist')))
   //app.use('/static', express.static(path.join(__dirname, '../../../dist')))
   router.use('*', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, '../../dist') })
+    res.sendFile('index.html', { root: path.join(process.cwd(), 'dist') })
   })
 
   return router

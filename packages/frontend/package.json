@@ -6,7 +6,7 @@
   "scripts": {
     "offline": "concurrently --kill-others 'nodemon server.js' 'yarn start'",
     "start": "craco start",
-    "build": "craco build",
+    "build": "INLINE_RUNTIME_CHUNK=false craco build",
     "test": "craco test"
   },
   "dependencies": {
