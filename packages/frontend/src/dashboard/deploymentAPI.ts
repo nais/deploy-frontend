@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { z } from 'zod'
 
 // TODO: Remove the data definitions which are not used by frontend
 //       (to prevent gratuitous validation errors)
