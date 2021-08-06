@@ -34,6 +34,8 @@ server.use(
   jsonServer.rewriter({
     '/api/v1/apikey': '/apikeys',
     '/downstream/api/v1/apikey/': '/apikeys',
+    '/api/v1/dashboard/deployments': '/deployments',
+    '/api/v1/dashboard/deployments?': '/deployments',
     '/downstream/api/v1/dashboard/deployments': '/deployments',
     '/downstream/api/v1/dashboard/deployments?': '/deployments',
   })

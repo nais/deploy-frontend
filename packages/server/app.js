@@ -42,13 +42,16 @@ async function configure() {
   app.set('trust proxy', 1)
   app.use(passport.initialize())
   app.use(passport.session())
-  const azureAuthClient = await client()
-  const azureOidcStrategy = strategy(azureAuthClient)
-  passport.use('azureOidc', azureOidcStrategy)
+  if (host.authenticationEnabled) {
+    const azureAuthClient = await client()
+    const azureOidcStrategy = strategy(azureAuthClient)
+    passport.use('azureOidc', azureOidcStrategy)
+    app.use('/', setup(azureAuthClient))
+  } else {
+    app.use('/', setup(null))
+  }
   passport.serializeUser((user, done) => done(null, user))
   passport.deserializeUser((user, done) => done(null, user))
-
-  app.use('/', setup(azureAuthClient))
 
   app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
 

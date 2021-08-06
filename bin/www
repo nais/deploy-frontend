@@ -32,5 +32,5 @@ function onError(error) {
 
 function onListening() {
   let addr = server.address()
-  logger.info(`Listening on ${host.name}:${addr.port}`)
+  logger.info(`Listening on http://${host.name}:${addr.port}`)
 }
