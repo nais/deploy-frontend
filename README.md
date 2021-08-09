@@ -20,6 +20,8 @@ Go to `http://localhost:3000` to show the running web application.
 
 Requires a valid .env file with Azure AD config, the bare minimum `.env` file can be copied from `.env.example` so that the Express application starts.
 
+**Note:** this requires you to have built the frontend, run `yarn build` first.
+
 ```
 yarn start
 ```

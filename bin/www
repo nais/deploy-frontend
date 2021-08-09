@@ -3,8 +3,14 @@
 const app = require('../packages/server/app')
 const { host, logger } = require('../packages/server/src/config')
 const http = require('http')
+const { existsSync } = require('fs')
+const path = require('path')
 
 logger.info('Starting up...')
+
+if (!existsSync(path.join(process.cwd(), 'dist'))) {
+  throw new Error("Missing 'dist/' folder in project root, build the frontend first")
+}
 
 app.set('port', host.port)
 
