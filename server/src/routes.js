@@ -56,7 +56,7 @@ exports.setup = (authClient) => {
   router.use(express.static('dist'))
   //app.use('/static', express.static(path.join(__dirname, '../../../dist')))
   router.use('*', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, '../../dist') })
+    res.sendFile('index.html', { root: path.join(__dirname, '../../../dist') })
   })
 
   return router
