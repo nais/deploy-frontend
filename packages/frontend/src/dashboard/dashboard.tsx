@@ -14,6 +14,12 @@ export default function Dashboard(props) {
   const [dashboardState, deploymentsDispatch] = useReducer(deploymentReducer, initialState)
 
   useEffect(() => {
+    if (teamFilter !== null) {
+      deploymentsDispatch({ type: 'FILTER_ADD', value: teamFilter })
+    }
+  }, [teamFilter])
+
+  useEffect(() => {
     getDeployments(dashboardState.filters)
       .then((deployments) => {
         deploymentsDispatch({ type: 'FETCH_SUCCESS', payload: deployments })
@@ -30,11 +36,6 @@ export default function Dashboard(props) {
       })
   }, [dashboardState.filters])
 
-  useEffect(() => {
-    if (teamFilter !== null) {
-      deploymentsDispatch({ type: 'FILTER_ADD', value: teamFilter })
-    }
-  }, [teamFilter])
   if (dashboardState.error) {
     return <div className={'mainContent'}>{dashboardState.error}</div>
   }
