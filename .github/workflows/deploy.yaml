@@ -69,6 +69,8 @@ jobs:
     name: Deploy to ci-gcp
     needs: build-image
     runs-on: ubuntu-latest
+    # soft-disable deployments to ci for now. just delete the following line to enable it again
+    if: ${{ github.ref == 'refs/heads/ci' }} 
 
     steps:
       - uses: actions/checkout@v2
