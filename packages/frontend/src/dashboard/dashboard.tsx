@@ -8,16 +8,13 @@ import FilterPanel from './filterPanel'
 export default function Dashboard(props) {
   logPageView('/')
 
+  const [dashboardState, deploymentsDispatch] = useReducer(deploymentReducer, initialState)
   const params = new URLSearchParams(window.location.search)
   const teamFilter = params.get('team')
 
-  const [dashboardState, deploymentsDispatch] = useReducer(deploymentReducer, initialState)
-
-  useEffect(() => {
-    if (teamFilter !== null) {
-      deploymentsDispatch({ type: 'FILTER_ADD', value: teamFilter })
-    }
-  }, [teamFilter])
+  if (teamFilter !== null) {
+    dashboardState.filters.set('team', teamFilter)
+  }
 
   useEffect(() => {
     getDeployments(dashboardState.filters)
