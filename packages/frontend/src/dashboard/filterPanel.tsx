@@ -1,6 +1,19 @@
 import { Close } from '@navikt/ds-icons'
+import { useHistory, useLocation } from 'react-router'
 
 const FilterPanel = ({ dashboardState, dispatch }) => {
+  const location = useLocation()
+  const history = useHistory()
+
+  const removeFilter = (value) => {
+    const queryParams = new URLSearchParams(location.search)
+    if (queryParams.has('team')) {
+      queryParams.delete('team')
+      history.replace({ search: queryParams.toString() })
+    }
+    dispatch({ type: 'FILTER_REMOVE', value: value })
+  }
+
   const emptyListStyle: React.CSSProperties = {
     fontStyle: 'italic',
     display: 'inline-block',
@@ -25,11 +38,7 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
     <div>
       <div style={emptyListStyle}>Filters:</div>
       {Array.from(dashboardState.filters.entries()).map(([key, value]) => (
-        <div
-          style={buttonStyle}
-          key={`${key}:${value}`}
-          onClick={() => dispatch({ type: 'FILTER_REMOVE', value: value })}
-        >
+        <div style={buttonStyle} key={`${key}:${value}`} onClick={() => removeFilter(value)}>
           <Close style={{ fontSize: '.7rem', marginRight: '.5em' }} />
           <span>
             {key}: {value}

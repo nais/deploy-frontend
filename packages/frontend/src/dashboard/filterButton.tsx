@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router'
 import { FilterFilled } from '@navikt/ds-icons'
 
 interface FilterButtonProps {
@@ -7,6 +8,12 @@ interface FilterButtonProps {
 }
 
 const FilterButton = ({ team, filterDispatch, isSelected }: FilterButtonProps) => {
+  const history = useHistory()
+
+  const addTeam = () => {
+    history.replace({ search: `team=${team}` })
+    filterDispatch({ type: 'FILTER_ADD', value: team })
+  }
   const tdStyle: React.CSSProperties = {
     background: '#eee',
     whiteSpace: 'nowrap',
@@ -19,7 +26,7 @@ const FilterButton = ({ team, filterDispatch, isSelected }: FilterButtonProps) =
     cursor: 'pointer',
   }
   return (
-    <div style={tdStyle} onClick={() => filterDispatch({ type: 'FILTER_ADD', value: team })}>
+    <div style={tdStyle} onClick={() => addTeam()}>
       <FilterFilled style={{ fontSize: '.7rem', marginRight: '.125em' }} /> {team}
     </div>
   )
