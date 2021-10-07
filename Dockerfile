@@ -1,32 +1,21 @@
-FROM node:14.16-alpine as frontend-builder
-WORKDIR /home/app
-COPY ./node_modules ./node_modules
-COPY ./tsconfig.json ./
-COPY ./package.json ./
-COPY ./yarn.lock ./
-COPY ./.babelrc ./
-COPY ./frontend ./frontend
-RUN yarn run build
+FROM node:16-alpine
 
-FROM node:14-alpine as api-builder
 WORKDIR /home/app
-COPY ./tsconfig.json ./
 COPY ./package.json ./
 COPY ./yarn.lock ./
+COPY ./packages/frontend/package.json ./packages/frontend/package.json
+COPY ./packages/server/package.json ./packages/server/package.json
 COPY ./bin ./bin
-COPY ./server/ ./server
-RUN yarn install --production=true
 
-FROM node:14-alpine
+RUN yarn install --frozen-lockfile
+
+COPY ./packages ./packages
+
 ENV NODE_ENV=production
 EXPOSE 8080
 WORKDIR /home/app
 
-COPY ./package.json ./
-COPY ./yarn.lock ./
-COPY --from=frontend-builder /home/app/dist/ ./dist/
-COPY --from=api-builder /home/app/server ./server
-COPY --from=api-builder /home/app/bin ./bin
-COPY --from=api-builder /home/app/node_modules ./node_modules
+RUN yarn workspaces run build
+RUN cp -R packages/frontend/build dist
 
 CMD ["node", "./bin/www"]

@@ -1,10 +1,16 @@
 #!/usr/bin/env node
 
-const app = require('../server/app')
-const { host, logger } = require('../server/src/config')
+const app = require('../packages/server/app')
+const { host, logger } = require('../packages/server/src/config')
 const http = require('http')
+const { existsSync } = require('fs')
+const path = require('path')
 
 logger.info('Starting up...')
+
+if (!existsSync(path.join(process.cwd(), 'dist'))) {
+  throw new Error("Missing 'dist/' folder in project root, build the frontend first")
+}
 
 app.set('port', host.port)
 
@@ -32,5 +38,5 @@ function onError(error) {
 
 function onListening() {
   let addr = server.address()
-  logger.info(`Listening on ${host.name}:${addr.port}`)
+  logger.info(`Listening on http://${host.name}:${addr.port}`)
 }
