@@ -5,6 +5,7 @@
     "https://deploy.ci.nav.no/oauth2",
     "https://deploy.ci.nav.no/logout",
     "https://deploy.ci.nav.no/me",
+    "https://deploy.ci.nav.no/apikeys",
     "https://deploy.ci.nav.no/downstream"
   ],
   "reply-url": "https://deploy.ci.nav.no/oauth2/callback",
