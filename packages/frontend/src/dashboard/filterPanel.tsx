@@ -5,13 +5,13 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
   const location = useLocation()
   const history = useHistory()
 
-  const removeFilter = (value) => {
+  const removeFilter = (key, value) => {
     const queryParams = new URLSearchParams(location.search)
-    if (queryParams.has('team')) {
-      queryParams.delete('team')
+    if (queryParams.has(key)) {
+      queryParams.delete(key)
       history.replace({ search: queryParams.toString() })
     }
-    dispatch({ type: 'FILTER_REMOVE', value: value })
+    dispatch({ type: `FILTER_REMOVE_${key.toUpperCase()}`, value: value })
   }
 
   const emptyListStyle: React.CSSProperties = {
@@ -38,7 +38,7 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
     <div>
       <div style={emptyListStyle}>Filters:</div>
       {Array.from(dashboardState.filters.entries()).map(([key, value]) => (
-        <div style={buttonStyle} key={`${key}:${value}`} onClick={() => removeFilter(value)}>
+        <div style={buttonStyle} key={`${key}:${value}`} onClick={() => removeFilter(key, value)}>
           <Close style={{ fontSize: '.7rem', marginRight: '.5em' }} />
           <span>
             {key}: {value}

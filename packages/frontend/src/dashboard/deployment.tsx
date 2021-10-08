@@ -104,9 +104,15 @@ const Deployment = ({ deployment, dispatch }: DeploymentProps) => {
         <TimeAgo date={deployment.deployment.created} />
       </td>
       <td>
-        <FilterButton filterDispatch={dispatch} team={deployment.deployment.team} />
+        <FilterButton filterDispatch={dispatch} item={deployment.deployment.team} type="team" />
       </td>
-      <td>{deployment.deployment.cluster}</td>
+      <td>
+        <FilterButton
+          filterDispatch={dispatch}
+          item={deployment.deployment.cluster}
+          type="cluster"
+        />
+      </td>
       <td>
         <StatusBadge statuses={deployment.statuses} />
       </td>

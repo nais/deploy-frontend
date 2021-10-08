@@ -1,18 +1,22 @@
-import { useHistory } from 'react-router'
+import { useHistory, useLocation } from 'react-router'
 import { FilterFilled } from '@navikt/ds-icons'
 
 interface FilterButtonProps {
-  team: string
+  item: string | null
+  type: string
   filterDispatch: any
   isSelected?: boolean
 }
 
-const FilterButton = ({ team, filterDispatch, isSelected }: FilterButtonProps) => {
+const FilterButton = ({ item, filterDispatch, type, isSelected }: FilterButtonProps) => {
   const history = useHistory()
+  const location = useLocation()
 
-  const addTeam = () => {
-    history.replace({ search: `team=${team}` })
-    filterDispatch({ type: 'FILTER_ADD', value: team })
+  const addFilter = () => {
+    const params = new URLSearchParams(location.search)
+    params.append(type, item!!)
+    history.replace({ search: params.toString() })
+    filterDispatch({ type: `FILTER_ADD_${type.toUpperCase()}`, value: item })
   }
   const tdStyle: React.CSSProperties = {
     background: '#eee',
@@ -26,8 +30,8 @@ const FilterButton = ({ team, filterDispatch, isSelected }: FilterButtonProps) =
     cursor: 'pointer',
   }
   return (
-    <div style={tdStyle} onClick={() => addTeam()}>
-      <FilterFilled style={{ fontSize: '.7rem', marginRight: '.125em' }} /> {team}
+    <div style={tdStyle} onClick={() => addFilter()}>
+      <FilterFilled style={{ fontSize: '.7rem', marginRight: '.125em' }} /> {item}
     </div>
   )
 }

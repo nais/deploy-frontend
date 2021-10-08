@@ -11,9 +11,13 @@ export default function Dashboard(props) {
   const [dashboardState, deploymentsDispatch] = useReducer(deploymentReducer, initialState)
   const params = new URLSearchParams(window.location.search)
   const teamFilter = params.get('team')
+  const clusterFilter = params.get('cluster')
 
   if (teamFilter !== null) {
     dashboardState.filters.set('team', teamFilter)
+  }
+  if (clusterFilter !== null) {
+    dashboardState.filters.set('cluster', clusterFilter)
   }
 
   useEffect(() => {

@@ -29,7 +29,7 @@ server.use(
     '/downstream/api/v1/apikey/': '/apikeys',
     '/api/v1/dashboard/deployments?': '/deployments',
     '/downstream/api/v1/dashboard/deployments?': '/deployments',
-    '/downstream/api/v1/dashboard/deployments?*': '/deployments/$1',
+    '/downstream/api/v1/dashboard/deployments?*': '/deployments',
   })
 )
 
@@ -46,12 +46,26 @@ server.post('/api/v1/apikey/:team', (req, res) => {
   // res.status(500).send()
 })
 
-server.get('/deployments/:team', (req, res) => {
-  const {
-    params: { team },
-  } = req
-  const pretty = filterComponent(team)
-  const filtered = data.deployments.deployments.filter((d) => d.deployment.team === pretty)
+server.get('/deployments', (req, res) => {
+  teams = req.query['team']
+  clusters = req.query['cluster']
+
+  if (teams !== undefined) {
+    teams = teams.split(',').filter((team) => team !== '')
+  } else {
+    teams = []
+  }
+  if (clusters !== undefined) {
+    clusters = clusters.split(',').filter((cluster) => cluster !== '')
+  } else {
+    clusters = []
+  }
+
+  console.log(teams, clusters)
+
+  const filtered = data.deployments.deployments
+    .filter((d) => teams.length === 0 || teams.indexOf(d.deployment.team) !== -1)
+    .filter((d) => clusters.length === 0 || clusters.indexOf(d.deployment.cluster) !== -1)
 
   res.status(200).send({ deployments: filtered })
 })

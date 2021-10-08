@@ -1,8 +1,10 @@
 import { DeploymentList } from './deploymentAPI'
 
 type DeploymentFilterChange =
-  | { type: 'FILTER_ADD'; value: string }
-  | { type: 'FILTER_REMOVE'; value: string }
+  | { type: 'FILTER_ADD_TEAM'; value: string }
+  | { type: 'FILTER_REMOVE_TEAM'; value: string }
+  | { type: 'FILTER_ADD_CLUSTER'; value: string }
+  | { type: 'FILTER_REMOVE_CLUSTER'; value: string }
   | { type: 'FILTER_CLEAR' }
 
 type FetchResult =
@@ -42,7 +44,7 @@ export const deploymentReducer = (
         filters: state.filters,
         error: action.error,
       }
-    case 'FILTER_REMOVE':
+    case 'FILTER_REMOVE_TEAM':
       const removeFilters = new Map(state.filters)
       removeFilters.delete('team')
       return {
@@ -51,13 +53,31 @@ export const deploymentReducer = (
         filters: removeFilters,
         error: state.error,
       }
-    case 'FILTER_ADD':
-      const addFilters = new Map(state.filters)
-      addFilters.set('team', action.value)
+    case 'FILTER_ADD_TEAM':
+      const newTeamFilters = new Map(state.filters)
+      newTeamFilters.set('team', action.value)
       return {
         loading: true,
         deployments: state.deployments,
-        filters: addFilters,
+        filters: newTeamFilters,
+        error: state.error,
+      }
+    case 'FILTER_ADD_CLUSTER':
+      const newClusterFilters = new Map(state.filters)
+      newClusterFilters.set('cluster', action.value)
+      return {
+        loading: true,
+        deployments: state.deployments,
+        filters: newClusterFilters,
+        error: state.error,
+      }
+    case 'FILTER_REMOVE_CLUSTER':
+      const removeClusterFilters = new Map(state.filters)
+      removeClusterFilters.delete('cluster')
+      return {
+        loading: true,
+        deployments: state.deployments,
+        filters: removeClusterFilters,
         error: state.error,
       }
     default:
