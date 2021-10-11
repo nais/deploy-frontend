@@ -10,7 +10,7 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
     if (queryValue !== null) {
       ret = queryValue
         .split(',')
-        .filter((val) => val != value)
+        .filter((val) => val !== value)
         .join()
     }
     if (ret === '') {
