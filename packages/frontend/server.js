@@ -61,8 +61,6 @@ server.get('/deployments', (req, res) => {
     clusters = []
   }
 
-  console.log(teams, clusters)
-
   const filtered = data.deployments.deployments
     .filter((d) => teams.length === 0 || teams.indexOf(d.deployment.team) !== -1)
     .filter((d) => clusters.length === 0 || clusters.indexOf(d.deployment.cluster) !== -1)

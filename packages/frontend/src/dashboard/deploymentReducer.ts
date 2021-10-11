@@ -29,6 +29,7 @@ export const deploymentReducer = (
   state: dashboardState,
   action: DeploymentFilterChange | FetchResult
 ) => {
+  const filters = new Map(state.filters)
   switch (action.type) {
     case 'FETCH_SUCCESS':
       return {
@@ -45,39 +46,35 @@ export const deploymentReducer = (
         error: action.error,
       }
     case 'FILTER_REMOVE_TEAM':
-      const removeFilters = new Map(state.filters)
-      removeFilters.delete('team')
+      filters.delete('team')
       return {
         loading: true,
         deployments: state.deployments,
-        filters: removeFilters,
+        filters: filters,
         error: state.error,
       }
     case 'FILTER_ADD_TEAM':
-      const newTeamFilters = new Map(state.filters)
-      newTeamFilters.set('team', action.value)
+      filters.set('team', action.value)
       return {
         loading: true,
         deployments: state.deployments,
-        filters: newTeamFilters,
+        filters: filters,
         error: state.error,
       }
     case 'FILTER_ADD_CLUSTER':
-      const newClusterFilters = new Map(state.filters)
-      newClusterFilters.set('cluster', action.value)
+      filters.set('cluster', action.value)
       return {
         loading: true,
         deployments: state.deployments,
-        filters: newClusterFilters,
+        filters: filters,
         error: state.error,
       }
     case 'FILTER_REMOVE_CLUSTER':
-      const removeClusterFilters = new Map(state.filters)
-      removeClusterFilters.delete('cluster')
+      filters.delete('cluster')
       return {
         loading: true,
         deployments: state.deployments,
-        filters: removeClusterFilters,
+        filters: filters,
         error: state.error,
       }
     default:

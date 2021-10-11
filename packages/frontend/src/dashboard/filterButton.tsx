@@ -14,7 +14,7 @@ const FilterButton = ({ item, filterDispatch, type, isSelected }: FilterButtonPr
 
   const addFilter = () => {
     const params = new URLSearchParams(location.search)
-    params.append(type, item!!)
+    params.set(type, item!!)
     history.replace({ search: params.toString() })
     filterDispatch({ type: `FILTER_ADD_${type.toUpperCase()}`, value: item })
   }
