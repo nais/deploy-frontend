@@ -2,7 +2,7 @@ import NavFrontendSpinner from 'nav-frontend-spinner'
 import Deployment from './deployment'
 
 const DeploymentTable = ({ dashboardState, dispatch }) => {
-  const deploymentFilter = (deployment, filters) => {
+  /*   const deploymentFilter = (deployment, filters) => {
     for (let [key, value] of filters) {
       if (key === 'team') {
         if (deployment.deployment.team !== value) {
@@ -11,7 +11,7 @@ const DeploymentTable = ({ dashboardState, dispatch }) => {
       }
     }
     return true
-  }
+  } */
 
   const loadingSpinner = () => (
     <tr>
@@ -36,7 +36,8 @@ const DeploymentTable = ({ dashboardState, dispatch }) => {
         </thead>
         <tbody>
           {dashboardState.deployments
-            .filter((x) => deploymentFilter(x, dashboardState.filters))
+            // filter appears unnecessary since the backend handles filtering on the db level
+            //.filter((x) => deploymentFilter(x, dashboardState.filters))
             .map((x) => (
               <Deployment key={x.deployment.id} dispatch={dispatch} deployment={x} />
             ))}
