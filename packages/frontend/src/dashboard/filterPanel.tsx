@@ -5,13 +5,33 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
   const location = useLocation()
   const history = useHistory()
 
+  const removeValue = (queryValue: string | null, value: string): string | null => {
+    var ret = ''
+    if (queryValue !== null) {
+      ret = queryValue
+        .split(',')
+        .filter((val) => val != value)
+        .join()
+    }
+    if (ret === '') {
+      return null
+    }
+    return ret
+  }
+
   const removeFilter = (key, value) => {
     const queryParams = new URLSearchParams(location.search)
     if (queryParams.has(key)) {
-      queryParams.delete(key)
+      const newValue = removeValue(queryParams.get(key), value)
+      if (newValue !== null) {
+        queryParams.set(key, newValue)
+        dispatch({ type: `FILTER_ADD_${key.toUpperCase()}`, value: newValue })
+      } else {
+        queryParams.delete(key)
+        dispatch({ type: `FILTER_REMOVE_${key.toUpperCase()}`, value: value })
+      }
       history.replace({ search: queryParams.toString() })
     }
-    dispatch({ type: `FILTER_REMOVE_${key.toUpperCase()}`, value: value })
   }
 
   const emptyListStyle: React.CSSProperties = {
@@ -37,14 +57,16 @@ const FilterPanel = ({ dashboardState, dispatch }) => {
   ) : (
     <div>
       <div style={emptyListStyle}>Filters:</div>
-      {Array.from(dashboardState.filters.entries()).map(([key, value]) => (
-        <div style={buttonStyle} key={`${key}:${value}`} onClick={() => removeFilter(key, value)}>
-          <Close style={{ fontSize: '.7rem', marginRight: '.5em' }} />
-          <span>
-            {key}: {value}
-          </span>
-        </div>
-      ))}
+      {Array.from(dashboardState.filters.entries()).map(([key, values]) =>
+        values.split(',').map((value) => (
+          <div style={buttonStyle} key={`${key}:${value}`} onClick={() => removeFilter(key, value)}>
+            <Close style={{ fontSize: '.7rem', marginRight: '.5em' }} />
+            <span>
+              {key}: {value}
+            </span>
+          </div>
+        ))
+      )}
     </div>
   )
 }
