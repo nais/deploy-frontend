@@ -2,11 +2,10 @@ const authUtils = require('./auth/auth-utils')
 const { host, proxyConfig, logger } = require('./config')
 const proxy = require('express-http-proxy')
 
-const options = (api, authClient) => ({
-  parseReqBody: false,
-  proxyReqOptDecorator: (options, req) => {
-    if (host.authenticationEnabled) {
-      return new Promise((resolve, reject) =>
+const proxyReqOptDecorator = (options, req) => {
+  if (host.authenticationEnabled) {
+    if (host.authenticationProvider === 'azure') {
+      return new Promise((resolve, reject) => {
         authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
           (access_token) => {
             options.headers.Authorization = `Bearer ${access_token}`
@@ -14,11 +13,21 @@ const options = (api, authClient) => ({
           },
           (error) => reject(error)
         )
-      )
-    } else {
-      return new Promise((resolve, reject) => resolve(options))
+      })
+    } else if (host.authenticationProvider === 'google') {
+      return new Promise((resolve, reject) => {
+        options.headers.XApiKey = proxy.ApiKey
+        resolve(options)
+      })
     }
-  },
+  } else {
+    return new Promise((resolve, reject) => resolve(options))
+  }
+}
+
+const options = (api, authClient) => ({
+  parseReqBody: false,
+  proxyReqOptDecorator,
   proxyReqPathResolver: (req) => {
     const newPath = req.originalUrl.replace(api.path, '').replace('//', '/')
     logger.debug(`Proxying request from '${req.originalUrl}' to '${newPath}'`)

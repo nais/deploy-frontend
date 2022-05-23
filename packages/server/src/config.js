@@ -14,35 +14,57 @@ const parseStringAsBool = (trueOrFalseString) => {
   return typeof trueOrFalseString === 'string' && trueOrFalseString.toLowerCase() === 'true'
 }
 
+const authEnabled = parseStringAsBool(envVar('AUTHENTICATION_ENABLED', false))
+const authProvider = envVar('AUTHENTICATION_PROVIDER', authEnabled)
+
+const isAuthEnabled = (provider) => {
+  return provider === authProvider && authEnabled
+}
+
 const host = {
   name: envVar('HOST', false) || 'localhost',
   port: parseInt(envVar('PORT', false), 10) || 8081,
   sessionKey: envVar('COOKIE_KEY'),
   cookieName: 'deploy-frontend',
-  authenticationEnabled: parseStringAsBool(envVar('AUTHENTICATION_ENABLED', false)),
+  authenticationEnabled: authEnabled,
+  authenticationProvider: authProvider,
 }
 
 const azureAd = {
-  discoveryUrl: envVar('AZURE_APP_WELL_KNOWN_URL', host.authenticationEnabled),
-  clientId: envVar('AZURE_APP_CLIENT_ID', host.authenticationEnabled),
-  clientSecret: envVar('AZURE_APP_CLIENT_SECRET', host.authenticationEnabled),
-  redirectUri: envVar('AAD_REDIRECT_URL', host.authenticationEnabled),
-  logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL', host.authenticationEnabled),
+  discoveryUrl: envVar('AZURE_APP_WELL_KNOWN_URL', isAuthEnabled('azure')),
+  clientId: envVar('AZURE_APP_CLIENT_ID', isAuthEnabled('azure')),
+  clientSecret: envVar('AZURE_APP_CLIENT_SECRET', isAuthEnabled('azure')),
+  redirectUri: envVar('AAD_REDIRECT_URL', isAuthEnabled('azure')),
+  logoutRedirectUri: envVar('AAD_LOGOUT_REDIRECT_URL', isAuthEnabled('azure')),
   tokenEndpointAuthMethod: 'client_secret_post',
   responseTypes: ['code'],
   responseMode: 'query',
+  providerName: 'azureOidc',
+}
+
+const google = {
+  discoveryUrl: envVar('GOOGLE_WELL_KNOWN_URL', isAuthEnabled('google')),
+  clientId: envVar('GOOGLE_CLIENT_ID', isAuthEnabled('google')),
+  clientSecret: envVar('GOOGLE_CLIENT_SECRET', isAuthEnabled('google')),
+  redirectUri: envVar('GOOGLE_REDIRECT_URL', isAuthEnabled('google')),
+  logoutRedirectUri: envVar('GOOGLE_LOGOUT_REDIRECT_URL', isAuthEnabled('google')),
+  tokenEndpointAuthMethod: 'client_secret_post',
+  responseTypes: ['code'],
+  responseMode: 'query',
+  providerName: 'googleOidc',
 }
 
 const proxyConfig = () => {
   return {
-    clientId: envVar('DOWNSTREAM_API_CLIENT_ID'),
+    clientId: envVar('DOWNSTREAM_API_CLIENT_ID', isAuthEnabled('azure')),
+    apiKey: envVar('DOWNSTREAM_API_KEY', isAuthEnabled('google')),
     path: 'downstream',
     url: envVar('DOWNSTREAM_API_URL'),
   }
 }
 
 module.exports = {
-  azureAd: azureAd,
+  auth: authProvider === 'google' ? google : azureAd,
   host: host,
   logger: logger,
   proxyConfig: proxyConfig(),

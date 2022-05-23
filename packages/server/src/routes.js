@@ -6,7 +6,7 @@ const health = require('./healthCheck')
 const session = require('express-session')
 const reverseProxy = require('./reverse-proxy')
 const path = require('path')
-const { host } = require('./config')
+const { host, auth } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
   if (req.isAuthenticated() && authUtils.hasValidAccessToken(req)) {
@@ -17,24 +17,25 @@ const ensureAuthenticated = async (req, res, next) => {
   }
 }
 
+const doAuth = passport.authenticate(auth.providerName, {
+  failureRedirect: '/login',
+  failureMessage: true,
+})
+
 exports.setup = (authClient) => {
   // Unprotected
   router.get('/isalive', health.isAlive())
-  router.get('/login', passport.authenticate('azureOidc', { failureRedirect: '/login' }))
-  router.use(
-    '/oauth2/callback',
-    passport.authenticate('azureOidc', { failureRedirect: '/login' }),
-    (req, res) => {
-      if (session.redirectTo) {
-        res.redirect(session.redirectTo)
-      } else {
-        res.redirect('/')
-      }
+  router.get('/login', doAuth)
+  router.use('/oauth2/callback', doAuth, (req, res) => {
+    if (session.redirectTo) {
+      res.redirect(session.redirectTo)
+    } else {
+      res.redirect('/')
     }
-  )
+  })
 
   if (host.authenticationEnabled) {
-    router.use(ensureAuthenticated)
+    router.use(doAuth)
     router.get('/me', (req, res) => {
       authUtils
         .getUserInfoFromGraphApi(authClient, req)
