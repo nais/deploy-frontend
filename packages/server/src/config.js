@@ -40,6 +40,7 @@ const azureAd = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'azureOidc',
+  scope: [],
 }
 
 const google = {
@@ -52,6 +53,7 @@ const google = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'googleOidc',
+  scope: ['email', 'profile'],
 }
 
 const proxyConfig = {

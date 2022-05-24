@@ -9,38 +9,61 @@ const path = require('path')
 const { host, auth } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
-  if (req.isAuthenticated() && authUtils.hasValidAccessToken(req)) {
-    next()
+  if (req.isAuthenticated()) {
+    if (host.authenticationProvider === 'google') {
+      // TODO: check if user is still valid?
+      return next()
+    } else {
+      if (authUtils.hasValidAccessToken(req)) {
+        return next()
+      }
+    }
   } else {
     session.redirectTo = req.url
     res.redirect('/login')
   }
 }
 
-const doAuth = passport.authenticate(auth.providerName, {
-  failureRedirect: '/login',
-  failureMessage: true,
-})
-
 exports.setup = (authClient) => {
   // Unprotected
   router.get('/isalive', health.isAlive())
-  router.get('/login', doAuth)
-  router.use('/oauth2/callback', doAuth, (req, res) => {
-    if (session.redirectTo) {
-      res.redirect(session.redirectTo)
-    } else {
-      res.redirect('/')
+  router.get(
+    '/login',
+    passport.authenticate(auth.providerName, {
+      scope: auth.scope,
+      failureRedirect: '/login',
+      failureMessage: true,
+    })
+  )
+  router.use(
+    '/oauth2/callback',
+    passport.authenticate(auth.providerName, {
+      failureRedirect: '/login',
+      failureMessage: true,
+    }),
+    (req, res) => {
+      if (session.redirectTo) {
+        res.redirect(session.redirectTo)
+      } else {
+        res.redirect('/')
+      }
     }
-  })
+  )
 
   if (host.authenticationEnabled) {
-    router.use(doAuth)
+    router.use(ensureAuthenticated)
     router.get('/me', (req, res) => {
-      authUtils
-        .getUserInfoFromGraphApi(authClient, req)
-        .then((userinfo) => res.send(userinfo))
-        .catch((err) => res.status(500).json(err))
+      if (host.authenticationProvider === 'google') {
+        res.send({
+          givenName: req.user.name.givenName,
+          surname: req.user.name.familyName,
+        })
+      } else {
+        authUtils
+          .getUserInfoFromGraphApi(authClient, req)
+          .then((userinfo) => res.send(userinfo))
+          .catch((err) => res.status(500).json(err))
+      }
     })
 
     router.get('/logout', (req, res) => {

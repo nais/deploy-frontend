@@ -22,7 +22,6 @@ const strategy = (client) => {
       callbackURL: auth.redirectUri,
     },
     function (issuer, profile, cb) {
-      console.log(profile)
       return cb(null, profile)
     }
   )
