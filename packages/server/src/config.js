@@ -54,18 +54,16 @@ const google = {
   providerName: 'googleOidc',
 }
 
-const proxyConfig = () => {
-  return {
-    clientId: envVar('DOWNSTREAM_API_CLIENT_ID', isAuthEnabled('azure')),
-    apiKey: envVar('DOWNSTREAM_API_KEY', isAuthEnabled('google')),
-    path: 'downstream',
-    url: envVar('DOWNSTREAM_API_URL'),
-  }
+const proxyConfig = {
+  clientId: envVar('DOWNSTREAM_API_CLIENT_ID', isAuthEnabled('azure')),
+  apiKey: envVar('DOWNSTREAM_API_KEY', isAuthEnabled('google')),
+  path: 'downstream',
+  url: envVar('DOWNSTREAM_API_URL'),
 }
 
 module.exports = {
   auth: authProvider === 'google' ? google : azureAd,
   host: host,
   logger: logger,
-  proxyConfig: proxyConfig(),
+  proxyConfig: proxyConfig,
 }

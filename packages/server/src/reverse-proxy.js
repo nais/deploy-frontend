@@ -16,7 +16,7 @@ const proxyReqOptDecorator = (options, req) => {
       })
     } else if (host.authenticationProvider === 'google') {
       return new Promise((resolve, reject) => {
-        options.headers.XApiKey = proxy.ApiKey
+        options.headers.XApiKey = proxyConfig.apiKey
         resolve(options)
       })
     }
