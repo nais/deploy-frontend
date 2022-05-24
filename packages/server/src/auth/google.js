@@ -1,6 +1,6 @@
 const { Issuer } = require('openid-client')
 const { auth } = require('../config')
-const googleStrategy = require('passport-google-oidc')
+const { Strategy } = require('passport-google-oauth20')
 
 const metadata = {
   client_id: auth.clientId,
@@ -14,14 +14,15 @@ const client = async () => {
   return new issuer.Client(metadata)
 }
 
-const strategy = (client) => {
-  return new googleStrategy(
+const strategy = () => {
+  return new Strategy(
     {
       clientID: auth.clientId,
       clientSecret: auth.clientSecret,
       callbackURL: auth.redirectUri,
     },
-    function (issuer, profile, cb) {
+    function (accessToken, refreshToken, profile, cb) {
+      profile.accessToken = accessToken
       return cb(null, profile)
     }
   )

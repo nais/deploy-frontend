@@ -19,6 +19,7 @@ const options = (api, authClient) => ({
       } else if (host.authProviderGoogle) {
         return new Promise((resolve, reject) => {
           options.headers['X-PSK'] = proxyConfig.preSharedKey
+          options.headers['Authorization'] = `Bearer ${req.user.accessToken}`
           resolve(options)
         })
       }
