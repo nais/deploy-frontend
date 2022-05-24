@@ -18,7 +18,7 @@ const options = (api, authClient) => ({
         })
       } else if (host.authProviderGoogle) {
         return new Promise((resolve, reject) => {
-          options.headers.XApiKey = proxyConfig.apiKey
+          options.headers.XAPIKey = proxyConfig.apiKey
           resolve(options)
         })
       }
