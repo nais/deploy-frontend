@@ -4,7 +4,7 @@ const proxy = require('express-http-proxy')
 
 const proxyReqOptDecorator = (options, req) => {
   if (host.authenticationEnabled) {
-    if (host.authenticationProvider === 'azure') {
+    if (host.authProviderAzure) {
       return new Promise((resolve, reject) => {
         authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
           (access_token) => {
@@ -14,7 +14,7 @@ const proxyReqOptDecorator = (options, req) => {
           (error) => reject(error)
         )
       })
-    } else if (host.authenticationProvider === 'google') {
+    } else if (host.authProviderGoogle) {
       return new Promise((resolve, reject) => {
         options.headers.XApiKey = proxyConfig.apiKey
         resolve(options)

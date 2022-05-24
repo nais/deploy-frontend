@@ -27,7 +27,8 @@ const host = {
   sessionKey: envVar('COOKIE_KEY'),
   cookieName: 'deploy-frontend',
   authenticationEnabled: authEnabled,
-  authenticationProvider: authProvider,
+  authProviderAzure: envVar('AUTHENTICATION_PROVIDER', authEnabled) === 'azure',
+  authProviderGoogle: envVar('AUTHENTICATION_PROVIDER', authEnabled) === 'google',
 }
 
 const azureAd = {

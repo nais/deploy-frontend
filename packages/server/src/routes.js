@@ -10,7 +10,7 @@ const { host, auth } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
   if (req.isAuthenticated()) {
-    if (host.authenticationProvider === 'google') {
+    if (host.authProviderGoogle) {
       // TODO: check if user is still valid?
       return next()
     } else {
@@ -53,7 +53,7 @@ exports.setup = (authClient) => {
   if (host.authenticationEnabled) {
     router.use(ensureAuthenticated)
     router.get('/me', (req, res) => {
-      if (host.authenticationProvider === 'google') {
+      if (host.authProviderGoogle) {
         res.send({
           givenName: req.user.name.givenName,
           surname: req.user.name.familyName,
