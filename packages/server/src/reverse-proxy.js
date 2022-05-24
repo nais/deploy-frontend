@@ -18,7 +18,7 @@ const options = (api, authClient) => ({
         })
       } else if (host.authProviderGoogle) {
         return new Promise((resolve, reject) => {
-          options.headers.XAPIKey = proxyConfig.apiKey
+          options.headers['X-PSK'] = proxyConfig.preSharedKey
           resolve(options)
         })
       }

@@ -59,7 +59,7 @@ const google = {
 
 const proxyConfig = {
   clientId: envVar('DOWNSTREAM_API_CLIENT_ID', isAuthEnabled('azure')),
-  apiKey: envVar('DOWNSTREAM_API_KEY', isAuthEnabled('google')),
+  preSharedKey: envVar('DOWNSTREAM_API_PRE_SHARED_KEY', isAuthEnabled('google')),
   path: 'downstream',
   url: envVar('DOWNSTREAM_API_URL'),
 }
