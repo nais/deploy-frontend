@@ -1,5 +1,6 @@
 import TeamCard from './teamCard'
 import { render } from '@testing-library/react'
+import moment from 'moment'
 
 const apiKeys = [
   {
@@ -7,7 +8,7 @@ const apiKeys = [
     groupId: '6fbc76c4-7909-4e58-99fa-64d542567c8c',
     key: 'theNewestKey',
     created: '2020-03-16T10:29:58.05+01:00',
-    expires: '2022-03-16T10:30:23.655+01:00',
+    expires: moment.utc().add(1, 'year').format(),
   },
   {
     team: 'team1',
