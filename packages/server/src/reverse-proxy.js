@@ -6,15 +6,23 @@ const options = (api, authClient) => ({
   parseReqBody: false,
   proxyReqOptDecorator: (options, req) => {
     if (host.authenticationEnabled) {
-      return new Promise((resolve, reject) =>
-        authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
-          (access_token) => {
-            options.headers.Authorization = `Bearer ${access_token}`
-            resolve(options)
-          },
-          (error) => reject(error)
-        )
-      )
+      if (host.authProviderAzure) {
+        return new Promise((resolve, reject) => {
+          authUtils.getOnBehalfOfAccessToken(authClient, req, api).then(
+            (access_token) => {
+              options.headers.Authorization = `Bearer ${access_token}`
+              resolve(options)
+            },
+            (error) => reject(error)
+          )
+        })
+      } else if (host.authProviderGoogle) {
+        return new Promise((resolve, reject) => {
+          options.headers['X-PSK'] = proxyConfig.preSharedKey
+          options.headers['Authorization'] = `Bearer ${req.user.accessToken}`
+          resolve(options)
+        })
+      }
     } else {
       return new Promise((resolve, reject) => resolve(options))
     }

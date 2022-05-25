@@ -1,7 +1,6 @@
 'use strict'
 
-const { client, strategy } = require('./src/auth/azure')
-const { host, logger } = require('./src/config')
+const { host, auth, logger } = require('./src/config')
 const express = require('express')
 const favicon = require('serve-favicon')
 const path = require('path')
@@ -43,10 +42,19 @@ async function configure() {
   app.use(passport.initialize())
   app.use(passport.session())
   if (host.authenticationEnabled) {
-    const azureAuthClient = await client()
-    const azureOidcStrategy = strategy(azureAuthClient)
-    passport.use('azureOidc', azureOidcStrategy)
-    app.use('/', setup(azureAuthClient))
+    if (host.authProviderAzure) {
+      const { client, strategy } = require('./src/auth/azure')
+      const azureAuthClient = await client()
+      const azureOidcStrategy = strategy(azureAuthClient)
+      passport.use(auth.providerName, azureOidcStrategy)
+      app.use('/', setup(azureAuthClient))
+    } else if (host.authProviderGoogle) {
+      const { client, strategy } = require('./src/auth/google')
+      const googleAuthClient = await client()
+      const googleOidcStrategy = strategy()
+      passport.use(auth.providerName, googleOidcStrategy)
+      app.use('/', setup(googleAuthClient))
+    }
   } else {
     app.use('/', setup(null))
   }

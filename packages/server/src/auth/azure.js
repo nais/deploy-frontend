@@ -1,16 +1,16 @@
 const { Issuer, Strategy } = require('openid-client')
 const authUtils = require('./auth-utils')
-const { azureAd } = require('../config')
+const { auth } = require('../config')
 
 const metadata = {
-  client_id: azureAd.clientId,
-  client_secret: azureAd.clientSecret,
-  redirect_uris: [azureAd.redirectUri],
-  token_endpoint_auth_method: azureAd.tokenEndpointAuthMethod,
+  client_id: auth.clientId,
+  client_secret: auth.clientSecret,
+  redirect_uris: [auth.redirectUri],
+  token_endpoint_auth_method: auth.tokenEndpointAuthMethod,
 }
 
 const client = async () => {
-  const issuer = await Issuer.discover(azureAd.discoveryUrl)
+  const issuer = await Issuer.discover(auth.discoveryUrl)
   return new issuer.Client(metadata)
 }
 
@@ -30,9 +30,9 @@ const strategy = (client) => {
   const options = {
     client: client,
     params: {
-      response_types: azureAd.responseTypes,
-      response_mode: azureAd.responseMode,
-      scope: `openid ${authUtils.appendDefaultScope(azureAd.clientId)}`,
+      response_types: auth.responseTypes,
+      response_mode: auth.responseMode,
+      scope: `openid ${authUtils.appendDefaultScope(auth.clientId)}`,
     },
     passReqToCallback: false,
     usePKCE: 'S256',

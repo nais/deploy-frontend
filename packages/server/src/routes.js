@@ -6,11 +6,18 @@ const health = require('./healthCheck')
 const session = require('express-session')
 const reverseProxy = require('./reverse-proxy')
 const path = require('path')
-const { host } = require('./config')
+const { host, auth } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
-  if (req.isAuthenticated() && authUtils.hasValidAccessToken(req)) {
-    next()
+  if (req.isAuthenticated()) {
+    if (host.authProviderGoogle) {
+      // TODO: check if user is still valid?
+      return next()
+    } else {
+      if (authUtils.hasValidAccessToken(req)) {
+        return next()
+      }
+    }
   } else {
     session.redirectTo = req.url
     res.redirect('/login')
@@ -20,10 +27,20 @@ const ensureAuthenticated = async (req, res, next) => {
 exports.setup = (authClient) => {
   // Unprotected
   router.get('/isalive', health.isAlive())
-  router.get('/login', passport.authenticate('azureOidc', { failureRedirect: '/login' }))
+  router.get(
+    '/login',
+    passport.authenticate(auth.providerName, {
+      scope: auth.scope,
+      failureRedirect: '/login',
+      failureMessage: true,
+    })
+  )
   router.use(
     '/oauth2/callback',
-    passport.authenticate('azureOidc', { failureRedirect: '/login' }),
+    passport.authenticate(auth.providerName, {
+      failureRedirect: '/login',
+      failureMessage: true,
+    }),
     (req, res) => {
       if (session.redirectTo) {
         res.redirect(session.redirectTo)
@@ -36,10 +53,17 @@ exports.setup = (authClient) => {
   if (host.authenticationEnabled) {
     router.use(ensureAuthenticated)
     router.get('/me', (req, res) => {
-      authUtils
-        .getUserInfoFromGraphApi(authClient, req)
-        .then((userinfo) => res.send(userinfo))
-        .catch((err) => res.status(500).json(err))
+      if (host.authProviderGoogle) {
+        res.send({
+          givenName: req.user.name.givenName,
+          surname: req.user.name.familyName,
+        })
+      } else {
+        authUtils
+          .getUserInfoFromGraphApi(authClient, req)
+          .then((userinfo) => res.send(userinfo))
+          .catch((err) => res.status(500).json(err))
+      }
     })
 
     router.get('/logout', (req, res) => {
