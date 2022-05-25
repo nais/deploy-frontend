@@ -14,6 +14,7 @@
     { "name": "DOWNSTREAM_API_PATH", "value": "downstream" },
     { "name": "DOWNSTREAM_API_SCOPES", "value": "" },
     { "name": "AUTHENTICATION_ENABLED", "value": "true" },
+    { "name": "AUTHENTICATION_PROVIDER", "value": "azure" },
     { "name": "AAD_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/oauth2/callback" },
     { "name": "AAD_LOGOUT_REDIRECT_URL", "value": "https://deploy.dev-gcp.nais.io/logout" }
   ]
