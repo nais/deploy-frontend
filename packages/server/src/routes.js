@@ -24,17 +24,25 @@ const ensureAuthenticated = async (req, res, next) => {
   }
 }
 
-exports.setup = (authClient) => {
-  // Unprotected
-  router.get('/isalive', health.isAlive())
-  router.get(
-    '/login',
-    passport.authenticate(auth.providerName, {
+const login = () => {
+  if (host.authProviderAzure) {
+    return passport.authenticate(auth.providerName, {
+      failureRedirect: '/login',
+      failureMessage: true,
+    })
+  } else if (host.authProviderGoogle) {
+    return passport.authenticate(auth.providerName, {
       scope: auth.scope,
       failureRedirect: '/login',
       failureMessage: true,
     })
-  )
+  }
+}
+
+exports.setup = (authClient) => {
+  // Unprotected
+  router.get('/isalive', health.isAlive())
+  router.get('/login', login())
   router.use(
     '/oauth2/callback',
     passport.authenticate(auth.providerName, {
