@@ -41,7 +41,7 @@ const azureAd = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'azureOidc',
-  scope: [],
+  scope: ['openid', `${envVar('AZURE_APP_CLIENT_ID', isAuthEnabled('azure'))}/.default`],
 }
 
 const google = {
