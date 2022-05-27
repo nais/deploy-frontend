@@ -25,14 +25,14 @@ const ensureAuthenticated = async (req, res, next) => {
 }
 
 const login = () => {
-  if (host.authProviderAzure) {
+  if (auth.overrideScopes) {
     return passport.authenticate(auth.providerName, {
+      scope: auth.overrideScopes,
       failureRedirect: '/login',
       failureMessage: true,
     })
-  } else if (host.authProviderGoogle) {
+  } else {
     return passport.authenticate(auth.providerName, {
-      scope: auth.scope,
       failureRedirect: '/login',
       failureMessage: true,
     })
@@ -43,20 +43,13 @@ exports.setup = (authClient) => {
   // Unprotected
   router.get('/isalive', health.isAlive())
   router.get('/login', login())
-  router.use(
-    '/oauth2/callback',
-    passport.authenticate(auth.providerName, {
-      failureRedirect: '/login',
-      failureMessage: true,
-    }),
-    (req, res) => {
-      if (session.redirectTo) {
-        res.redirect(session.redirectTo)
-      } else {
-        res.redirect('/')
-      }
+  router.use('/oauth2/callback', login(), (req, res) => {
+    if (session.redirectTo) {
+      res.redirect(session.redirectTo)
+    } else {
+      res.redirect('/')
     }
-  )
+  })
 
   if (host.authenticationEnabled) {
     router.use(ensureAuthenticated)

@@ -41,7 +41,6 @@ const azureAd = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'azureOidc',
-  scope: ['openid', `${envVar('AZURE_APP_CLIENT_ID', isAuthEnabled('azure'))}/.default`],
 }
 
 const google = {
@@ -54,7 +53,7 @@ const google = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'googleOidc',
-  scope: ['email', 'profile'],
+  overrideScopes: ['email', 'profile'],
 }
 
 const proxyConfig = {
