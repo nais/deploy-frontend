@@ -6,8 +6,8 @@ export function initAmplitude() {
       .getInstance()
       .init(
         document.domain === 'deploy.nais.io'
-          ? '487ae1d6430543123d5da2c3467d0844'
-          : '69f900cf5fe06368af2469ca4cf1f927',
+          ? '16d1ee2fd894ca2562eeebb5095dbcf0'
+          : '04203d48401492bda4620a74acf85a5b',
         '',
         {
           apiEndpoint: 'amplitude.nav.no/collect',
