@@ -7,16 +7,16 @@ services:
     ports:
     - "8081:8081"
     environment:
-      GOOGLE_WELL_KNOWN_URL: ${GOOGLE_WELL_KNOWN_URL}
+      GOOGLE_WELL_KNOWN_URL: "https://accounts.google.com/.well-known/openid-configuration"
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-      GOOGLE_REDIRECT_URL: ${GOOGLE_REDIRECT_URL}
-      GOOGLE_LOGOUT_REDIRECT_URL: ${GOOGLE_LOGOUT_REDIRECT_URL}
+      GOOGLE_REDIRECT_URL: "http://localhost:8081/oauth2/callback"
+      GOOGLE_LOGOUT_REDIRECT_URL: "http://localhost:8081/logout"
       COOKIE_KEY: ${COOKIE_KEY}
       DOWNSTREAM_API_PRE_SHARED_KEY: ${DOWNSTREAM_API_PRE_SHARED_KEY}
       DOWNSTREAM_API_URL: "http://hookd:8080"
-      AUTHENTICATION_ENABLED: ${AUTHENTICATION_ENABLED}
-      AUTHENTICATION_PROVIDER: ${AUTHENTICATION_PROVIDER}
+      AUTHENTICATION_ENABLED: "true"
+      AUTHENTICATION_PROVIDER: "google"
   hookd-db:
     command: postgres -c log_statement=all
     image: postgres:11-alpine
@@ -36,6 +36,7 @@ services:
       HOOKD_DATABASE_URL: "postgresql://postgres:root@hookd-db/hookd"
       HOOKD_FRONTEND_KEYS: ${DOWNSTREAM_API_PRE_SHARED_KEY}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      HOOKD_LISTEN_ADDRESS: "0.0.0.0:8080"
   console-db:
     image: postgres:14-alpine
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
@@ -53,6 +54,7 @@ services:
       dockerfile: ../console/Dockerfile
     environment:
       CONSOLE_DATABASE_URL: "postgresql://console:console@console-db/console"
+      CONSOLE_LISTEN_ADDRESS: "0.0.0.0:3000"
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
 
   adminer:
