@@ -31,12 +31,17 @@ services:
   hookd:
     build:
       context: ../deploy/
-      dockerfile: ../deploy/Dockerfile.hookd
+      dockerfile: ../deploy/Dockerfile
+    command:
+      - /app/hookd
+    depends_on:
+      - console
     environment:
       HOOKD_DATABASE_URL: "postgresql://postgres:root@hookd-db/hookd"
-      HOOKD_FRONTEND_KEYS: ${DOWNSTREAM_API_PRE_SHARED_KEY}
-      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       HOOKD_LISTEN_ADDRESS: "0.0.0.0:8080"
+      HOOKD_FRONTEND_KEYS: ${DOWNSTREAM_API_PRE_SHARED_KEY}
+      HOOKD_CONSOLE_URL: "http://console:3000/query"
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
   console-db:
     image: postgres:14-alpine
     command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
