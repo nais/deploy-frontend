@@ -10,7 +10,7 @@
     "test": "CI=true yarn workspaces run test",
     "start-watch": "NODE_ENV=development nodemon bin/www",
     "offline": "yarn workspace nais-deploy-frontend run offline",
-    "prestart": "cp -R packages/frontend/build dist",
+    "prestart": "mkdir -p dist && cp -R packages/frontend/build/* dist/",
     "start": "node ./bin/www",
     "prepare": "husky install"
   },
