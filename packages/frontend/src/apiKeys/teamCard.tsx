@@ -65,10 +65,16 @@ function TeamCard(props: Props) {
       </div>
       <KeyStatus expiresTimestamp={expires} />
       <Normaltekst>{`Created ${formatTimestamp(created)}`}</Normaltekst>
-      <Element className="aad">{`Azure AD team id`}</Element>
-      <Normaltekst>
-        <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
-      </Normaltekst>
+      {groupId !== '' ? (
+        <div>
+          <Element className="aad">{`Azure AD team id`}</Element>
+          <Normaltekst>
+            <Lenke href={`${azureAdGroupUrl}${groupId}`} target="new">{`${groupId}`}</Lenke>
+          </Normaltekst>
+        </div>
+      ) : (
+        <div></div>
+      )}
       <div className="apiButtons">
         <div className="newKeyButton">
           <Knapp mini onClick={() => setCopied(true)} style={{ transform: 'translateY(-2px)' }}>
