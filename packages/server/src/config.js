@@ -53,7 +53,6 @@ const google = {
   responseTypes: ['code'],
   responseMode: 'query',
   providerName: 'googleOidc',
-  overrideScopes: ['email', 'profile'],
 }
 
 const proxyConfig = {

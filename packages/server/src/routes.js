@@ -25,18 +25,10 @@ const ensureAuthenticated = async (req, res, next) => {
 }
 
 const login = () => {
-  if (auth.overrideScopes) {
-    return passport.authenticate(auth.providerName, {
-      scope: auth.overrideScopes,
-      failureRedirect: '/login',
-      failureMessage: true,
-    })
-  } else {
-    return passport.authenticate(auth.providerName, {
-      failureRedirect: '/login',
-      failureMessage: true,
-    })
-  }
+  return passport.authenticate(auth.providerName, {
+    failureRedirect: '/login',
+    failureMessage: true,
+  })
 }
 
 exports.setup = (authClient) => {

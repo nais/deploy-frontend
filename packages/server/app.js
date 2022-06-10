@@ -51,7 +51,7 @@ async function configure() {
     } else if (host.authProviderGoogle) {
       const { client, strategy } = require('./src/auth/google')
       const googleAuthClient = await client()
-      const googleOidcStrategy = strategy()
+      const googleOidcStrategy = strategy(googleAuthClient)
       passport.use(auth.providerName, googleOidcStrategy)
       app.use('/', setup(googleAuthClient))
     }
