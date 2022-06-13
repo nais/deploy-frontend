@@ -48,8 +48,8 @@ exports.setup = (authClient) => {
     router.get('/me', (req, res) => {
       if (host.authProviderGoogle) {
         res.send({
-          givenName: req.user.name.givenName,
-          surname: req.user.name.familyName,
+          givenName: req.user.given_name,
+          surname: req.user.family_name,
         })
       } else {
         authUtils
