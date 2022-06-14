@@ -69,12 +69,22 @@ const getTokenSetsFromSession = (req) => {
   return null
 }
 
-const hasValidAccessToken = (req, key = tokenSetSelfId) => {
-  const tokenSets = getTokenSetsFromSession(req)
-  if (!tokenSets) {
-    return false
+const getTokenSetFromSession = (req) => {
+  if (req && req.user && req.user.tokenSet) {
+    return req.user.tokenSet
   }
-  const tokenSet = tokenSets[key]
+}
+
+const hasValidAccessToken = (req, key = tokenSetSelfId) => {
+  let tokenSet
+
+  const tokenSets = getTokenSetsFromSession(req)
+  if (tokenSets) {
+    tokenSet = tokenSets[key]
+  } else {
+    tokenSet = getTokenSetFromSession(req)
+  }
+
   if (!tokenSet) {
     return false
   }

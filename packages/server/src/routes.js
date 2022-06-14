@@ -9,15 +9,8 @@ const path = require('path')
 const { host, auth } = require('./config')
 
 const ensureAuthenticated = async (req, res, next) => {
-  if (req.isAuthenticated()) {
-    if (host.authProviderGoogle) {
-      // TODO: check if user is still valid?
-      return next()
-    } else {
-      if (authUtils.hasValidAccessToken(req)) {
-        return next()
-      }
-    }
+  if (req.isAuthenticated() && authUtils.hasValidAccessToken(req)) {
+    return next()
   } else {
     session.redirectTo = req.url
     res.redirect('/login')
@@ -61,9 +54,7 @@ exports.setup = (authClient) => {
 
     router.get('/logout', (req, res) => {
       req.logOut()
-      res.redirect(
-        authClient.endSessionUrl({ post_logout_redirect_uri: config.azureAd.logoutRedirectUri })
-      )
+      res.redirect(authClient.endSessionUrl({ post_logout_redirect_uri: auth.logoutRedirectUri }))
     })
   }
 

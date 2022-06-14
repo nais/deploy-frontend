@@ -10,8 +10,7 @@ const metadata = {
 
 const client = async () => {
   const issuer = await Issuer.discover(auth.discoveryUrl)
-  const client = new issuer.Client(metadata)
-  return client
+  return new issuer.Client(metadata)
 }
 
 const strategy = (client) => {
