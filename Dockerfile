@@ -1,5 +1,7 @@
 FROM node:16-alpine
 
+LABEL org.opencontainers.image.source https://github.com/nais/deploy-frontend
+
 WORKDIR /home/app
 COPY ./package.json ./
 COPY ./yarn.lock ./

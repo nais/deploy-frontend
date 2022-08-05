@@ -3,7 +3,7 @@ name: Build and deploy nais-deploy-frontend
 on: [push, pull_request]
 
 env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/deploy-frontend:${{ github.sha }}
+  IMAGE: ghcr.io/${{ github.repository }}/deploy-frontend:${{ github.sha }}
 
 jobs:
   build:
@@ -47,7 +47,7 @@ jobs:
       - name: Login to Github package registry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "$GITHUB_TOKEN" | docker login docker.pkg.github.com -u "$GITHUB_REPOSITORY" --password-stdin
+        run: echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_REPOSITORY" --password-stdin
       - name: Push docker image
         run: docker push $IMAGE
 
