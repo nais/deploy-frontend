@@ -68,8 +68,9 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - run: |
-          echo version: "${{ steps.metadata.outputs.version }}"
-          echo image: "${{ fromJSON(steps.metadata.outputs.tags).tags[0] }}"
+          echo outputs:
+          echo "version: ${{ steps.metadata.outputs.version }}"
+          echo "image: ${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
     outputs:
       version: "${{ steps.metadata.outputs.version }}"
       image: "${{ fromJSON(steps.metadata.outputs.tags).tags[0] }}"
