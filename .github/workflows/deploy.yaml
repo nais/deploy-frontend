@@ -57,8 +57,11 @@ jobs:
           images: ${{ env.BASE_IMAGE }}
           tags: |
             type=raw,value={{date 'YYYYMMDDhhmmss'}}-{{sha}}
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=ref,event=branch
+            type=raw,value=latest
+      - run: |
+          echo outputs:
+          echo "version: ${{ steps.metadata.outputs.version }}"
+          echo "image: ${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -67,13 +70,9 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - run: |
-          echo outputs:
-          echo "version: ${{ steps.metadata.outputs.version }}"
-          echo "image: ${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
     outputs:
       version: "${{ steps.metadata.outputs.version }}"
-      image: "${{ fromJSON(steps.metadata.outputs.tags).tags[0] }}"
+      image: "${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
 
   deploy-dev:
     name: Deploy to dev-gcp
