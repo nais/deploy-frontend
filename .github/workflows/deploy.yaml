@@ -3,7 +3,7 @@ name: Build and deploy nais-deploy-frontend
 on: [push, pull_request]
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}/deploy-frontend:${{ github.sha }}
+  BASE_IMAGE: ghcr.io/${{ github.repository }}/deploy-frontend
 
 jobs:
   build:
@@ -41,23 +41,41 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Build docker image
-        run: docker build . --tag $IMAGE
-      - name: Login to Github package registry
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_REPOSITORY" --password-stdin
-      - name: Push docker image
-        run: docker push $IMAGE
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to GitHub Packages Docker Registry
+        uses: docker/login-action@ab80d026d4753220c4243394c07c7d80f9638d06 # Use commit-sha1 instead of tag for security concerns
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker meta
+        id: metadata
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.BASE_IMAGE }}
+          tags: |
+            type=raw,value={{date 'YYYYMMDDhhmmss'}}-{{sha}}
+            type=raw,value=latest,enable={{is_default_branch}}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: ${{ github.ref == 'refs/heads/master' }}
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+    outputs:
+      image: "${{ env.BASE_IMAGE }}:${{ fromJSON(steps.metadata.outputs.tags).tags[0] }}"
 
   deploy-dev:
     name: Deploy to dev-gcp
     needs: build-image
     runs-on: ubuntu-latest
     # soft-disable deployments to dev-gcp for now. just delete the following line to enable it again
-    if: ${{ github.ref == 'refs/heads/dev-gcp' }} 
-
+    if: ${{ github.ref == 'refs/heads/dev-gcp' }}
     steps:
       - uses: actions/checkout@v2
       - uses: nais/deploy/actions/deploy@v1
@@ -66,6 +84,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/dev-config.json
+          IMAGE: "${{ needs.build-image.image }}"
 
   deploy-ci:
     name: Deploy to ci-gcp
@@ -81,6 +100,7 @@ jobs:
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/ci-config.json
           DEPLOY_SERVER: deploy.ci.nav.no:443
+          IMAGE: "${{ needs.build-image.image }}"
 
   deploy-prod:
     name: Deploy to prod-gcp
@@ -95,3 +115,4 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
+          IMAGE: "${{ needs.build-image.image }}"
