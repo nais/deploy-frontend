@@ -58,10 +58,6 @@ jobs:
           tags: |
             type=raw,value={{date 'YYYYMMDDhhmmss'}}-{{sha}}
             type=raw,value=latest
-      - run: |
-          echo outputs:
-          echo "version: ${{ steps.metadata.outputs.version }}"
-          echo "image: ${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
@@ -71,7 +67,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
     outputs:
-      version: "${{ steps.metadata.outputs.version }}"
       image: "${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
 
   deploy-dev:
