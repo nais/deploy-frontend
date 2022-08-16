@@ -85,7 +85,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/dev-config.json
-          VAR: "image=${{ needs.build-image.image }}"
+          VAR: "image=${{ needs.build-image.outputs.image }}"
 
   deploy-ci:
     name: Deploy to ci-gcp
@@ -103,7 +103,7 @@ jobs:
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/ci-config.json
           DEPLOY_SERVER: deploy.ci.nav.no:443
-          VAR: "image=${{ needs.build-image.image }}"
+          VAR: "image=${{ needs.build-image.outputs.image }}"
 
   deploy-prod:
     name: Deploy to prod-gcp
@@ -120,4 +120,4 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
-          VAR: "image=${{ needs.build-image.image }}"
+          VAR: "image=${{ needs.build-image.outputs.image }}"
