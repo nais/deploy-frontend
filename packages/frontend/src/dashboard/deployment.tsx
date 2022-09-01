@@ -78,9 +78,9 @@ const LogsLink = ({ deployment }) => {
   return (
     <a
       className="knapp--mini knapp--hoved knapp"
-      href={`https://deploy.nais.io/logs?delivery_id=${deployment.id}&ts=${timeStamp(
-        deployment.created
-      )}&v=1&cluster=${deployment.cluster}`}
+      href={`/logs?delivery_id=${deployment.id}&ts=${timeStamp(deployment.created)}&v=1&cluster=${
+        deployment.cluster
+      }`}
     >
       Log
     </a>
