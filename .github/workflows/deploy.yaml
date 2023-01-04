@@ -68,6 +68,7 @@ jobs:
           cache-to: type=gha,mode=max
     outputs:
       image: "${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
+      version: "${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}"
 
   deploy-dev:
     name: Deploy to dev-gcp
@@ -121,3 +122,19 @@ jobs:
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
           VAR: "image=${{ needs.build-image.outputs.image }}"
+
+  rollout:
+    name: Rollout with Fasit
+    if: github.ref == 'refs/heads/master'
+    needs:
+      - test
+      - build-image
+    permissions:
+      id-token: write
+    runs-on: fasit-deploy
+    steps:
+      - uses: nais/fasit-deploy@main
+        name: Rollout hookd
+        with:
+          json: '{"frontend": {"image": {"tag": "${{ needs.build-image.outputs.version }}"}}}'
+          feature_name: hookd
