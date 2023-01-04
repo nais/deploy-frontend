@@ -68,7 +68,7 @@ jobs:
           cache-to: type=gha,mode=max
     outputs:
       image: "${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
-      version: "${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}"
+      version: "${{ fromJSON(steps.metadata.outputs.json).labels['org.opencontainers.image.version'] }}"
 
   deploy-dev:
     name: Deploy to dev-gcp
