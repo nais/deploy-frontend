@@ -67,7 +67,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
     outputs:
-      image: "${{ fromJSON(steps.metadata.outputs.json).tags[0] }}"
+      image: '${{ fromJSON(steps.metadata.outputs.json).tags[0] }}'
       version: "${{ fromJSON(steps.metadata.outputs.json).labels['org.opencontainers.image.version'] }}"
 
   deploy-dev:
@@ -86,7 +86,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/dev-config.json
-          VAR: "image=${{ needs.build-image.outputs.image }}"
+          VAR: 'image=${{ needs.build-image.outputs.image }}'
 
   deploy-ci:
     name: Deploy to ci-gcp
@@ -99,12 +99,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY_CI }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: ci-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/ci-config.json
           DEPLOY_SERVER: deploy.nav.cloud.nais.no:443
-          VAR: "image=${{ needs.build-image.outputs.image }}"
+          VAR: 'image=${{ needs.build-image.outputs.image }}'
 
   deploy-prod:
     name: Deploy to prod-gcp
@@ -121,7 +121,7 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/prod-config.json
-          VAR: "image=${{ needs.build-image.outputs.image }}"
+          VAR: 'image=${{ needs.build-image.outputs.image }}'
 
   rollout:
     name: Rollout with Fasit
