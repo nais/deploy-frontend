@@ -76,8 +76,6 @@ jobs:
       - test
       - build-image
     runs-on: ubuntu-latest
-    # soft-disable deployments to dev-gcp for now. just delete the following line to enable it again
-    if: ${{ github.ref == 'refs/heads/dev-gcp' }}
     steps:
       - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@new_deploy_server
@@ -103,7 +101,7 @@ jobs:
           CLUSTER: ci-gcp
           RESOURCE: .nais/naiserator.yml
           VARS: .nais/ci-config.json
-          DEPLOY_SERVER: deploy.nav.cloud.nais.no:443
+          DEPLOY_SERVER: deploy.nav.cloud.nais.io:443
           VAR: 'image=${{ needs.build-image.outputs.image }}'
 
   deploy-prod:
