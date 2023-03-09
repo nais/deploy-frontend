@@ -46,7 +46,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     needs:
       - test
-      - build-image
+      - build-push-sign
     permissions:
       id-token: write
     runs-on: fasit-deploy
