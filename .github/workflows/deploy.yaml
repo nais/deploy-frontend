@@ -1,7 +1,8 @@
 name: Build and deploy nais-deploy-frontend
 on: [push, pull_request]
 env:
-  BASE_IMAGE: ghcr.io/${{ github.repository }}/deploy-frontend
+  REGISTRY: europe-north1-docker.pkg.dev/nais-io/nais/images
+  IMAGE: deploy-frontend
 jobs:
   test:
     name: Build and test
@@ -57,7 +58,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96 # ratchet:docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ matrix.image }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE }}
           tags: |
             type=raw,value={{date 'YYYYMMDDhhmmss'}}-{{sha}}
             type=raw,value=latest
@@ -66,14 +67,14 @@ jobs:
         uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # ratchet:docker/build-push-action@v3
         with:
           context: .
-          file: Dockerfile.${{ matrix.image }}
+          file: Dockerfile.${{ env.IMAGE }}
           push: ${{ github.actor != 'dependabot[bot]' }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
       - name: Save image_ref to env
-        run: echo "image_ref=${{ env.REGISTRY }}/${{ matrix.image }}@${{ steps.build_push.outputs.digest }}" >> $GITHUB_ENV
+        run: echo "image_ref=${{ env.REGISTRY }}/${{ env.IMAGE }}@${{ steps.build_push.outputs.digest }}" >> $GITHUB_ENV
       - name: Sign image
         run: cosign sign --yes "${{ env.image_ref }}"
       - name: Create SBOM
@@ -87,8 +88,8 @@ jobs:
         run: |
           cosign attest --yes --predicate cyclone.sbom.json --type cyclonedx "${{ env.image_ref }}"
     outputs:
-      image: '${{ fromJSON(steps.metadata.outputs.json).tags[0] }}'
       version: "${{ fromJSON(steps.metadata.outputs.json).labels['org.opencontainers.image.version'] }}"
+
   rollout:
     name: Rollout with Fasit
     if: github.ref == 'refs/heads/master'
