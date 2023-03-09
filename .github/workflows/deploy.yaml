@@ -37,7 +37,7 @@ jobs:
         id: build-push-sign
         with:
           name: deploy-frontend
-          service_account: gh-deploy-frontend
+          google_service_account: gh-deploy-frontend
           workload_identity_provider: ${{ secrets.NAIS_IO_WORKLOAD_IDENTITY_PROVIDER }}
           push: ${{ github.actor != 'dependabot[bot]' }}
     outputs:
