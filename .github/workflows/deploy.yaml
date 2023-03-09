@@ -39,7 +39,7 @@ jobs:
           name: deploy-frontend
           service_account: gh-deploy-frontend
     outputs:
-      version: "${{ steps.build-push-sign.outputs.version"
+      version: "${{ steps.build-push-sign.outputs.version }}"
 
   rollout:
     name: Rollout with Fasit
