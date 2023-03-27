@@ -14,7 +14,6 @@ RUN yarn install --frozen-lockfile
 COPY ./packages ./packages
 
 ENV NODE_ENV=production
-EXPOSE 8080
 WORKDIR /home/app
 
 RUN yarn workspaces run build
