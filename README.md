@@ -4,6 +4,8 @@ TODO
 
 ## Local development
 
+For a combination of more tools running locally ([hookd](https://github.com/nais/deploy), [Console frontend](https://github.com/nais/console-frontend) and more), check out the [nais/features-dev](https://github.com/nais/features-dev) repo.
+
 1. You need to have `yarn` installed locally. Installed with your favorite package manager or via `npm`.
 
 ### Offline mode
